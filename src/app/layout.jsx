@@ -1,3 +1,5 @@
+import React from "react";
+import PropTypes from "prop-types";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -28,3 +30,7 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
+RootLayout.propTypes = {
+  children: PropTypes.node.isRequired,
+};

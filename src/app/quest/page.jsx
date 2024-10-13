@@ -6,13 +6,13 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 const worlds = {
   "array": {
     title: "Array",
-    unlocks: ["hashing"],
+    prereqs: [],
     x: 50,
     y: 70
   },
   "hashing": {
     title: "Hashing",
-    unlocks: ["stack", "queue"],
+    prereqs: ["array"],
     x: 50,
     y: 25
   },
@@ -58,7 +58,7 @@ export default function Quest() {
       <TransformWrapper>
         <TransformComponent>
           <div className="w-screen h-screen">
-            {Object.entries(worlds).map(([id, { title, x, y, unlocks }]) => (
+            {Object.entries(worlds).map(([id, { title, x, y }]) => (
               <div
                 key={id}
                 className="absolute text-white bg-gray-800 rounded w-[10ch] flex justify-center cursor-pointer"

@@ -61,7 +61,7 @@ export default function Quest() {
             <h2 className="text-2xl font-bold p-4">{selectedWorld}</h2>
             <World>
               {worldData[selectedWorld] && Object.entries(worldData[selectedWorld]).map(([name, { x, y }]) => (
-                <WorldNode key={name} world={false} name={name} x={x} y={y} onClick={() => {}} />
+                <WorldNode key={name} isAWorld={false} name={name} x={x} y={y} onClick={() => {}} />
               ))}
               <ArrowsWrapper>
                 {worldData[selectedWorld] && Object.entries(worldData[selectedWorld]).flatMap(([name, { x, y, prereqs = {} }]) =>
@@ -77,7 +77,7 @@ export default function Quest() {
                         y1={prereqWorld.y}
                         x2={x}
                         y2={y}
-                        box={false}
+                        isAWorld={false}
                         radius={LEVEL_RADIUS}
                         flipArrow={flipArrow || false}
                       />
@@ -102,7 +102,7 @@ export default function Quest() {
 
       <World>
         {Object.entries(worldsData).map(([name, { x, y }]) => (
-          <WorldNode key={name} world={true} name={name} x={x} y={y} onClick={() => handleWorldClick(name)} />
+          <WorldNode key={name} isAWorld={true} name={name} x={x} y={y} onClick={() => handleWorldClick(name)} />
         ))}
         <ArrowsWrapper>
           {Object.entries(worldsData).flatMap(([name, { x, y, prereqs = {} }]) =>
@@ -118,7 +118,7 @@ export default function Quest() {
                   y1={prereqWorld.y}
                   x2={x}
                   y2={y}
-                  box={true}
+                  isAWorld={true}
                   width={WORLD_WIDTH}
                   height={WORLD_HEIGHT}
                   flipArrow={flipArrow || false}

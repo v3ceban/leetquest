@@ -17,8 +17,8 @@ function World({ children }) {
   );
 }
 
-function WorldNode({ world, name, x, y, onClick }) {
-  return world ? (
+function WorldNode({ isAWorld, name, x, y, onClick }) {
+  return isAWorld ? (
     <div
       key={name}
       className="absolute text-white bg-gray-800 rounded flex justify-center items-center cursor-pointer"

@@ -14,11 +14,14 @@ const ARROW_OPTIONS = {
   stretchMax: 420,
   padStart: 0,
   padEnd: 20,
-  flip: false,
   straights: true,
-}
+};
 
-function getArrow(x1, y1, x2, y2) {
+function getArrow(x1, y1, x2, y2, flipArrow) {
+  const options = {
+    ...ARROW_OPTIONS,
+    flip: flipArrow,
+  };
   return getBoxToBoxArrow(
     x1,
     y1,
@@ -28,7 +31,7 @@ function getArrow(x1, y1, x2, y2) {
     y2,
     WORLD_WIDTH,
     WORLD_HEIGHT,
-    ARROW_OPTIONS
+    options
   );
 }
 
@@ -82,14 +85,19 @@ export default function Quest() {
                 {name}
               </div>
             ))}
-            <svg stroke="#1F2937" fill="#1F2937" strokeWidth={3}>
+            <svg
+              className="w-screen h-screen"
+              stroke="#1F2937"
+              fill="#1F2937"
+              strokeWidth={3}
+            >
               {Object.entries(worlds).flatMap(([id, { x, y, prereqs }]) =>
-                prereqs.map(prereqId => {
+                prereqs.map(({ id: prereqId, flip_arrow: flipArrow }) => {
                   const prereqWorld = worlds[prereqId];
                   if (!prereqWorld) {
                     return null;
                   }
-                  const [sx, sy, cx, cy, ex, ey, ae] = getArrow(x, y, prereqWorld.x, prereqWorld.y);
+                  const [sx, sy, cx, cy, ex, ey, ae] = getArrow(x, y, prereqWorld.x, prereqWorld.y, flipArrow);
                   const endAngleAsDegrees = ae * (180 / Math.PI);
                   return (
                     <g key={`${id}-${prereqId}`}>

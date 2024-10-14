@@ -3,14 +3,17 @@
     "name": "Array",
     "prereqs": [],
     "x": 20,
-    "y": 150
+    "y": 280
   },
   "hashing": {
     "name": "Hashing",
     "prereqs": [
-      "array"
+      {
+        "id": "array",
+        "flip_arrow": true
+      }
     ],
-    "x": 100,
+    "x": 200,
     "y": 25
   }
 }

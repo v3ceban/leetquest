@@ -53,8 +53,8 @@ export default function Quest() {
           className={`absolute top-0 right-0 w-2/3 h-full bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-40 ${isVisible ? 'translate-x-0' : 'translate-x-[110%]'}`}
         >
           <World title={selectedWorld}>
-            {worldData[selectedWorld] && Object.entries(worldData[selectedWorld]).map(([name, { x, y, type }]) => (
-              <WorldNode key={name} isAWorld={false} name={name} levelType={type} x={x} y={y} onClick={() => {}} />
+            {worldData[selectedWorld] && Object.entries(worldData[selectedWorld]).map(([name, { x, y, color }]) => (
+              <WorldNode key={name} isAWorld={false} name={name} levelColor={color} x={x} y={y} onClick={() => {}} />
             ))}
             <ArrowsWrapper>
               {worldData[selectedWorld] && Object.entries(worldData[selectedWorld]).flatMap(([name, { x, y, prereqs = {} }]) =>

@@ -2,12 +2,12 @@
   "I": {
     "x": 20,
     "y": 50,
-    "type": "learn"
+    "color": "blue"
   },
   "1": {
     "x": 80,
     "y": 120,
-    "type": "problem",
+    "color": "green",
     "prereqs": {
       "I": {}
     }
@@ -15,7 +15,7 @@
   "A": {
     "x": 200,
     "y": 190,
-    "type": "challenge",
+    "color": "red",
     "prereqs": {
       "1": {
         "flip_arrow": true

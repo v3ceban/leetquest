@@ -1,6 +1,10 @@
 import { getBoxToBoxArrow } from 'perfect-arrows';
 import { getArrow } from 'perfect-arrows';
 
+const WORLD_WIDTH = 70;
+const WORLD_HEIGHT = 25;
+const LEVEL_RADIUS = 20;
+
 const PAD_END = 18;
 const ARROW_OPTIONS = {
   bow: 0.2,
@@ -26,11 +30,11 @@ function ArrowsWrapper({ children }) {
   );
 }
 
-function Arrow({ x1, y1, x2, y2, isAWorld, width, height, radius, flipArrow }) {
+function Arrow({ x1, y1, x2, y2, isAWorld, flipArrow }) {
   const [sx, sy, cx, cy, ex, ey, ae] = isAWorld ? getBoxToBoxArrow(
-    x1, y1, width, height, x2, y2, width, height, { ...ARROW_OPTIONS, flip: flipArrow }
+    x1, y1, WORLD_WIDTH, WORLD_HEIGHT, x2, y2, WORLD_WIDTH, WORLD_HEIGHT, { ...ARROW_OPTIONS, flip: flipArrow }
   ) : getArrow(
-    x1 + radius, y1 + radius, x2 + radius, y2 + radius, { ...ARROW_OPTIONS, padStart: radius, padEnd: PAD_END + radius, flip: flipArrow }
+    x1 + LEVEL_RADIUS, y1 + LEVEL_RADIUS, x2 + LEVEL_RADIUS, y2 + LEVEL_RADIUS, { ...ARROW_OPTIONS, padStart: LEVEL_RADIUS, padEnd: PAD_END + LEVEL_RADIUS, flip: flipArrow }
   );
   const endAngleAsDegrees = ae * RADIANS_TO_DEGREES_RATIO;
   return (

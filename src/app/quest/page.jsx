@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { ArrowsWrapper, Arrow } from '@/components/Arrow';
 import { World, WorldNode } from '@/components/World';
 
@@ -13,11 +12,6 @@ const worldData = {
   "Array": arrayWorldData,
   // "Hashing": hashingWorldData
 };
-
-const WORLD_WIDTH = 70;
-const WORLD_HEIGHT = 25;
-const LEVEL_RADIUS = 20;
-const LEVEL_DIAMETER = LEVEL_RADIUS * 2;
 
 export default function Quest() {
   const [selectedWorld, setSelectedWorld] = useState(null);
@@ -78,7 +72,6 @@ export default function Quest() {
                         x2={x}
                         y2={y}
                         isAWorld={false}
-                        radius={LEVEL_RADIUS}
                         flipArrow={flipArrow || false}
                       />
                     );
@@ -119,8 +112,6 @@ export default function Quest() {
                   x2={x}
                   y2={y}
                   isAWorld={true}
-                  width={WORLD_WIDTH}
-                  height={WORLD_HEIGHT}
                   flipArrow={flipArrow || false}
                 />
               );

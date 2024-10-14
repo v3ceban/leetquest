@@ -40,7 +40,18 @@ export default function Quest() {
   const [isVisible, setIsVisible] = useState(false);
 
   const handleWorldClick = (world) => {
-    setSelectedWorld(world);
+    if (selectedWorld === null) {
+      setSelectedWorld(world);
+    } else {
+      if (selectedWorld === world) {
+        return;
+      }
+      setIsVisible(false);
+      setTimeout(() => {
+        setSelectedWorld(world);
+        setIsVisible(true);
+      }, 300);
+    }
   };
 
   const closeWindow = () => {
@@ -60,15 +71,22 @@ export default function Quest() {
 
       {selectedWorld && (
         <div
-          className={`absolute top-0 right-0 w-2/3 h-full bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-40 ${isVisible ? 'translate-x-0' : 'translate-x-full'}`}
+          className={`absolute top-0 right-0 w-2/3 h-full bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-40 ${isVisible ? 'translate-x-0' : 'translate-x-[110%]'}`}
         >
-          <button className="absolute top-4 right-4 text-black" onClick={closeWindow}>
-            Close
-          </button>
           <div className="p-4">
             <h2 className="text-2xl font-bold">{worlds[selectedWorld].name}</h2>
             {/* TODO: World map */}
           </div>
+          <div
+            className="absolute top-1/2 left-0 -translate-x-full -translate-y-1/2 cursor-pointer"
+            style={{
+              borderBottom: '30px solid transparent',
+              borderTop: '30px solid transparent',
+              borderRight: '30px solid #1F2937',
+              height: '80px',
+            }}
+            onClick={closeWindow}
+          />
         </div>
       )}
 

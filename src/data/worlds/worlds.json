@@ -1,0 +1,16 @@
+{
+  "array": {
+    "name": "Array",
+    "prereqs": [],
+    "x": 50,
+    "y": 70
+  },
+  "hashing": {
+    "name": "Hashing",
+    "prereqs": [
+      "array"
+    ],
+    "x": 50,
+    "y": 25
+  }
+}

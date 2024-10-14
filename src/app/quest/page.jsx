@@ -2,21 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-
-const worlds = {
-  "array": {
-    name: "Array",
-    prereqs: [],
-    x: 50,
-    y: 70
-  },
-  "hashing": {
-    name: "Hashing",
-    prereqs: ["array"],
-    x: 50,
-    y: 25
-  },
-};
+import worlds from '@/data/worlds/worlds.json';
 
 export default function Quest() {
   const [selectedWorld, setSelectedWorld] = useState(null);

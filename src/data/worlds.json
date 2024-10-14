@@ -1,15 +1,13 @@
 {
-  "array": {
-    "name": "Array",
+  "Array": {
     "prereqs": [],
     "x": 20,
     "y": 280
   },
-  "hashing": {
-    "name": "Hashing",
+  "Hashing": {
     "prereqs": [
       {
-        "id": "array",
+        "name": "Array",
         "flip_arrow": true
       }
     ],

@@ -1,0 +1,27 @@
+{
+  "I": {
+    "prereqs": [],
+    "x": 20,
+    "y": 50
+  },
+  "1": {
+    "prereqs": [
+      {
+        "name": "I",
+        "flip_arrow": false
+      }
+    ],
+    "x": 80,
+    "y": 120
+  },
+  "A": {
+    "prereqs": [
+      {
+        "name": "1",
+        "flip_arrow": true
+      }
+    ],
+    "x": 140,
+    "y": 190
+  }
+}

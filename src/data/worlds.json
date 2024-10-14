@@ -5,12 +5,11 @@
     "y": 280
   },
   "Hashing": {
-    "prereqs": [
-      {
-        "name": "Array",
-        "flip_arrow": true
+    "prereqs": {
+        "Array": {
+          "flip_arrow": true
       }
-    ],
+    },
     "x": 200,
     "y": 25
   }

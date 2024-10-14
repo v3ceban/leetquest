@@ -102,7 +102,7 @@ export default function Quest() {
                     strokeWidth={3}
                   >
                     {worldData[selectedWorld] && Object.entries(worldData[selectedWorld]).flatMap(([name, { x, y, prereqs }]) =>
-                      prereqs.map(({ name: prereq, flip_arrow: flipArrow }) => {
+                      Object.entries(prereqs).map(([prereq, { flip_arrow: flipArrow }]) => {
                         const prereqWorld = worldData[selectedWorld][prereq];
                         if (!prereqWorld) {
                           return null;
@@ -158,7 +158,7 @@ export default function Quest() {
               strokeWidth={3}
             >
               {Object.entries(worldsData).flatMap(([name, { x, y, prereqs }]) =>
-                prereqs.map(({ name: prereq, flip_arrow: flipArrow }) => {
+                Object.entries(prereqs).map(([prereq, { flip_arrow: flipArrow }]) => {
                   const prereqWorld = worldsData[prereq];
                   if (!prereqWorld) {
                     return null;

@@ -9,6 +9,7 @@ import arrayWorldData from '@/data/worlds/array.json';
 // import hashingWorldData from '@/data/worlds/hashing.json';
 
 const worldData = {
+  "Worlds": worldsData,
   "Array": arrayWorldData,
   // "Hashing": hashingWorldData
 };
@@ -51,35 +52,32 @@ export default function Quest() {
         <div
           className={`absolute top-0 right-0 w-2/3 h-full bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-40 ${isVisible ? 'translate-x-0' : 'translate-x-[110%]'}`}
         >
-          <div>
-            <h2 className="text-2xl font-bold p-4">{selectedWorld}</h2>
-            <World>
-              {worldData[selectedWorld] && Object.entries(worldData[selectedWorld]).map(([name, { x, y, type }]) => (
-                <WorldNode key={name} isAWorld={false} name={name} levelType={type} x={x} y={y} onClick={() => {}} />
-              ))}
-              <ArrowsWrapper>
-                {worldData[selectedWorld] && Object.entries(worldData[selectedWorld]).flatMap(([name, { x, y, prereqs = {} }]) =>
-                  Object.entries(prereqs).map(([prereq, { flip_arrow: flipArrow }]) => {
-                    const prereqWorld = worldData[selectedWorld][prereq];
-                    if (!prereqWorld) {
-                      return null;
-                    }
-                    return (
-                      <Arrow
-                        key={`${name}-${prereq}`}
-                        x1={prereqWorld.x}
-                        y1={prereqWorld.y}
-                        x2={x}
-                        y2={y}
-                        isAWorld={false}
-                        flipArrow={flipArrow || false}
-                      />
-                    );
-                  })
-                )}
-              </ArrowsWrapper>
-            </World>
-          </div>
+          <World title={selectedWorld}>
+            {worldData[selectedWorld] && Object.entries(worldData[selectedWorld]).map(([name, { x, y, type }]) => (
+              <WorldNode key={name} isAWorld={false} name={name} levelType={type} x={x} y={y} onClick={() => {}} />
+            ))}
+            <ArrowsWrapper>
+              {worldData[selectedWorld] && Object.entries(worldData[selectedWorld]).flatMap(([name, { x, y, prereqs = {} }]) =>
+                Object.entries(prereqs).map(([prereq, { flip_arrow: flipArrow }]) => {
+                  const prereqWorld = worldData[selectedWorld][prereq];
+                  if (!prereqWorld) {
+                    return null;
+                  }
+                  return (
+                    <Arrow
+                      key={`${name}-${prereq}`}
+                      x1={prereqWorld.x}
+                      y1={prereqWorld.y}
+                      x2={x}
+                      y2={y}
+                      isAWorld={false}
+                      flipArrow={flipArrow || false}
+                    />
+                  );
+                })
+              )}
+            </ArrowsWrapper>
+          </World>
           <div
             className="absolute top-1/2 left-0 -translate-x-full -translate-y-1/2 cursor-pointer"
             style={{
@@ -93,14 +91,14 @@ export default function Quest() {
         </div>
       )}
 
-      <World>
-        {Object.entries(worldsData).map(([name, { x, y }]) => (
+      <World title={"Worlds"}>
+        {Object.entries(worldData["Worlds"]).map(([name, { x, y }]) => (
           <WorldNode key={name} isAWorld={true} name={name} x={x} y={y} onClick={() => handleWorldClick(name)} />
         ))}
         <ArrowsWrapper>
-          {Object.entries(worldsData).flatMap(([name, { x, y, prereqs = {} }]) =>
+          {Object.entries(worldData["Worlds"]).flatMap(([name, { x, y, prereqs = {} }]) =>
             Object.entries(prereqs).map(([prereq, { flip_arrow: flipArrow }]) => {
-              const prereqWorld = worldsData[prereq];
+              const prereqWorld = worldData["Worlds"][prereq];
               if (!prereqWorld) {
                 return null;
               }

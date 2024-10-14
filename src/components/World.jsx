@@ -5,15 +5,18 @@ const WORLD_HEIGHT = 25;
 const LEVEL_RADIUS = 20;
 const LEVEL_DIAMETER = LEVEL_RADIUS * 2;
 
-function World({ children }) {
+function World({ children, title }) {
   return (
-    <TransformWrapper>
-      <TransformComponent>
-        <div className="relative w-screen h-screen">
-          {children}
-        </div>
-      </TransformComponent>
-    </TransformWrapper>
+    <div>
+      <h2 className="text-2xl font-bold p-4">{title}</h2>
+      <TransformWrapper>
+        <TransformComponent>
+          <div className="relative w-screen h-screen">
+            {children}
+          </div>
+        </TransformComponent>
+      </TransformWrapper>
+    </div>
   );
 }
 

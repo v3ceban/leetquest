@@ -2,15 +2,15 @@
   "array": {
     "name": "Array",
     "prereqs": [],
-    "x": 50,
-    "y": 70
+    "x": 20,
+    "y": 150
   },
   "hashing": {
     "name": "Hashing",
     "prereqs": [
       "array"
     ],
-    "x": 50,
+    "x": 100,
     "y": 25
   }
 }

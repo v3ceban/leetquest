@@ -54,8 +54,8 @@ export default function Quest() {
           <div>
             <h2 className="text-2xl font-bold p-4">{selectedWorld}</h2>
             <World>
-              {worldData[selectedWorld] && Object.entries(worldData[selectedWorld]).map(([name, { x, y }]) => (
-                <WorldNode key={name} isAWorld={false} name={name} x={x} y={y} onClick={() => {}} />
+              {worldData[selectedWorld] && Object.entries(worldData[selectedWorld]).map(([name, { x, y, type }]) => (
+                <WorldNode key={name} isAWorld={false} name={name} levelType={type} x={x} y={y} onClick={() => {}} />
               ))}
               <ArrowsWrapper>
                 {worldData[selectedWorld] && Object.entries(worldData[selectedWorld]).flatMap(([name, { x, y, prereqs = {} }]) =>

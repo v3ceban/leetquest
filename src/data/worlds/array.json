@@ -1,22 +1,25 @@
 {
   "I": {
     "x": 20,
-    "y": 50
+    "y": 50,
+    "type": "learn"
   },
   "1": {
+    "x": 80,
+    "y": 120,
+    "type": "problem",
     "prereqs": {
       "I": {}
-    },
-    "x": 80,
-    "y": 120
+    }
   },
   "A": {
+    "x": 200,
+    "y": 190,
+    "type": "challenge",
     "prereqs": {
       "1": {
         "flip_arrow": true
       }
-    },
-    "x": 140,
-    "y": 190
+    }
   }
 }

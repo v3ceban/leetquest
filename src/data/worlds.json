@@ -4,12 +4,12 @@
     "y": 280
   },
   "Hashing": {
+    "x": 200,
+    "y": 25,
     "prereqs": {
       "Array": {
         "flip_arrow": true
       }
-    },
-    "x": 200,
-    "y": 25
+    }
   }
 }

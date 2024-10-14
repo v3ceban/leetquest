@@ -17,7 +17,19 @@ function World({ children }) {
   );
 }
 
-function WorldNode({ isAWorld, name, x, y, onClick }) {
+function WorldNode({ isAWorld, name, levelType, x, y, onClick }) {
+  const getBackgroundColor = (levelType) => {
+    switch (levelType) {
+      case 'learn':
+        return 'bg-blue-500';
+      case 'problem':
+        return 'bg-green-500';
+      case 'challenge':
+        return 'bg-red-500';
+      default:
+        return 'bg-gray-800';
+    }
+  };
   return isAWorld ? (
     <div
       key={name}
@@ -30,7 +42,7 @@ function WorldNode({ isAWorld, name, x, y, onClick }) {
   ) : (
     <div
       key={name}
-      className="absolute text-white bg-gray-800 rounded flex justify-center items-center cursor-pointer rounded-full"
+      className={`absolute text-white rounded flex justify-center items-center cursor-pointer rounded-full ${getBackgroundColor(levelType)}`}
       style={{ left: x, top: y, width: LEVEL_DIAMETER, height: LEVEL_DIAMETER }}
     >
       {name}

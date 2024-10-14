@@ -7,7 +7,8 @@ const LEVEL_DIAMETER = LEVEL_RADIUS * 2;
 const LEVEL_COLOR_TO_BACKGROUND_COLOR = {
   'blue': 'bg-blue-700',
   'green': 'bg-green-600',
-  'red': 'bg-red-600'
+  'red': 'bg-red-600',
+  'gray': 'bg-gray-800',
 }
 
 function World({ children, title }) {
@@ -38,7 +39,7 @@ function WorldNode({ isAWorld, name, levelColor, x, y, onClick }) {
   ) : (
     <div
       key={name}
-        className={`absolute text-white rounded flex justify-center items-center cursor-pointer rounded-full ${LEVEL_COLOR_TO_BACKGROUND_COLOR[levelColor] || 'bg-gray-800'}`}
+        className={`absolute text-white rounded flex justify-center items-center cursor-pointer rounded-full ${LEVEL_COLOR_TO_BACKGROUND_COLOR[levelColor] || LEVEL_COLOR_TO_BACKGROUND_COLOR["gray"]}`}
       style={{ left: x, top: y, width: LEVEL_DIAMETER, height: LEVEL_DIAMETER }}
     >
       {name}

@@ -26,8 +26,8 @@ function ArrowsWrapper({ children }) {
   );
 }
 
-function Arrow({ x1, y1, x2, y2, box, width, height, radius, flipArrow }) {
-  const [sx, sy, cx, cy, ex, ey, ae] = box ? getBoxToBoxArrow(
+function Arrow({ x1, y1, x2, y2, isAWorld, width, height, radius, flipArrow }) {
+  const [sx, sy, cx, cy, ex, ey, ae] = isAWorld ? getBoxToBoxArrow(
     x1, y1, width, height, x2, y2, width, height, { ...ARROW_OPTIONS, flip: flipArrow }
   ) : getArrow(
     x1 + radius, y1 + radius, x2 + radius, y2 + radius, { ...ARROW_OPTIONS, padStart: radius, padEnd: PAD_END + radius, flip: flipArrow }

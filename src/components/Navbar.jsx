@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 const Navbar = () => {
   return (
     <nav className="bg-gray-800 text-white py-4 overflow-auto">
-      <div className="container mx-auto flex justify-between items-center [&>*]:px-4">
+      <div className="container mx-auto flex justify-between items-center px-4 gap-x-4">
         <div className="text-lg font-bold">
           <Link href="/">LeetQuest</Link>
         </div>

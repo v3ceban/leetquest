@@ -5,13 +5,13 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const worlds = {
   "array": {
-    title: "Array",
+    name: "Array",
     prereqs: [],
     x: 50,
     y: 70
   },
   "hashing": {
-    title: "Hashing",
+    name: "Hashing",
     prereqs: ["array"],
     x: 50,
     y: 25
@@ -49,7 +49,7 @@ export default function Quest() {
             Close
           </button>
           <div className="p-4">
-            <h2 className="text-2xl font-bold">{worlds[selectedWorld].title}</h2>
+            <h2 className="text-2xl font-bold">{worlds[selectedWorld].name}</h2>
             {/* TODO: World map */}
           </div>
         </div>
@@ -58,14 +58,14 @@ export default function Quest() {
       <TransformWrapper>
         <TransformComponent>
           <div className="w-screen h-screen">
-            {Object.entries(worlds).map(([id, { title, x, y }]) => (
+            {Object.entries(worlds).map(([id, { name, x, y }]) => (
               <div
                 key={id}
                 className="absolute text-white bg-gray-800 rounded w-[10ch] flex justify-center cursor-pointer"
                 style={{ left: x, top: y }}
                 onClick={() => handleWorldClick(id)}
               >
-                {title}
+                {name}
               </div>
             ))}
           </div>

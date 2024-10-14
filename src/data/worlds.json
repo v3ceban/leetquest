@@ -1,13 +1,12 @@
 {
   "Array": {
-    "prereqs": [],
     "x": 20,
     "y": 280
   },
   "Hashing": {
     "prereqs": {
-        "Array": {
-          "flip_arrow": true
+      "Array": {
+        "flip_arrow": true
       }
     },
     "x": 200,

@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import { getBoxToBoxArrow } from "perfect-arrows";
+import { ArrowsWrapper, Arrow } from '@/components/Arrow';
+import { World, WorldNode } from '@/components/World';
 
 import worldsData from '@/data/worlds.json';
 import arrayWorldData from '@/data/worlds/array.json';
@@ -15,33 +16,8 @@ const worldData = {
 
 const WORLD_WIDTH = 70;
 const WORLD_HEIGHT = 25;
-const ARROW_OPTIONS = {
-  bow: 0.2,
-  stretch: 0.5,
-  stretchMin: 40,
-  stretchMax: 420,
-  padStart: 0,
-  padEnd: 20,
-  straights: true,
-};
-
-function getArrow(x1, y1, x2, y2, flipArrow) {
-  const options = {
-    ...ARROW_OPTIONS,
-    flip: flipArrow,
-  };
-  return getBoxToBoxArrow(
-    x1,
-    y1,
-    WORLD_WIDTH,
-    WORLD_HEIGHT,
-    x2,
-    y2,
-    WORLD_WIDTH,
-    WORLD_HEIGHT,
-    options
-  );
-}
+const LEVEL_RADIUS = 20;
+const LEVEL_DIAMETER = LEVEL_RADIUS * 2;
 
 export default function Quest() {
   const [selectedWorld, setSelectedWorld] = useState(null);
@@ -83,47 +59,33 @@ export default function Quest() {
         >
           <div>
             <h2 className="text-2xl font-bold p-4">{selectedWorld}</h2>
-            <TransformWrapper>
-              <TransformComponent>
-                <div className="relative w-screen h-screen">
-                  {worldData[selectedWorld] && Object.entries(worldData[selectedWorld]).map(([name, { x, y }]) => (
-                    <div
-                      key={name}
-                      className="absolute text-white bg-gray-800 rounded flex justify-center cursor-pointer"
-                      style={{ left: x, top: y, width: WORLD_WIDTH, height: WORLD_HEIGHT }}
-                    >
-                      {name}
-                    </div>
-                  ))}
-                  <svg
-                    className="w-full h-full"
-                    stroke="#1F2937"
-                    fill="#1F2937"
-                    strokeWidth={3}
-                  >
-                    {worldData[selectedWorld] && Object.entries(worldData[selectedWorld]).flatMap(([name, { x, y, prereqs }]) =>
-                      Object.entries(prereqs).map(([prereq, { flip_arrow: flipArrow }]) => {
-                        const prereqWorld = worldData[selectedWorld][prereq];
-                        if (!prereqWorld) {
-                          return null;
-                        }
-                        const [sx, sy, cx, cy, ex, ey, ae] = getArrow(x, y, prereqWorld.x, prereqWorld.y, flipArrow);
-                        const endAngleAsDegrees = ae * (180 / Math.PI);
-                        return (
-                          <g key={`${name}-${prereq}`}>
-                            <path d={`M${sx},${sy} Q${cx},${cy} ${ex},${ey}`} fill="none" />
-                            <polygon
-                              points="0,-6 12,0, 0,6"
-                              transform={`translate(${ex},${ey}) rotate(${endAngleAsDegrees})`}
-                            />
-                          </g>
-                        );
-                      })
-                    )}
-                  </svg>
-                </div>
-              </TransformComponent>
-            </TransformWrapper>
+            <World>
+              {worldData[selectedWorld] && Object.entries(worldData[selectedWorld]).map(([name, { x, y }]) => (
+                <WorldNode key={name} world={false} name={name} x={x} y={y} onClick={() => {}} />
+              ))}
+              <ArrowsWrapper>
+                {worldData[selectedWorld] && Object.entries(worldData[selectedWorld]).flatMap(([name, { x, y, prereqs = {} }]) =>
+                  Object.entries(prereqs).map(([prereq, { flip_arrow: flipArrow }]) => {
+                    const prereqWorld = worldData[selectedWorld][prereq];
+                    if (!prereqWorld) {
+                      return null;
+                    }
+                    return (
+                      <Arrow
+                        key={`${name}-${prereq}`}
+                        x1={prereqWorld.x}
+                        y1={prereqWorld.y}
+                        x2={x}
+                        y2={y}
+                        box={false}
+                        radius={LEVEL_RADIUS}
+                        flipArrow={flipArrow || false}
+                      />
+                    );
+                  })
+                )}
+              </ArrowsWrapper>
+            </World>
           </div>
           <div
             className="absolute top-1/2 left-0 -translate-x-full -translate-y-1/2 cursor-pointer"
@@ -138,48 +100,34 @@ export default function Quest() {
         </div>
       )}
 
-      <TransformWrapper>
-        <TransformComponent>
-          <div className="w-screen h-screen">
-            {Object.entries(worldsData).map(([name, { x, y }]) => (
-              <div
-                key={name}
-                className="absolute text-white bg-gray-800 rounded flex justify-center cursor-pointer"
-                style={{ left: x, top: y, width: WORLD_WIDTH, height: WORLD_HEIGHT }}
-                onClick={() => handleWorldClick(name)}
-              >
-                {name}
-              </div>
-            ))}
-            <svg
-              className="w-screen h-screen"
-              stroke="#1F2937"
-              fill="#1F2937"
-              strokeWidth={3}
-            >
-              {Object.entries(worldsData).flatMap(([name, { x, y, prereqs }]) =>
-                Object.entries(prereqs).map(([prereq, { flip_arrow: flipArrow }]) => {
-                  const prereqWorld = worldsData[prereq];
-                  if (!prereqWorld) {
-                    return null;
-                  }
-                  const [sx, sy, cx, cy, ex, ey, ae] = getArrow(x, y, prereqWorld.x, prereqWorld.y, flipArrow);
-                  const endAngleAsDegrees = ae * (180 / Math.PI);
-                  return (
-                    <g key={`${name}-${prereq}`}>
-                      <path d={`M${sx},${sy} Q${cx},${cy} ${ex},${ey}`} fill="none" />
-                      <polygon
-                        points="0,-6 12,0, 0,6"
-                        transform={`translate(${ex},${ey}) rotate(${endAngleAsDegrees})`}
-                      />
-                    </g>
-                  );
-                })
-              )}
-            </svg>
-          </div>
-        </TransformComponent>
-      </TransformWrapper>
+      <World>
+        {Object.entries(worldsData).map(([name, { x, y }]) => (
+          <WorldNode key={name} world={true} name={name} x={x} y={y} onClick={() => handleWorldClick(name)} />
+        ))}
+        <ArrowsWrapper>
+          {Object.entries(worldsData).flatMap(([name, { x, y, prereqs = {} }]) =>
+            Object.entries(prereqs).map(([prereq, { flip_arrow: flipArrow }]) => {
+              const prereqWorld = worldsData[prereq];
+              if (!prereqWorld) {
+                return null;
+              }
+              return (
+                <Arrow
+                  key={`${name}-${prereq}`}
+                  x1={prereqWorld.x}
+                  y1={prereqWorld.y}
+                  x2={x}
+                  y2={y}
+                  box={true}
+                  width={WORLD_WIDTH}
+                  height={WORLD_HEIGHT}
+                  flipArrow={flipArrow || false}
+                />
+              );
+            })
+          )}
+        </ArrowsWrapper>
+      </World>
     </div>
   );
 }

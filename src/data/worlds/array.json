@@ -1,14 +1,11 @@
 {
   "I": {
-    "prereqs": [],
     "x": 20,
     "y": 50
   },
   "1": {
     "prereqs": {
-      "I": {
-        "flip_arrow": false
-      }
+      "I": {}
     },
     "x": 80,
     "y": 120

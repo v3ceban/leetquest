@@ -4,6 +4,11 @@ const WORLD_WIDTH = 70;
 const WORLD_HEIGHT = 25;
 const LEVEL_RADIUS = 20;
 const LEVEL_DIAMETER = LEVEL_RADIUS * 2;
+const LEVEL_COLOR_TO_BACKGROUND_COLOR = {
+  'blue': 'bg-blue-700',
+  'green': 'bg-green-600',
+  'red': 'bg-red-600'
+}
 
 function World({ children, title }) {
   return (
@@ -21,18 +26,6 @@ function World({ children, title }) {
 }
 
 function WorldNode({ isAWorld, name, levelColor, x, y, onClick }) {
-  const getBackgroundColor = (levelColor) => {
-    switch (levelColor) {
-      case 'blue':
-        return 'bg-blue-700';
-      case 'green':
-        return 'bg-green-600';
-      case 'red':
-        return 'bg-red-600';
-      default:
-        return 'bg-gray-800';
-    }
-  };
   return isAWorld ? (
     <div
       key={name}
@@ -45,7 +38,7 @@ function WorldNode({ isAWorld, name, levelColor, x, y, onClick }) {
   ) : (
     <div
       key={name}
-        className={`absolute text-white rounded flex justify-center items-center cursor-pointer rounded-full ${getBackgroundColor(levelColor)}`}
+        className={`absolute text-white rounded flex justify-center items-center cursor-pointer rounded-full ${LEVEL_COLOR_TO_BACKGROUND_COLOR[levelColor] || 'bg-gray-800'}`}
       style={{ left: x, top: y, width: LEVEL_DIAMETER, height: LEVEL_DIAMETER }}
     >
       {name}

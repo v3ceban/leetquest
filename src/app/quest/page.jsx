@@ -45,7 +45,7 @@ export default function Quest() {
   }, [selectedWorld]);
 
   return (
-    <main className="relative h-[calc(100dvh-72px)]">
+    <main className="relative overflow-y-hidden max-h-[calc(100dvh-72px)]">
       {/* TODO: Breadcrumb */}
 
       {selectedWorld && (

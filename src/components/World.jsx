@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const WORLD_WIDTH = 70;
@@ -18,12 +19,17 @@ function World({ children, title }) {
       <h2 className="p-4 text-2xl font-bold">{title}</h2>
       <TransformWrapper>
         <TransformComponent>
-          <div className="relative w-screen h-full">{children}</div>
+          <div className="relative w-screen h-dvh">{children}</div>
         </TransformComponent>
       </TransformWrapper>
     </div>
   );
 }
+
+World.propTypes = {
+  children: PropTypes.node,
+  title: PropTypes.string,
+};
 
 function WorldNode({ isAWorld, name, levelColor, x, y, onClick }) {
   return isAWorld ? (
@@ -45,5 +51,14 @@ function WorldNode({ isAWorld, name, levelColor, x, y, onClick }) {
     </div>
   );
 }
+
+WorldNode.propTypes = {
+  isAWorld: PropTypes.bool,
+  name: PropTypes.string,
+  levelColor: PropTypes.string,
+  x: PropTypes.number,
+  y: PropTypes.number,
+  onClick: PropTypes.func,
+};
 
 export { World, WorldNode };

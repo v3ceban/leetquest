@@ -1,10 +1,11 @@
-import Link from 'next/link';
-import { Button } from "@/components/ui/button"
+import React from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   return (
-    <nav className="bg-gray-800 text-white py-4 overflow-auto">
-      <div className="container mx-auto flex justify-between items-center px-4 gap-x-4">
+    <nav className="overflow-auto sticky top-0 py-4 text-white bg-gray-800">
+      <div className="container flex gap-x-4 justify-between items-center px-4 mx-auto">
         <div className="text-lg font-bold">
           <Link href="/">LeetQuest</Link>
         </div>

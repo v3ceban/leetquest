@@ -2,11 +2,13 @@
   "I": {
     "x": 20,
     "y": 50,
+    "level": "What is an array?",
     "color": "blue"
   },
   "1": {
     "x": 80,
     "y": 120,
+    "level": "Get the last element of an array",
     "color": "green",
     "prereqs": {
       "I": {}
@@ -15,6 +17,7 @@
   "A": {
     "x": 200,
     "y": 190,
+    "level": "Shuffle an array",
     "color": "red",
     "prereqs": {
       "1": {

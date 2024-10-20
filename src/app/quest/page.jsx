@@ -8,6 +8,7 @@ import worldsData from "@/data/worlds.json";
 import arrayWorldData from "@/data/worlds/array.json";
 // import hashingWorldData from '@/data/worlds/hashing.json';
 
+const SHIFT_DURATION = 200;
 const worldData = {
   Worlds: worldsData,
   Array: arrayWorldData,
@@ -16,46 +17,95 @@ const worldData = {
 
 export default function Quest() {
   const [selectedWorld, setSelectedWorld] = useState(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [worldShifted, setWorldShifted] = useState(false);
+
+  const [selectedLevel, setSelectedLevel] = useState(null);
+  const [levelShifted, setLevelShifted] = useState(false);
+
+  const switchWorld = (nextWorld) => {
+    if (selectedLevel) {
+      setLevelShifted(false);
+      setTimeout(() => {
+        setSelectedLevel(null)
+        setWorldShifted(false);
+        setTimeout(() => setSelectedWorld(nextWorld), SHIFT_DURATION);
+      }, SHIFT_DURATION);
+    } else {
+      setWorldShifted(false);
+      setTimeout(() => setSelectedWorld(nextWorld), SHIFT_DURATION);
+    }
+  }
 
   const handleWorldClick = (world) => {
-    if (selectedWorld === null) {
+    if (!selectedWorld) {
       setSelectedWorld(world);
-    } else {
-      if (selectedWorld === world) {
-        return;
-      }
-      setIsVisible(false);
-      setTimeout(() => {
-        setSelectedWorld(world);
-        setIsVisible(true);
-      }, 300);
+    } else if (selectedWorld !== world) {
+      switchWorld(world);
     }
   };
 
-  const closeWindow = () => {
-    setIsVisible(false);
-    setTimeout(() => setSelectedWorld(null), 300);
+  const closeWorld = () => {
+    switchWorld(null);
   };
 
   useEffect(() => {
     if (selectedWorld) {
-      setIsVisible(true);
+      setWorldShifted(true);
     }
   }, [selectedWorld]);
 
+  const handleLevelClick = (level) => {
+    if (!selectedLevel) {
+      setSelectedLevel(level);
+    } else if (selectedLevel !== level) {
+      setLevelShifted(false);
+      setTimeout(() => setSelectedLevel(level), SHIFT_DURATION);
+    }
+  }
+
+  const closeLevel = () => {
+    setLevelShifted(false);
+    setTimeout(() => setSelectedLevel(null), SHIFT_DURATION);
+  }
+
+  useEffect(() => {
+    if (selectedLevel) {
+      setLevelShifted(true);
+    }
+  }, [selectedLevel]);
+  
   return (
     <main className="relative overflow-y-hidden max-h-[calc(100dvh-72px)]">
       {/* TODO: Breadcrumb */}
 
       {selectedWorld && (
         <div
-          className={`absolute top-0 right-0 w-2/3 h-full bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-40 ${isVisible ? "translate-x-0" : "translate-x-[110%]"}`}
+          className={`absolute top-0 right-0 w-[66.66vw] h-full bg-white shadow-lg transform transition-transform ease-in-out z-40 ${worldShifted ? "translate-x-0" : "translate-x-[110%]"}`}
+          style={{ transitionDuration: `${SHIFT_DURATION}ms` }}
         >
+          {selectedLevel && (
+            <div
+              className={`absolute top-0 right-0 w-[33.33vw] h-full bg-white shadow-lg transform transition-transform ease-in-out z-20 ${levelShifted ? "translate-x-0" : "translate-x-[110%]"}`}
+              style={{ transitionDuration: `${SHIFT_DURATION}ms` }}
+            >
+              <h2 className="p-4 text-2xl font-bold">{selectedLevel}</h2>
+              <div
+                className="absolute left-0 top-1/2 -translate-x-full -translate-y-1/2 cursor-pointer"
+                style={{
+                  borderBottom: "30px solid transparent",
+                  borderTop: "30px solid transparent",
+                  borderRight: "30px solid #1F2937",
+                  height: "80px",
+                }}
+                onClick={closeLevel}
+              />
+            </div>
+          )}
+          
           <World title={selectedWorld}>
             {worldData[selectedWorld] &&
               Object.entries(worldData[selectedWorld]).map(
-                ([name, { x, y, color }]) => (
+                ([name, { x, y, level, color }]) => (
                   <WorldNode
                     key={name}
                     isAWorld={false}
@@ -63,7 +113,7 @@ export default function Quest() {
                     levelColor={color}
                     x={x}
                     y={y}
-                    onClick={() => { }}
+                    onClick={() => handleLevelClick(level)}
                   />
                 ),
               )}
@@ -101,7 +151,7 @@ export default function Quest() {
               borderRight: "30px solid #1F2937",
               height: "80px",
             }}
-            onClick={closeWindow}
+            onClick={closeWorld}
           />
         </div>
       )}

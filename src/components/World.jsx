@@ -46,6 +46,7 @@ function WorldNode({ isAWorld, name, levelColor, x, y, onClick }) {
       key={name}
       className={`absolute text-white flex justify-center items-center cursor-pointer rounded-full ${LEVEL_COLOR_TO_BACKGROUND_COLOR[levelColor] || LEVEL_COLOR_TO_BACKGROUND_COLOR["default"]}`}
       style={{ left: x, top: y, width: LEVEL_DIAMETER, height: LEVEL_DIAMETER }}
+      onClick={onClick}
     >
       {name}
     </div>

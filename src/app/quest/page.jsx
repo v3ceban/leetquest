@@ -26,7 +26,7 @@ export default function Quest() {
     if (selectedLevel) {
       setLevelShifted(false);
       setTimeout(() => {
-        setSelectedLevel(null)
+        setSelectedLevel(null);
         setWorldShifted(false);
         setTimeout(() => setSelectedWorld(nextWorld), SHIFT_DURATION);
       }, SHIFT_DURATION);
@@ -34,7 +34,7 @@ export default function Quest() {
       setWorldShifted(false);
       setTimeout(() => setSelectedWorld(nextWorld), SHIFT_DURATION);
     }
-  }
+  };
 
   const handleWorldClick = (world) => {
     if (!selectedWorld) {
@@ -61,31 +61,31 @@ export default function Quest() {
       setLevelShifted(false);
       setTimeout(() => setSelectedLevel(level), SHIFT_DURATION);
     }
-  }
+  };
 
   const closeLevel = () => {
     setLevelShifted(false);
     setTimeout(() => setSelectedLevel(null), SHIFT_DURATION);
-  }
+  };
 
   useEffect(() => {
     if (selectedLevel) {
       setLevelShifted(true);
     }
   }, [selectedLevel]);
-  
+
   return (
-    <main className="relative overflow-y-hidden max-h-[calc(100dvh-72px)]">
+    <main className="relative overflow-hidden max-h-[calc(100dvh-104px)]">
       {/* TODO: Breadcrumb */}
 
       {selectedWorld && (
         <div
-          className={`absolute top-0 right-0 w-[66.66vw] h-full bg-white shadow-lg transform transition-transform ease-in-out z-40 ${worldShifted ? "translate-x-0" : "translate-x-[110%]"}`}
+          className={`absolute top-0 right-0 w-2/3 h-full bg-white shadow-lg transform transition-transform ease-in-out z-40 ${worldShifted ? "translate-x-0" : "translate-x-[110%]"}`}
           style={{ transitionDuration: `${SHIFT_DURATION}ms` }}
         >
           {selectedLevel && (
             <div
-              className={`absolute top-0 right-0 w-[33.33vw] h-full bg-white shadow-lg transform transition-transform ease-in-out z-20 ${levelShifted ? "translate-x-0" : "translate-x-[110%]"}`}
+              className={`absolute top-0 right-0 w-1/2 h-full bg-white shadow-lg transform transition-transform ease-in-out z-20 ${levelShifted ? "translate-x-0" : "translate-x-[110%]"}`}
               style={{ transitionDuration: `${SHIFT_DURATION}ms` }}
             >
               <h2 className="p-4 text-2xl font-bold">{selectedLevel}</h2>
@@ -101,7 +101,7 @@ export default function Quest() {
               />
             </div>
           )}
-          
+
           <World title={selectedWorld}>
             {worldData[selectedWorld] &&
               Object.entries(worldData[selectedWorld]).map(

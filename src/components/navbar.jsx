@@ -1,13 +1,13 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { AuthButton } from "@/components/AuthButton";
+import { AuthButton } from "@/components/auth-button";
 import { auth } from "@/lib/auth";
 import {
   faHouseChimney,
   faLocationArrow,
 } from "@fortawesome/free-solid-svg-icons";
-import { Icon } from "@/components/Icon";
+import { Icon } from "@/components/icon";
 
 const Navbar = async () => {
   const session = await auth();

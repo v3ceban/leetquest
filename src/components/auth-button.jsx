@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { signIn, signOut } from "next-auth/react";
-import { Icon } from "@/components/Icon";
+import { Icon } from "@/components/icon";
 import { faGithub, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { Spinner } from "@/components/ui/spinner";
 import {

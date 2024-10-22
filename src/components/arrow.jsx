@@ -82,4 +82,35 @@ Arrow.propTypes = {
   flipArrow: PropTypes.bool,
 };
 
-export { ArrowsWrapper, Arrow };
+const QuestArrows = ({ data, isAWorld }) => {
+  return (
+    <ArrowsWrapper>
+      {Object.entries(data).flatMap(([name, { x, y, prereqs = {} }]) =>
+        Object.entries(prereqs).map(([prereq, { flip_arrow: flipArrow }]) => {
+          const prereqWorld = data[prereq];
+          if (!prereqWorld) {
+            return null;
+          }
+          return (
+            <Arrow
+              key={`${name}-${prereq}`}
+              x1={prereqWorld.x}
+              y1={prereqWorld.y}
+              x2={x}
+              y2={y}
+              isAWorld={isAWorld}
+              flipArrow={flipArrow || false}
+            />
+          );
+        }),
+      )}
+    </ArrowsWrapper>
+  );
+};
+
+QuestArrows.propTypes = {
+  data: PropTypes.object.isRequired,
+  isAWorld: PropTypes.bool,
+};
+
+export { ArrowsWrapper, Arrow, QuestArrows };

@@ -8,6 +8,7 @@ import {
   faLocationArrow,
 } from "@fortawesome/free-solid-svg-icons";
 import { Icon } from "@/components/Icon";
+import WaveButton from "./ui/wave-button";
 
 const Navbar = async () => {
   const session = await auth();
@@ -25,6 +26,12 @@ const Navbar = async () => {
       <nav className="grid grid-cols-3 gap-x-4">
         {session && (
           <>
+            <WaveButton>
+              <Link href="/dashboard">
+                <Icon icon={faHouseChimney} className="text-base" fixedWidth />
+                Dashboard
+              </Link>
+            </WaveButton>
             <Button variant="outline" asChild>
               <Link href="/dashboard">
                 <Icon icon={faHouseChimney} className="text-base" fixedWidth />

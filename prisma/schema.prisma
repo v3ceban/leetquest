@@ -59,6 +59,8 @@ model Level {
   type          Level_Type
   color         Color
   name          String
+  x_position    Int
+  y_position    Int
   // stars     Int
   world         World        @relation(fields: [world_id], references: [id])
   world_id      String

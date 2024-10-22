@@ -23,8 +23,8 @@ function ArrowsWrapper({ children }) {
   return (
     <svg
       className="w-full h-full"
-      stroke="#1F2937"
-      fill="#1F2937"
+      stroke="#cdd6f4"
+      fill="#cdd6f4"
       strokeWidth={3}
     >
       {children}

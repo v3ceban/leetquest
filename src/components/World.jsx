@@ -37,7 +37,7 @@ function WorldNode({ isAWorld, name, levelColor, x, y, onClick }) {
   return isAWorld ? (
     <div
       key={name}
-      className="flex absolute justify-center items-center text-white bg-gray-800 rounded cursor-pointer"
+      className="flex absolute justify-center items-center text-background bg-foreground rounded cursor-pointer"
       style={{ left: x, top: y, width: WORLD_WIDTH, height: WORLD_HEIGHT }}
       onClick={onClick}
     >

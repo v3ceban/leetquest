@@ -80,12 +80,12 @@ export default function Quest() {
 
       {selectedWorld && (
         <div
-          className={`absolute top-0 right-0 w-2/3 h-full bg-white shadow-lg transform transition-transform ease-in-out z-40 ${worldShifted ? "translate-x-0" : "translate-x-[110%]"}`}
+          className={`absolute top-0 right-0 w-2/3 h-full bg-background text-foreground shadow-lg shadow-dark transform transition-transform ease-in-out z-40 ${worldShifted ? "translate-x-0" : "translate-x-[110%]"}`}
           style={{ transitionDuration: `${SHIFT_DURATION}ms` }}
         >
           {selectedLevel && (
             <div
-              className={`absolute top-0 right-0 w-1/2 h-full bg-white shadow-lg transform transition-transform ease-in-out z-20 ${levelShifted ? "translate-x-0" : "translate-x-[110%]"}`}
+              className={`absolute top-0 right-0 w-1/2 h-full bg-background text-foreground shadow-lg shadow-dark transform transition-transform ease-in-out z-20 ${levelShifted ? "translate-x-0" : "translate-x-[110%]"}`}
               style={{ transitionDuration: `${SHIFT_DURATION}ms` }}
             >
               <h2 className="p-4 text-2xl font-bold">{selectedLevel}</h2>
@@ -94,7 +94,7 @@ export default function Quest() {
                 style={{
                   borderBottom: "30px solid transparent",
                   borderTop: "30px solid transparent",
-                  borderRight: "30px solid #1F2937",
+                  borderRight: "30px solid #cdd6f4",
                   height: "80px",
                 }}
                 onClick={closeLevel}
@@ -148,7 +148,7 @@ export default function Quest() {
             style={{
               borderBottom: "30px solid transparent",
               borderTop: "30px solid transparent",
-              borderRight: "30px solid #1F2937",
+              borderRight: "30px solid #cdd6f4",
               height: "80px",
             }}
             onClick={closeWorld}

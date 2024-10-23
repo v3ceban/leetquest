@@ -22,7 +22,14 @@ import {
 import { usePathname } from "next/navigation";
 import { providers } from "@/lib/auth";
 
-export const AuthButton = ({ session, className, variant, children, auto }) => {
+export const AuthButton = ({
+  session,
+  className,
+  variant,
+  size,
+  children,
+  auto,
+}) => {
   const pathname = usePathname();
   const [loading, setLoading] = React.useState(false);
   const [open, setOpen] = React.useState(auto && pathname === auto);
@@ -40,18 +47,25 @@ export const AuthButton = ({ session, className, variant, children, auto }) => {
   };
 
   if (session) {
-    return <LogoutButton loading={loading} onLogout={handleLogout} />;
+    return (
+      <LogoutButton
+        loading={loading}
+        variant={variant}
+        size={size}
+        onLogout={handleLogout}
+      />
+    );
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className={className} variant={variant}>
+        <Button className={className} variant={variant} size={size}>
           {children ? (
             children
           ) : (
             <>
-              <Icon icon={faRightToBracket} fixedWidth />
+              <Icon icon={faRightToBracket} />
               Login
             </>
           )}
@@ -71,10 +85,7 @@ export const AuthButton = ({ session, className, variant, children, auto }) => {
                 <Loading />
               ) : (
                 <>
-                  <Icon
-                    icon={provider === "Google" ? faGoogle : faGithub}
-                    fixedWidth
-                  />
+                  <Icon icon={provider === "Google" ? faGoogle : faGithub} />
                   {provider}
                 </>
               )}
@@ -90,6 +101,7 @@ AuthButton.propTypes = {
   session: PropTypes.object.isRequired,
   className: PropTypes.string,
   variant: PropTypes.string,
+  size: PropTypes.string,
   auto: PropTypes.bool,
   children: PropTypes.string,
 };
@@ -97,20 +109,20 @@ AuthButton.propTypes = {
 const Loading = () => {
   return (
     <>
-      <Spinner className="mr-1 fill-dark" />
+      <Spinner className="mr-1 fill-dark inline-block" />
       Loading...
     </>
   );
 };
 
-const LogoutButton = ({ loading, onLogout }) => {
+const LogoutButton = ({ loading, variant, size, onLogout }) => {
   return (
-    <Button onClick={onLogout} variant="outline">
+    <Button onClick={onLogout} variant={variant} size={size}>
       {loading === "logout" ? (
         <Loading />
       ) : (
         <>
-          <Icon icon={faRightFromBracket} fixedWidth /> {"Logout"}
+          <Icon icon={faRightFromBracket} /> {"Logout"}
         </>
       )}
     </Button>
@@ -119,5 +131,7 @@ const LogoutButton = ({ loading, onLogout }) => {
 
 LogoutButton.propTypes = {
   loading: PropTypes.string,
+  variant: PropTypes.string,
+  size: PropTypes.string,
   onLogout: PropTypes.func,
 };

@@ -2,11 +2,12 @@ import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
 import PropTypes from "prop-types";
+import "./wave-button.css";
 
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center font-medium whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -19,12 +20,14 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        wave: "border-2 border-input bg-background",
       },
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
+        wave: "h-10",
       },
     },
     defaultVariants: {
@@ -37,15 +40,29 @@ const buttonVariants = cva(
 const Button = React.forwardRef(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
+
+    const buttonProps = { ...props };
+    if (variant === "wave") {
+      const children = (
+        <div className="wave-btn flex items-center justify-center w-full h-full relative overflow-hidden">
+          <div className="mix-blend-difference flex items-center justify-center">
+            {{ ...props }.children}
+          </div>
+        </div>
+      );
+      buttonProps.children = children;
+    }
+
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
-        {...props}
+        {...buttonProps}
       />
     );
   },
 );
+
 Button.displayName = "Button";
 
 Button.propTypes = {

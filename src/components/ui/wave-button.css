@@ -1,0 +1,28 @@
+.wave-btn:before {
+  content: "";
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background-color: var(--light);
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%);
+  transition: all 1s;
+  animation: wave 5s infinite linear;
+}
+
+.wave-btn:hover:before {
+  border-radius: 130px;
+  top: 50%;
+}
+
+@keyframes wave {
+  0% {
+    transform: translate(-50%) rotate(-180deg);
+  }
+
+  100% {
+    transform: translate(-50%) rotate(360deg);
+  }
+}

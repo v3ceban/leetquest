@@ -22,18 +22,18 @@ const Navbar = async () => {
           </span>
         </Link>
       </div>
-      <nav className="grid grid-cols-3 gap-x-4">
+      <nav className="grid grid-cols-[150px_150px_150px] gap-x-4">
         {session && (
           <>
-            <Button variant="outline" asChild>
+            <Button variant="wave" size="wave" asChild>
               <Link href="/dashboard">
-                <Icon icon={faHouseChimney} className="text-base" fixedWidth />
+                <Icon icon={faHouseChimney} width={18} height={18} />
                 Dashboard
               </Link>
             </Button>
-            <Button variant="outline" asChild>
+            <Button variant="wave" size="wave" asChild>
               <Link href="/quest">
-                <Icon icon={faLocationArrow} fixedWidth />
+                <Icon icon={faLocationArrow} />
                 Quest
               </Link>
             </Button>
@@ -42,7 +42,8 @@ const Navbar = async () => {
         <AuthButton
           className="col-start-3 col-end-4"
           session={session}
-          variant="outline"
+          variant="wave"
+          size="wave"
           auto="/login"
         />
       </nav>

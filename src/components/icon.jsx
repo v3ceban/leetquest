@@ -15,7 +15,11 @@ export const Icon = ({
       icon={icon}
       width={width}
       height={height}
-      className={cn("mr-1 text-lg", className)}
+      className={cn("mr-1 inline-block align-text-top", className)}
+      style={{
+        width: `${width}px`,
+        height: `${height}px`,
+      }}
       {...props}
     />
   );

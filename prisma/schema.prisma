@@ -12,14 +12,17 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(cuid())
-  email      String   @unique
+  id         String       @id @default(cuid())
+  email      String       @unique
   name       String
   picture    String?
-  role       Role     @relation(fields: [role_id], references: [id])
+  role       Role         @relation(fields: [role_id], references: [id])
   role_id    String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updatedAt
+  // Keep track of User progress on worlds & Levels
+  worlds     User_World[]
+  levels     User_Level[]
 }
 
 model Role {
@@ -37,4 +40,73 @@ model Permission {
   roles      Role[]
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+}
+
+// Model for World
+model World {
+  id         String       @id @default(cuid())
+  name       String
+  // total_possible_stars Int       @default(0)
+  levels     Level[]
+  user_world User_World[]
+}
+
+// Model for Level 
+model Level {
+  id            String       @id @default(cuid())
+  title         String
+  description   String
+  type          Level_Type
+  color         Color
+  name          String
+  x_position    Int
+  y_position    Int
+  // stars     Int
+  world         World        @relation(fields: [world_id], references: [id])
+  world_id      String
+  user_levels   User_Level[]
+  prerequisites Level[]      @relation("LevelPrerequisites")
+  requiredBy    Level[]      @relation("LevelPrerequisites")
+}
+
+// Model to track user progress for each world
+model User_World {
+  user     User    @relation(fields: [user_id], references: [id])
+  world    World   @relation(fields: [world_id], references: [id])
+  user_id  String
+  world_id String
+  // stars_got Int       @default(0)
+  unlocked Boolean @default(false)
+
+  @@id([user_id, world_id])
+}
+
+// Model to track user progress for each Level
+model User_Level {
+  user     User         @relation(fields: [user_id], references: [id])
+  Level    Level        @relation(fields: [level_id], references: [id])
+  user_id  String
+  level_id String
+  status   Level_Status @default(INCOMPLETE)
+  unlocked Boolean      @default(false)
+
+  @@id([user_id, level_id])
+}
+
+enum Color {
+  BLUE
+  GREEN
+  RED
+  YELLOW
+}
+
+enum Level_Type {
+  LEARN
+  PROBLEM
+  BONUS
+}
+
+enum Level_Status {
+  INCOMPLETE
+  COMPLETE
 }

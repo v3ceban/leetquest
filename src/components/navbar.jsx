@@ -29,7 +29,7 @@ const Navbar = async () => {
           </span>
         </Link>
       </div>
-      <nav className="grid gap-x-4 grid-cols-[150px_150px_150px]">
+      <nav className="grid grid-cols-[150px_150px_150px] gap-x-4">
         {session ? (
           <>
             <Button variant="wave" size="wave">
@@ -52,27 +52,27 @@ const Navbar = async () => {
                     alt={session.user.name}
                     width={24}
                     height={24}
-                    className="mr-1 rounded-full"
+                    className="rounded-full mr-1"
                   />
-                  Settings
+                  {session.user.name.split(" ")[0]}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="border-2 border-foreground min-w-[150px]">
-                <DropdownMenuItem className="focus:bg-transparent focus:text-primary">
+                <DropdownMenuItem className="focus:bg-transparent">
                   <AuthButton
                     session={session}
                     variant="link"
                     auto="/profile"
                   />
                 </DropdownMenuItem>
-                <DropdownMenuItem className="focus:bg-transparent focus:text-primary">
+                <DropdownMenuItem>
                   <AuthButton
                     session={session}
                     variant="link"
                     auto="/profile"
                   />
                 </DropdownMenuItem>
-                <DropdownMenuItem className="focus:bg-transparent focus:text-primary">
+                <DropdownMenuItem>
                   <AuthButton
                     session={session}
                     variant="link"

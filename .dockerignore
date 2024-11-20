@@ -1,0 +1,9 @@
+.git
+public
+src
+node_modules
+.next
+.dockerignore
+docker-compose.yml
+Dockerfile
+README.md

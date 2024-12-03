@@ -20,7 +20,7 @@ const Navbar = async () => {
   const session = await auth();
 
   return (
-    <header className="flex overflow-auto sticky top-0 gap-x-4 justify-between items-center py-4 bg-base">
+    <header className="flex sticky top-0 gap-x-4 justify-between items-center py-4 bg-base">
       <div className="text-5xl font-bold">
         <Link href="/">
           LeetQuest
@@ -29,17 +29,17 @@ const Navbar = async () => {
           </span>
         </Link>
       </div>
-      <nav className="grid grid-cols-[150px_150px_150px] gap-x-4">
+      <nav className="grid gap-x-4 grid-cols-[150px_150px_150px]">
         {session ? (
           <>
-            <Button variant="wave" size="wave" asChild>
-              <Link href="/dashboard">
+            <Button variant="wave" size="wave">
+              <Link tabIndex={-1} href="/dashboard">
                 <Icon icon={faHouseChimney} width={18} height={18} />
                 Dashboard
               </Link>
             </Button>
-            <Button variant="wave" size="wave" asChild>
-              <Link href="/quest">
+            <Button variant="wave" size="wave">
+              <Link tabIndex={-1} href="/quest">
                 <Icon icon={faLocationArrow} />
                 Quest
               </Link>
@@ -52,27 +52,27 @@ const Navbar = async () => {
                     alt={session.user.name}
                     width={24}
                     height={24}
-                    className="rounded-full mr-1"
+                    className="mr-1 rounded-full"
                   />
-                  {session.user.name.split(" ")[0]}
+                  Settings
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="border-2 border-foreground min-w-[150px]">
-                <DropdownMenuItem className="focus:bg-transparent">
+                <DropdownMenuItem className="focus:bg-transparent focus:text-primary">
                   <AuthButton
                     session={session}
                     variant="link"
                     auto="/profile"
                   />
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem className="focus:bg-transparent focus:text-primary">
                   <AuthButton
                     session={session}
                     variant="link"
                     auto="/profile"
                   />
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem className="focus:bg-transparent focus:text-primary">
                   <AuthButton
                     session={session}
                     variant="link"

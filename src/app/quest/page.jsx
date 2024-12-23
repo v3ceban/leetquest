@@ -18,7 +18,7 @@ export default async function QuestPage() {
   };
 
   return (
-    <main className="relative overflow-hidden max-h-[calc(100dvh-104px)]">
+    <main className="relative overflow-hidden max-h-[calc(100dvh-104px-20px)] bg-[--overlay] rounded-xl">
       <QuestProvider worldData={worldData} shiftDuration={SHIFT_DURATION}>
         {/* TODO: Breadcumbs */}
         <Levels />

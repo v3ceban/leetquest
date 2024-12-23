@@ -49,5 +49,9 @@ body {
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    --blue-world-node: #A1E8FF;
+    --green-world-node: #9CFFA0;
+    --red-world-node: #FF6767;
+    --world-node-shadow: -10px 10px 0 var(--dark);
   }
 }

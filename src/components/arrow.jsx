@@ -3,13 +3,14 @@ import PropTypes from "prop-types";
 import { getBoxToBoxArrow } from "perfect-arrows";
 import { getArrow } from "perfect-arrows";
 
-const WORLD_WIDTH = 70;
-const WORLD_HEIGHT = 25;
-const LEVEL_RADIUS = 20;
+// also in src/components/quest/world.jsx
+const WORLD_WIDTH = 100; 
+const WORLD_HEIGHT = 40; 
+const LEVEL_RADIUS = 20; 
 
 const PAD_END = 18;
 const ARROW_OPTIONS = {
-  bow: 0.2,
+  bow: 0.1,
   stretch: 0.5,
   stretchMin: 40,
   stretchMax: 420,
@@ -23,9 +24,9 @@ function ArrowsWrapper({ children }) {
   return (
     <svg
       className="w-full h-full"
-      stroke="#cdd6f4"
-      fill="#cdd6f4"
-      strokeWidth={3}
+      stroke="var(--surface-1)"
+      fill="var(--surface-1)"
+      strokeWidth={2}
     >
       {children}
     </svg>

@@ -19,15 +19,15 @@ export const Levels = () => {
   return (
     selectedWorld && (
       <section
-        className={`absolute top-0 right-0 w-2/3 h-full bg-background text-foreground shadow-lg shadow-dark transform transition-transform ease-in-out z-40 ${worldShifted ? "translate-x-0" : "translate-x-[110%]"}`}
+        className={`absolute top-0 right-0 w-2/3 h-full bg-[--overlay] text-foreground shadow-lg shadow-dark transform transition-transform ease-in-out z-40 ${worldShifted ? "translate-x-0" : "translate-x-[110%]"}`}
         style={{ transitionDuration: `${shiftDuration}ms` }}
       >
         {selectedLevel && (
           <section
-            className={`absolute top-0 right-0 w-1/2 h-full bg-background text-foreground shadow-lg shadow-dark transform transition-transform ease-in-out z-20 ${levelShifted ? "translate-x-0" : "translate-x-[110%]"}`}
+            className={`absolute top-0 right-0 w-1/2 h-full bg-[--surface-1] text-foreground shadow-lg shadow-dark transform transition-transform ease-in-out z-20 ${levelShifted ? "translate-x-0" : "translate-x-[110%]"}`}
             style={{ transitionDuration: `${shiftDuration}ms` }}
           >
-            <h2 className="p-4 text-2xl font-bold">{selectedLevel}</h2>
+            <h2 className="p-4 text-2xl">{selectedLevel}</h2>
             <CloseTag type="level" />
           </section>
         )}

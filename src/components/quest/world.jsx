@@ -62,7 +62,7 @@ function WorldNode({ name, type, levelColor, x, y, value, isAPreview }) {
   const { handleWorldClick, handleLevelClick } = React.useContext(QuestContext);
 
   const handleClick = isAPreview ? undefined : (event) => {
-    // Prevents the click from propagating to the World, which closes tabs to the right if clicked
+    // Prevents the click from propagating to the World (which also closes tabs to the right if clicked, but prevents going to the newly clicked node in the same world)
     event.stopPropagation();
     if (type === "world") {
       handleWorldClick(value);

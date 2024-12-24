@@ -31,7 +31,7 @@ export default async function QuestPage() {
               x={x}
               y={y}
               value={name}
-              isAbsolute={true}
+              isAPreview={false}
             />
           ))}
           {worldData["Worlds"] && (

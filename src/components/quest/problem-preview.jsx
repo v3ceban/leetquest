@@ -6,33 +6,36 @@ const ProblemPreview = () => {
     const {
         worldData,
         selectedWorld,
-        selectedLevel,
+        selectedLevelName,
     } = React.useContext(QuestContext);
 
-    const selectedLevelData = selectedWorld && selectedLevel ? worldData[selectedWorld][selectedLevel] : null;
+    const selectedLevelData = selectedWorld && selectedLevelName ? worldData[selectedWorld][selectedLevelName] : null;
 
     return (
-        <div>
-            <div>
-                <div className="flex flex-row items-center">
-                    <div className="flex-shrink-0">
-                        {selectedLevelData && (
-                            <WorldNode
-                                key={selectedLevel}
-                                type="level"
-                                name={selectedLevel}
-                                levelColor={selectedLevelData.color}
-                                x={0}
-                                y={0}
-                                value={selectedLevelData.level}
-                                isAPreview={true}
-                            />
-                        )}
-                    </div>
-                    <h2 className="text-2xl">{selectedLevelData.level}</h2>
+        <div className="flex flex-col gap-4 p-4 h-full">
+            <div className="flex flex-row items-center gap-4">
+                <div className="flex-shrink-0">
+                    {selectedLevelData && (
+                        <WorldNode
+                            key={selectedLevelName}
+                            type="level"
+                            name={selectedLevelName}
+                            levelColor={selectedLevelData.color}
+                            x={0}
+                            y={0}
+                            value={selectedLevelData.level}
+                            isAPreview={true}
+                        />
+                    )}
                 </div>
+                <h2 className="text-2xl">{selectedLevelData.level}</h2>
             </div>
             <p>This is the description of the problem being previewed.</p>
+            <div className="flex justify-center mt-auto">
+                <button className="rounded-lg bg-foreground text-background px-4 py-2 w-fit">
+                    Start
+                </button>
+            </div>
         </div>
     );
 };

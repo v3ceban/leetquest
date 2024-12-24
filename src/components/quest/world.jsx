@@ -22,12 +22,22 @@ const LEVEL_COLOR_TO_BACKGROUND_COLOR = {
 };
 
 function World({ children, title }) {
-  const { selectedWorld } = React.useContext(QuestContext);
+  const { selectedWorld, selectedLevelName, closeLevel, closeWorld } = React.useContext(QuestContext);
+
+  const isAWorld = title ? false : true;
+
+  const handleBackgroundClick = () => {
+    if (!isAWorld && selectedWorld) {
+      closeWorld();
+    } else if (isAWorld && selectedLevelName) {
+      closeLevel();
+    }
+  };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full" onClick={handleBackgroundClick}>
       <h2 className="bg-[var(--surface-1)] pl-4 py-2">
-        {title ? title : selectedWorld}
+        {isAWorld ? selectedWorld : title}
       </h2>
       <TransformWrapper
         doubleClick={{ step: 0.3 }}
@@ -51,9 +61,9 @@ World.propTypes = {
 function WorldNode({ name, type, levelColor, x, y, value, isAPreview }) {
   const { handleWorldClick, handleLevelClick } = React.useContext(QuestContext);
 
-
-
-  const handleClick = isAPreview ? undefined : () => {
+  const handleClick = isAPreview ? undefined : (event) => {
+    // Prevents the click from propagating to the World, which closes tabs to the right if clicked
+    event.stopPropagation();
     if (type === "world") {
       handleWorldClick(value);
     } else {
@@ -80,7 +90,7 @@ function WorldNode({ name, type, levelColor, x, y, value, isAPreview }) {
   ) : (
     <button
       key={name}
-        className={`text-black flex justify-center items-center cursor-pointer rounded-full text-xl text-[--surface-1] ${isAPreview ? "" : "shadow-node"}`}
+      className={`text-black flex justify-center items-center cursor-pointer rounded-full text-xl text-[--surface-1] ${isAPreview ? "" : "shadow-node"}`}
       style={{ 
         left: x, 
         top: y, 
@@ -89,9 +99,8 @@ function WorldNode({ name, type, levelColor, x, y, value, isAPreview }) {
         backgroundColor: LEVEL_COLOR_TO_BACKGROUND_COLOR[levelColor], 
         position: isAPreview ? "relative" : "absolute",
         pointerEvents: isAPreview ? "none" : "auto"
-        // fontWeight: /^[A-Za-z]$/.test(name) ? "bold" : "normal" 
       }}
-        onClick={handleClick}
+      onClick={handleClick}
     >
       {name}
     </button>

@@ -11,6 +11,7 @@ module.exports = {
       boxShadow: {
         solid: "var(--shadow-solid)",
         node: "var(--node-shadow)",
+        window: "var(--window-shadow)",
       },
       colors: {
         dark: "var(--dark)",

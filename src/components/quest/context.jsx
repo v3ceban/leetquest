@@ -13,14 +13,14 @@ export const QuestProvider = ({ worldData, shiftDuration, children }) => {
   const [selectedWorld, setSelectedWorld] = React.useState(null);
   const [worldShifted, setWorldShifted] = React.useState(false);
 
-  const [selectedLevel, setSelectedLevel] = React.useState(null);
+  const [selectedLevelName, setSelectedLevelName] = React.useState(null);
   const [levelShifted, setLevelShifted] = React.useState(false);
 
   const switchWorld = (nextWorld) => {
-    if (selectedLevel) {
+    if (selectedLevelName) {
       setLevelShifted(false);
       setTimeout(() => {
-        setSelectedLevel(null);
+        setSelectedLevelName(null);
         setWorldShifted(false);
         setTimeout(() => setSelectedWorld(nextWorld), shiftDuration);
       }, shiftDuration);
@@ -49,24 +49,24 @@ export const QuestProvider = ({ worldData, shiftDuration, children }) => {
   }, [selectedWorld]);
 
   const handleLevelClick = (levelName) => {
-    if (!selectedLevel) {
-      setSelectedLevel(levelName);
-    } else if (selectedLevel !== levelName) {
+    if (!selectedLevelName) {
+      setSelectedLevelName(levelName);
+    } else if (selectedLevelName !== levelName) {
       setLevelShifted(false);
-      setTimeout(() => setSelectedLevel(levelName), shiftDuration);
+      setTimeout(() => setSelectedLevelName(levelName), shiftDuration);
     }
   };
 
   const closeLevel = () => {
     setLevelShifted(false);
-    setTimeout(() => setSelectedLevel(null), shiftDuration);
+    setTimeout(() => setSelectedLevelName(null), shiftDuration);
   };
 
   React.useEffect(() => {
-    if (selectedLevel) {
+    if (selectedLevelName) {
       setLevelShifted(true);
     }
-  }, [selectedLevel]);
+  }, [selectedLevelName]);
 
   return (
     <QuestContext.Provider
@@ -75,7 +75,7 @@ export const QuestProvider = ({ worldData, shiftDuration, children }) => {
         shiftDuration,
         selectedWorld,
         worldShifted,
-        selectedLevel,
+        selectedLevelName,
         levelShifted,
         closeLevel,
         handleLevelClick,

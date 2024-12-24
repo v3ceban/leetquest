@@ -10,6 +10,7 @@ module.exports = {
     extend: {
       boxShadow: {
         solid: "var(--shadow-solid)",
+        node: "var(--node-shadow)",
       },
       colors: {
         dark: "var(--dark)",

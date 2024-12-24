@@ -16,9 +16,9 @@ const LIMIT_TO_BOUNDS = true;
 
 const LEVEL_DIAMETER = LEVEL_RADIUS * 2;
 const LEVEL_COLOR_TO_BACKGROUND_COLOR = {
-  blue: "var(--blue-world-node)",
-  green: "var(--green-world-node)",
-  red: "var(--red-world-node)",
+  blue: "var(--blue-node)",
+  green: "var(--green-node)",
+  red: "var(--red-node)",
 };
 
 function World({ children, title }) {
@@ -48,21 +48,31 @@ World.propTypes = {
   title: PropTypes.string,
 };
 
-function WorldNode({ name, type, levelColor, x, y, value }) {
+function WorldNode({ name, type, levelColor, x, y, value, isAPreview }) {
   const { handleWorldClick, handleLevelClick } = React.useContext(QuestContext);
-  const handleClick = () => {
+
+
+
+  const handleClick = isAPreview ? undefined : () => {
     if (type === "world") {
       handleWorldClick(value);
     } else {
-      handleLevelClick(value);
+      handleLevelClick(name);
     }
   };
 
   return type === "world" ? (
     <button
       key={name}
-      className="flex absolute justify-center items-center rounded cursor-pointer text-background bg-foreground shadow-lg shadow-[--surface-1]"
-      style={{ left: x, top: y, width: WORLD_WIDTH, height: WORLD_HEIGHT }}
+      className={`flex justify-center items-center rounded cursor-pointer text-background bg-foreground ${isAPreview ? "" : "shadow-node"}`}
+      style={{
+        left: x,
+        top: y,
+        width: WORLD_WIDTH,
+        height: WORLD_HEIGHT,
+        position: isAPreview ? "relative" : "absolute",
+        pointerEvents: isAPreview ? "none" : "auto"
+      }}
       onClick={handleClick}
     >
       {name}
@@ -70,16 +80,18 @@ function WorldNode({ name, type, levelColor, x, y, value }) {
   ) : (
     <button
       key={name}
-        className="absolute text-black flex justify-center items-center cursor-pointer rounded-full text-xl text-[--surface-1] shadow-lg shadow-[--surface-1]"
+        className={`text-black flex justify-center items-center cursor-pointer rounded-full text-xl text-[--surface-1] ${isAPreview ? "" : "shadow-node"}`}
       style={{ 
         left: x, 
         top: y, 
         width: LEVEL_DIAMETER, 
         height: LEVEL_DIAMETER, 
         backgroundColor: LEVEL_COLOR_TO_BACKGROUND_COLOR[levelColor], 
+        position: isAPreview ? "relative" : "absolute",
+        pointerEvents: isAPreview ? "none" : "auto"
         // fontWeight: /^[A-Za-z]$/.test(name) ? "bold" : "normal" 
       }}
-      onClick={handleClick}
+        onClick={handleClick}
     >
       {name}
     </button>

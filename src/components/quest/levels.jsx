@@ -5,6 +5,7 @@ import { QuestArrows } from "@/components/arrow";
 import { World, WorldNode } from "@/components/quest/world";
 import { QuestContext } from "@/components/quest/context";
 import CloseTag from "./close-tag";
+import ProblemPreview from "./problem-preview";
 
 export const Levels = () => {
   const {
@@ -27,7 +28,7 @@ export const Levels = () => {
             className={`absolute top-0 right-0 w-1/2 h-full bg-[--surface-1] text-foreground shadow-lg shadow-dark transform transition-transform ease-in-out z-20 ${levelShifted ? "translate-x-0" : "translate-x-[110%]"}`}
             style={{ transitionDuration: `${shiftDuration}ms` }}
           >
-            <h2 className="p-4 text-2xl">{selectedLevel}</h2>
+            <ProblemPreview></ProblemPreview>
             <CloseTag type="level" />
           </section>
         )}
@@ -44,6 +45,7 @@ export const Levels = () => {
                   x={x}
                   y={y}
                   value={level}
+                  isAPreview={false}
                 />
               ),
             )}

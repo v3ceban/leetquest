@@ -48,12 +48,12 @@ export const QuestProvider = ({ worldData, shiftDuration, children }) => {
     }
   }, [selectedWorld]);
 
-  const handleLevelClick = (level) => {
+  const handleLevelClick = (levelName) => {
     if (!selectedLevel) {
-      setSelectedLevel(level);
-    } else if (selectedLevel !== level) {
+      setSelectedLevel(levelName);
+    } else if (selectedLevel !== levelName) {
       setLevelShifted(false);
-      setTimeout(() => setSelectedLevel(level), shiftDuration);
+      setTimeout(() => setSelectedLevel(levelName), shiftDuration);
     }
   };
 

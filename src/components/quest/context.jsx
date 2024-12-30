@@ -2,14 +2,20 @@
 
 import React from "react";
 import PropTypes from "prop-types";
+import worldsData from "@/data/worlds.json";
+import arrayWorldData from "@/data/worlds/array.json";
 
-export const QuestContext = React.createContext({
-  // default fallback values
-  worldData: {},
-  shiftDuration: 200,
-});
+const SHIFT_DURATION = 200;
 
-export const QuestProvider = ({ worldData, shiftDuration, children }) => {
+const QuestContext = React.createContext({});
+
+const QuestProvider = ({ children }) => {
+  const [worldData, setWorldData] = React.useState({
+      Worlds: worldsData,
+      Array: arrayWorldData,
+      // "Hashing": hashingWorldData
+    });
+
   const [selectedWorld, setSelectedWorld] = React.useState(null);
   const [worldShifted, setWorldShifted] = React.useState(false);
 
@@ -22,11 +28,11 @@ export const QuestProvider = ({ worldData, shiftDuration, children }) => {
       setTimeout(() => {
         setSelectedLevelName(null);
         setWorldShifted(false);
-        setTimeout(() => setSelectedWorld(nextWorld), shiftDuration);
-      }, shiftDuration);
+        setTimeout(() => setSelectedWorld(nextWorld), SHIFT_DURATION);
+      }, SHIFT_DURATION);
     } else {
       setWorldShifted(false);
-      setTimeout(() => setSelectedWorld(nextWorld), shiftDuration);
+      setTimeout(() => setSelectedWorld(nextWorld), SHIFT_DURATION);
     }
   };
 
@@ -53,13 +59,13 @@ export const QuestProvider = ({ worldData, shiftDuration, children }) => {
       setSelectedLevelName(levelName);
     } else if (selectedLevelName !== levelName) {
       setLevelShifted(false);
-      setTimeout(() => setSelectedLevelName(levelName), shiftDuration);
+      setTimeout(() => setSelectedLevelName(levelName), SHIFT_DURATION);
     }
   };
 
   const closeLevel = () => {
     setLevelShifted(false);
-    setTimeout(() => setSelectedLevelName(null), shiftDuration);
+    setTimeout(() => setSelectedLevelName(null), SHIFT_DURATION);
   };
 
   React.useEffect(() => {
@@ -72,7 +78,6 @@ export const QuestProvider = ({ worldData, shiftDuration, children }) => {
     <QuestContext.Provider
       value={{
         worldData,
-        shiftDuration,
         selectedWorld,
         worldShifted,
         selectedLevelName,
@@ -90,6 +95,7 @@ export const QuestProvider = ({ worldData, shiftDuration, children }) => {
 
 QuestProvider.propTypes = {
   worldData: PropTypes.object,
-  shiftDuration: PropTypes.number,
   children: PropTypes.node,
 };
+
+export { QuestContext, QuestProvider };

@@ -51,6 +51,7 @@ body {
     --chart-5: 27 87% 67%;
     --blue-node: #A1E8FF;
     --green-node: #9CFFA0;
+    --yellow-node: #FFE177;
     --red-node: #FF6767;
     --node-shadow: -3px 3px 0 0 rgba(49, 50, 68, 0.5);
     --window-shadow: -3px 3px 5px 5px rgba(17, 17, 27, 0.2);

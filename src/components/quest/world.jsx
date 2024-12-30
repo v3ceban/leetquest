@@ -12,35 +12,47 @@ const LEVEL_RADIUS = 20;
 
 const MAX_SCALE = 2;
 const MIN_SCALE = 0.5;
-const LIMIT_TO_BOUNDS = true;
+const LIMIT_TO_BOUNDS = false;
 
 const LEVEL_DIAMETER = LEVEL_RADIUS * 2;
-const LEVEL_COLOR_TO_BACKGROUND_COLOR = {
-  blue: "var(--blue-node)",
-  green: "var(--green-node)",
-  red: "var(--red-node)",
-};
 
 function World({ children, title }) {
   const { selectedWorld, selectedLevelName, closeLevel, closeWorld } = React.useContext(QuestContext);
 
   const isAWorld = title ? false : true;
 
-  const handleBackgroundClick = () => {
-    if (!isAWorld && selectedWorld) {
-      closeWorld();
-    } else if (isAWorld && selectedLevelName) {
-      closeLevel();
+  const [isDragging, setIsDragging] = React.useState(false);
+
+  const handleMouseDown = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = () => {
+    setIsDragging(true);
+  };
+
+  const handleMouseUp = () => {
+    if (!isDragging) {
+      if (!isAWorld && selectedWorld) {
+        closeWorld();
+      } else if (isAWorld && selectedLevelName) {
+        closeLevel();
+      }
     }
   };
 
   return (
-    <div className="flex flex-col h-full" onClick={handleBackgroundClick}>
+    <div
+      className="flex flex-col h-full"
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+    >
       <h2 className="bg-[var(--surface-1)] pl-4 py-2">
         {isAWorld ? selectedWorld : title}
       </h2>
       <TransformWrapper
-        doubleClick={{ step: 0.3 }}
+        doubleClick={{ disabled: true }}
         maxScale={MAX_SCALE}
         minScale={MIN_SCALE}
         limitToBounds={LIMIT_TO_BOUNDS}
@@ -96,7 +108,7 @@ function WorldNode({ name, type, levelColor, x, y, value, isAPreview }) {
         top: y, 
         width: LEVEL_DIAMETER, 
         height: LEVEL_DIAMETER, 
-        backgroundColor: LEVEL_COLOR_TO_BACKGROUND_COLOR[levelColor], 
+        backgroundColor: `var(--${levelColor}-node)`, 
         position: isAPreview ? "relative" : "absolute",
         pointerEvents: isAPreview ? "none" : "auto"
       }}

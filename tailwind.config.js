@@ -64,6 +64,20 @@ module.exports = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      animation: {
+        fadein: 'fadeIn .5s ease-in-out',
+        fadeout: 'fadeOut .5s ease-in-out',
+      },
+      keyframes: {
+        fadeIn: {
+          from: { opacity: 0 },
+          to: { opacity: 1 },
+        },
+        fadeOut: {
+          from: { opacity: 1 },
+          to: { opacity: 0 },
+        },
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

@@ -86,7 +86,7 @@ Arrow.propTypes = {
 const QuestArrows = ({ data, isAWorld }) => {
   return (
     <ArrowsWrapper>
-      {Object.entries(data).flatMap(([name, { x, y, prereqs = {} }]) =>
+      {Object.entries(data).flatMap(([name, { x_position, y_position, prereqs = {} }]) =>
         Object.entries(prereqs).map(([prereq, { flip_arrow: flipArrow }]) => {
           const prereqWorld = data[prereq];
           if (!prereqWorld) {
@@ -95,10 +95,10 @@ const QuestArrows = ({ data, isAWorld }) => {
           return (
             <Arrow
               key={`${name}-${prereq}`}
-              x1={prereqWorld.x}
-              y1={prereqWorld.y}
-              x2={x}
-              y2={y}
+              x1={prereqWorld.x_position}
+              y1={prereqWorld.y_position}
+              x2={x_position}
+              y2={y_position}
               isAWorld={isAWorld}
               flipArrow={flipArrow || false}
             />

@@ -70,7 +70,7 @@ World.propTypes = {
   title: PropTypes.string,
 };
 
-function WorldNode({ name, type, levelColor, x, y, value, isAPreview }) {
+function WorldNode({ name, type, levelColor, x_position, y_position, value, isAPreview }) {
   const { handleWorldClick, handleLevelClick } = React.useContext(QuestContext);
 
   const handleClick = isAPreview ? undefined : (event) => {
@@ -88,8 +88,8 @@ function WorldNode({ name, type, levelColor, x, y, value, isAPreview }) {
       key={name}
       className={`flex justify-center items-center rounded cursor-pointer text-background bg-foreground ${isAPreview ? "" : "shadow-node"}`}
       style={{
-        left: x,
-        top: y,
+        left: x_position,
+        top: y_position,
         width: WORLD_WIDTH,
         height: WORLD_HEIGHT,
         position: isAPreview ? "relative" : "absolute",
@@ -104,8 +104,8 @@ function WorldNode({ name, type, levelColor, x, y, value, isAPreview }) {
       key={name}
       className={`text-black flex justify-center items-center cursor-pointer rounded-full text-xl text-[--surface-1] ${isAPreview ? "" : "shadow-node"}`}
       style={{ 
-        left: x, 
-        top: y, 
+        left: x_position, 
+        top: y_position, 
         width: LEVEL_DIAMETER, 
         height: LEVEL_DIAMETER, 
         backgroundColor: `var(--${levelColor}-node)`, 

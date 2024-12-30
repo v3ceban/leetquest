@@ -28,9 +28,9 @@ const ProblemPreview = () => {
                         />
                     )}
                 </div>
-                <h2 className="text-2xl">{selectedLevelData.level}</h2>
+                <h2 className="text-2xl">{selectedLevelData.title}</h2>
             </div>
-            <p>This is the description of the problem being previewed.</p>
+            <p>{selectedLevelData.description}</p>
             <div className="flex justify-center mt-auto">
                 <button className="rounded-lg bg-foreground text-background px-4 py-2 w-fit">
                     Start

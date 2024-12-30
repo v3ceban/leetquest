@@ -35,14 +35,14 @@ export const Quest = () => {
           <World>
             {worldData[selectedWorld] &&
               Object.entries(worldData[selectedWorld]).map(
-                ([name, { x, y, level, color }]) => (
+                ([name, { x_position, y_position, level, color }]) => (
                   <WorldNode
                     key={name}
                     type="level"
                     name={name}
                     levelColor={color}
-                    x={x}
-                    y={y}
+                    x_position={x_position}
+                    y_position={y_position}
                     value={level}
                     isAPreview={false}
                   />
@@ -55,13 +55,13 @@ export const Quest = () => {
         </section>
       )}
       <World title={"Worlds"}>
-        {Object.entries(worldData["Worlds"]).map(([name, { x, y }]) => (
+        {Object.entries(worldData["Worlds"]).map(([name, { x_position, y_position }]) => (
           <WorldNode
             key={name}
             type="world"
             name={name}
-            x={x}
-            y={y}
+            x_position={x_position}
+            y_position={y_position}
             value={name}
             isAPreview={false}
           />

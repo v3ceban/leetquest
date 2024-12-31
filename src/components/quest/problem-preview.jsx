@@ -4,12 +4,12 @@ import { WorldNode } from "@/components/quest/world";
 
 const ProblemPreview = () => {
     const {
-        worldData,
-        selectedWorld,
+        selectedWorldData,
         selectedLevelName,
     } = React.useContext(QuestContext);
 
-    const selectedLevelData = selectedWorld && selectedLevelName ? worldData[selectedWorld][selectedLevelName] : null;
+    // if needed, can implement a more efficient way to find the level e.g. by querying the database again or using a map
+    const selectedLevelData = selectedWorldData && selectedLevelName ? selectedWorldData.find(({ name }) => name === selectedLevelName) : null;
 
     return (
         <div className="flex flex-col gap-4 p-4 h-full">
@@ -18,12 +18,12 @@ const ProblemPreview = () => {
                     {selectedLevelData && (
                         <WorldNode
                             key={selectedLevelName}
-                            type="level"
+                            isAWorld={true}
                             name={selectedLevelName}
-                            levelColor={selectedLevelData.color}
+                            color={selectedLevelData.color}
                             x={0}
                             y={0}
-                            value={selectedLevelData.level}
+                            value={selectedLevelName}
                             isAPreview={true}
                         />
                     )}

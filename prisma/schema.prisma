@@ -44,13 +44,16 @@ model Permission {
 
 // Model for World
 model World {
-  id         String       @id @default(cuid())
-  name       String
+  id            String       @id @default(cuid())
+  name          String
   // total_possible_stars Int       @default(0)
   x_position    Int
   y_position    Int
-  levels     Level[]
-  user_world User_World[]
+  levels        Level[]
+  user_world    User_World[]
+  prerequisites World[]      @relation("WorldPrerequisites")
+  requiredBy    World[]      @relation("WorldPrerequisites")
+  flip_arrow    Boolean      @default(false)
 }
 
 // Model for Level 
@@ -70,6 +73,7 @@ model Level {
   user_levels   User_Level[]
   prerequisites Level[]      @relation("LevelPrerequisites")
   requiredBy    Level[]      @relation("LevelPrerequisites")
+  flip_arrow    Boolean      @default(false)
 }
 
 // Model to track user progress for each world

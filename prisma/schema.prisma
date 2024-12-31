@@ -47,6 +47,8 @@ model World {
   id         String       @id @default(cuid())
   name       String
   // total_possible_stars Int       @default(0)
+  x_position    Int
+  y_position    Int
   levels     Level[]
   user_world User_World[]
 }
@@ -61,6 +63,7 @@ model Level {
   name          String
   x_position    Int
   y_position    Int
+  leetcode_url  String?
   // stars     Int
   world         World        @relation(fields: [world_id], references: [id])
   world_id      String

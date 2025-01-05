@@ -91,7 +91,7 @@ model User_World {
 // Model to track user progress for each Level
 model User_Level {
   user     User         @relation(fields: [user_id], references: [id])
-  Level    Level        @relation(fields: [level_id], references: [id])
+  level    Level        @relation(fields: [level_id], references: [id])
   user_id  String
   level_id String
   status   Level_Status @default(INCOMPLETE)

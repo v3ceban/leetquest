@@ -30,7 +30,7 @@ const getOrCreateUser = async ({ email, name, picture }) => {
           email,
           name,
           picture,
-          role_id: "cm2i1c7r00001a9pvy3xn1nco",
+          role_id: "cm5lqyxv40000krjcaj6d0n2v",
         },
         include,
       });

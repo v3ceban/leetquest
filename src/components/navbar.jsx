@@ -1,13 +1,8 @@
-import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { AuthButton } from "@/components/auth-button";
 import { auth } from "@/lib/auth";
-import {
-  faHouseChimney,
-  faLocationArrow,
-} from "@fortawesome/free-solid-svg-icons";
-import { Icon } from "@/components/icon";
+import { FaHouseChimney, FaLocationArrow } from "react-icons/fa6";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,18 +24,18 @@ const Navbar = async () => {
           </span>
         </Link>
       </div>
-      <nav className="grid grid-cols-[150px_150px_150px] gap-x-4">
+      <nav className="grid gap-x-4 grid-cols-[150px_150px_150px]">
         {session ? (
           <>
             <Button variant="wave" size="wave">
               <Link tabIndex={-1} href="/dashboard">
-                <Icon icon={faHouseChimney} width={18} height={18} />
+                <FaHouseChimney className="inline-block mr-1 mb-[2px]" />
                 Dashboard
               </Link>
             </Button>
             <Button variant="wave" size="wave">
               <Link tabIndex={-1} href="/quest">
-                <Icon icon={faLocationArrow} />
+                <FaLocationArrow className="inline-block mr-1" />
                 Quest
               </Link>
             </Button>
@@ -52,31 +47,17 @@ const Navbar = async () => {
                     alt={session.user.name}
                     width={24}
                     height={24}
-                    className="rounded-full mr-1"
+                    className="mr-1 rounded-full"
                   />
                   {session.user.name.split(" ")[0]}
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="border-2 border-foreground min-w-[150px]">
-                <DropdownMenuItem className="focus:bg-transparent">
+              <DropdownMenuContent className="p-0 border-2 border-foreground min-w-[150px]">
+                <DropdownMenuItem className="py-0 hover:bg-accent hover:text-accent-foreground">
                   <AuthButton
                     session={session}
                     variant="link"
-                    auto="/profile"
-                  />
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <AuthButton
-                    session={session}
-                    variant="link"
-                    auto="/profile"
-                  />
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <AuthButton
-                    session={session}
-                    variant="link"
-                    auto="/profile"
+                    className="p-0 w-full hover:no-underline"
                   />
                 </DropdownMenuItem>
               </DropdownMenuContent>

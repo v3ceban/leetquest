@@ -12,13 +12,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { signIn, signOut } from "next-auth/react";
-import { Icon } from "@/components/icon";
-import { faGithub, faGoogle } from "@fortawesome/free-brands-svg-icons";
-import { Spinner } from "@/components/ui/spinner";
 import {
-  faRightFromBracket,
-  faRightToBracket,
-} from "@fortawesome/free-solid-svg-icons";
+  FaGithub,
+  FaGoogle,
+  FaRightFromBracket,
+  FaRightToBracket,
+} from "react-icons/fa6";
+import { Spinner } from "@/components/ui/spinner";
 import { usePathname } from "next/navigation";
 import { providers } from "@/lib/auth";
 
@@ -49,6 +49,7 @@ export const AuthButton = ({
   if (session) {
     return (
       <LogoutButton
+        className={className}
         loading={loading}
         variant={variant}
         size={size}
@@ -65,7 +66,7 @@ export const AuthButton = ({
             children
           ) : (
             <>
-              <Icon icon={faRightToBracket} />
+              <FaRightToBracket className="mr-1" />
               Login
             </>
           )}
@@ -85,7 +86,11 @@ export const AuthButton = ({
                 <Loading />
               ) : (
                 <>
-                  <Icon icon={provider === "Google" ? faGoogle : faGithub} />
+                  {provider === "Google" ? (
+                    <FaGoogle className="mr-1" />
+                  ) : (
+                    <FaGithub className="mr-1" />
+                  )}
                   {provider}
                 </>
               )}
@@ -109,20 +114,25 @@ AuthButton.propTypes = {
 const Loading = () => {
   return (
     <>
-      <Spinner className="mr-1 fill-dark inline-block" />
+      <Spinner className="inline-block mr-1 fill-dark" />
       Loading...
     </>
   );
 };
 
-const LogoutButton = ({ loading, variant, size, onLogout }) => {
+const LogoutButton = ({ className, loading, variant, size, onLogout }) => {
   return (
-    <Button onClick={onLogout} variant={variant} size={size}>
+    <Button
+      className={className}
+      onClick={onLogout}
+      variant={variant}
+      size={size}
+    >
       {loading === "logout" ? (
         <Loading />
       ) : (
         <>
-          <Icon icon={faRightFromBracket} /> {"Logout"}
+          <FaRightFromBracket className="mr-1" /> {"Logout"}
         </>
       )}
     </Button>
@@ -130,6 +140,7 @@ const LogoutButton = ({ loading, variant, size, onLogout }) => {
 };
 
 LogoutButton.propTypes = {
+  className: PropTypes.string,
   loading: PropTypes.string,
   variant: PropTypes.string,
   size: PropTypes.string,

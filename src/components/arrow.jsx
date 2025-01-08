@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { getBoxToBoxArrow } from "perfect-arrows";
 import { getArrow } from "perfect-arrows";

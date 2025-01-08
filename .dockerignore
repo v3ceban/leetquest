@@ -1,9 +1,7 @@
 # Dev image
-
 .git
 .next
 node_modules
-prisma
 public
 src
 .dockerignore

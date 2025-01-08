@@ -1,4 +1,3 @@
-import React from "react";
 import { QuestProvider } from "@/components/quest/context";
 import { QuestArrows } from "@/components/arrow";
 import { World, WorldNode } from "@/components/quest/world";
@@ -18,7 +17,7 @@ export default async function QuestPage() {
   };
 
   return (
-    <main className="relative overflow-hidden max-h-[calc(100dvh-104px)]">
+    <main className="overflow-hidden relative max-h-[calc(100dvh-104px)]">
       <QuestProvider worldData={worldData} shiftDuration={SHIFT_DURATION}>
         {/* TODO: Breadcumbs */}
         <Levels />

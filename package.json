@@ -15,7 +15,7 @@
     "db:seed": "node prisma/seed.js"
   },
   "dependencies": {
-    "@prisma/client": "^6.2.0",
+    "@prisma/client": "^6.2.1",
     "@radix-ui/react-dialog": "^1.1.4",
     "@radix-ui/react-dropdown-menu": "^2.1.4",
     "@radix-ui/react-slot": "^1.1.1",
@@ -37,7 +37,7 @@
     "eslint-plugin-react": "^7.37.3",
     "globals": "^15.14.0",
     "postcss": "^8",
-    "prisma": "^6.2.0",
+    "prisma": "^6.2.1",
     "tailwindcss": "^3.4.1"
   }
 }

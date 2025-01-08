@@ -18,31 +18,34 @@ const getOrCreateUser = async ({ email, name, picture }) => {
     },
   };
 
-  try {
-    const user = await prisma.user.findUnique({
-      where: { email },
+  const user = await prisma.user.findUnique({
+    where: { email },
+    include,
+  });
+
+  if (!user) {
+    const { id: role_id } = await prisma.role.upsert({
+      where: { name: "user" },
+      update: {},
+      create: {
+        name: "user",
+      },
+    });
+
+    const newUser = await prisma.user.create({
+      data: {
+        email,
+        name,
+        picture,
+        role_id,
+      },
       include,
     });
 
-    if (!user) {
-      const newUser = await prisma.user.create({
-        data: {
-          email,
-          name,
-          picture,
-          role_id: "cm5lqyxv40000krjcaj6d0n2v",
-        },
-        include,
-      });
-
-      return newUser;
-    }
-
-    return user;
-  } catch (error) {
-    console.error(error);
-    return null;
+    return newUser;
   }
+
+  return user;
 };
 
 const profileCallback = async (profile) => {

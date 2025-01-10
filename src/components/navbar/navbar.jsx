@@ -10,6 +10,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
+import UserSettingsDialog from "./user-settings";
+import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 
 const Navbar = async () => {
   const session = await auth();
@@ -26,7 +28,7 @@ const Navbar = async () => {
       </div>
       <nav className="grid gap-x-4 grid-cols-[150px_150px_150px]">
         {session ? (
-          <>
+          <Dialog>
             <Button variant="wave" size="wave">
               <Link tabIndex={-1} href="/dashboard">
                 <FaHouseChimney className="inline-block mr-1 mb-[2px]" />
@@ -54,6 +56,16 @@ const Navbar = async () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="p-0 border-2 border-foreground min-w-[150px]">
                 <DropdownMenuItem className="py-0 hover:bg-accent hover:text-accent-foreground">
+                  <DialogTrigger asChild>
+                    <Button
+                      variant="link"
+                      className="p-0 w-full hover:no-underline"
+                    >
+                      Settings
+                    </Button>
+                  </DialogTrigger>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="py-0 hover:bg-accent hover:text-accent-foreground">
                   <AuthButton
                     session={session}
                     variant="link"
@@ -62,7 +74,8 @@ const Navbar = async () => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          </>
+            <UserSettingsDialog user={session.user} />
+          </Dialog>
         ) : (
           <AuthButton
             className="col-start-3 col-end-4"

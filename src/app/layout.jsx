@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import localFont from "next/font/local";
 import "./globals.css";
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/navbar/navbar";
 
 const montserrat = localFont({
   src: "./fonts/Montserrat.ttf",

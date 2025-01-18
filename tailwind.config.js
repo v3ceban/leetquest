@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   darkMode: ["class"],
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,6 +10,8 @@ module.exports = {
     extend: {
       boxShadow: {
         solid: "var(--shadow-solid)",
+        node: "var(--node-shadow)",
+        window: "var(--window-shadow)",
       },
       colors: {
         dark: "var(--dark)",
@@ -61,6 +63,20 @@ module.exports = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      animation: {
+        fadein: 'fadeIn 1s ease-in-out',
+        fadeout: 'fadeOut 1s ease-in-out',
+      },
+      keyframes: {
+        fadeIn: {
+          from: { opacity: 0 },
+          to: { opacity: 1 },
+        },
+        fadeOut: {
+          from: { opacity: 1 },
+          to: { opacity: 0 },
+        },
       },
     },
   },

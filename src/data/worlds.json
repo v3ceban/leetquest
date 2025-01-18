@@ -1,11 +1,11 @@
 {
   "Array": {
-    "x": 20,
-    "y": 280
+    "x_position": 20,
+    "y_position": 280
   },
   "Hashing": {
-    "x": 200,
-    "y": 25,
+    "x_position": 200,
+    "y_position": 25,
     "prereqs": {
       "Array": {
         "flip_arrow": true

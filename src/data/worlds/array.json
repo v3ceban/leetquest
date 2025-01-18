@@ -1,23 +1,26 @@
 {
   "I": {
-    "x": 20,
-    "y": 50,
-    "level": "What is an array?",
+    "x_position": 20,
+    "y_position": 50,
+    "title": "What is an array?",
+    "description": "An array is a data structure that stores a collection of elements. Each element is identified by an index.",
     "color": "blue"
   },
   "1": {
-    "x": 80,
-    "y": 120,
-    "level": "Get the last element of an array",
+    "x_position": 80,
+    "y_position": 120,
+    "title": "Get the last element of an array",
+    "description": "To get the last element of an array, you can use the index of the last element.",
     "color": "green",
     "prereqs": {
       "I": {}
     }
   },
   "A": {
-    "x": 200,
-    "y": 190,
-    "level": "Shuffle an array",
+    "x_position": 200,
+    "y_position": 190,
+    "title": "Shuffle an array",
+    "description": "To shuffle an array, you can use the Fisher-Yates algorithm.",
     "color": "red",
     "prereqs": {
       "1": {

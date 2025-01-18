@@ -2,13 +2,14 @@ import PropTypes from "prop-types";
 import { getBoxToBoxArrow } from "perfect-arrows";
 import { getArrow } from "perfect-arrows";
 
-const WORLD_WIDTH = 70;
-const WORLD_HEIGHT = 25;
+// also in src/components/quest/world.jsx
+const WORLD_WIDTH = 100;
+const WORLD_HEIGHT = 40;
 const LEVEL_RADIUS = 20;
 
 const PAD_END = 18;
 const ARROW_OPTIONS = {
-  bow: 0.2,
+  bow: 0.1,
   stretch: 0.5,
   stretchMin: 40,
   stretchMax: 420,
@@ -22,9 +23,9 @@ function ArrowsWrapper({ children }) {
   return (
     <svg
       className="w-full h-full"
-      stroke="#cdd6f4"
-      fill="#cdd6f4"
-      strokeWidth={3}
+      stroke="var(--surface-1)"
+      fill="var(--surface-1)"
+      strokeWidth={2}
     >
       {children}
     </svg>
@@ -36,7 +37,7 @@ ArrowsWrapper.propTypes = {
 };
 
 function Arrow({ x1, y1, x2, y2, isAWorld, flipArrow }) {
-  const [sx, sy, cx, cy, ex, ey, ae] = isAWorld
+  const [sx, sy, cx, cy, ex, ey, ae] = !isAWorld
     ? getBoxToBoxArrow(
       x1,
       y1,
@@ -82,26 +83,28 @@ Arrow.propTypes = {
 };
 
 const QuestArrows = ({ data, isAWorld }) => {
+  // console.log("arrow.jsx:87 QuestArrows", data, isAWorld);
   return (
     <ArrowsWrapper>
-      {Object.entries(data).flatMap(([name, { x, y, prereqs = {} }]) =>
-        Object.entries(prereqs).map(([prereq, { flip_arrow: flipArrow }]) => {
-          const prereqWorld = data[prereq];
-          if (!prereqWorld) {
+      {Object.values(data).flatMap(({ id, x_position, y_position, requiredBy = [], flip_arrow: flipArrow }) =>
+        requiredBy.map(({ id: requiredById }) => {
+          // if needed, can implement a more efficient way to find the world e.g. by querying the database again or using a map
+          const worldThatRequiresThis = Object.values(data).find(({ id }) => id === requiredById);
+          if (!worldThatRequiresThis) {
             return null;
-          }
+          }          
           return (
             <Arrow
-              key={`${name}-${prereq}`}
-              x1={prereqWorld.x}
-              y1={prereqWorld.y}
-              x2={x}
-              y2={y}
+              key={`${id}-${requiredById}`}
+              x1={x_position}
+              y1={y_position}
+              x2={worldThatRequiresThis.x_position}
+              y2={worldThatRequiresThis.y_position}
               isAWorld={isAWorld}
-              flipArrow={flipArrow || false}
+              flipArrow={worldThatRequiresThis.flip_arrow || false}
             />
           );
-        }),
+        })
       )}
     </ArrowsWrapper>
   );

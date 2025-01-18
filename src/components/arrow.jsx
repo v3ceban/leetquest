@@ -86,25 +86,34 @@ const QuestArrows = ({ data, isAWorld }) => {
   // console.log("arrow.jsx:87 QuestArrows", data, isAWorld);
   return (
     <ArrowsWrapper>
-      {Object.values(data).flatMap(({ id, x_position, y_position, requiredBy = [], flip_arrow: flipArrow }) =>
-        requiredBy.map(({ id: requiredById }) => {
-          // if needed, can implement a more efficient way to find the world e.g. by querying the database again or using a map
-          const worldThatRequiresThis = Object.values(data).find(({ id }) => id === requiredById);
-          if (!worldThatRequiresThis) {
-            return null;
-          }          
-          return (
-            <Arrow
-              key={`${id}-${requiredById}`}
-              x1={x_position}
-              y1={y_position}
-              x2={worldThatRequiresThis.x_position}
-              y2={worldThatRequiresThis.y_position}
-              isAWorld={isAWorld}
-              flipArrow={worldThatRequiresThis.flip_arrow || false}
-            />
-          );
-        })
+      {Object.values(data).flatMap(
+        ({
+          id,
+          x_position,
+          y_position,
+          requiredBy = [],
+          // flip_arrow: flipArrow, // not used now, commenting out to build without warnings
+        }) =>
+          requiredBy.map(({ id: requiredById }) => {
+            // if needed, can implement a more efficient way to find the world e.g. by querying the database again or using a map
+            const worldThatRequiresThis = Object.values(data).find(
+              ({ id }) => id === requiredById,
+            );
+            if (!worldThatRequiresThis) {
+              return null;
+            }
+            return (
+              <Arrow
+                key={`${id}-${requiredById}`}
+                x1={x_position}
+                y1={y_position}
+                x2={worldThatRequiresThis.x_position}
+                y2={worldThatRequiresThis.y_position}
+                isAWorld={isAWorld}
+                flipArrow={worldThatRequiresThis.flip_arrow || false}
+              />
+            );
+          }),
       )}
     </ArrowsWrapper>
   );

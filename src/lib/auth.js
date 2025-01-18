@@ -18,31 +18,34 @@ const getOrCreateUser = async ({ email, name, picture }) => {
     },
   };
 
-  try {
-    const user = await prisma.user.findUnique({
-      where: { email },
+  const user = await prisma.user.findUnique({
+    where: { email },
+    include,
+  });
+
+  if (!user) {
+    const { id: role_id } = await prisma.role.upsert({
+      where: { name: "user" },
+      update: {},
+      create: {
+        name: "user",
+      },
+    });
+
+    const newUser = await prisma.user.create({
+      data: {
+        email,
+        name,
+        picture,
+        role_id,
+      },
       include,
     });
 
-    if (!user) {
-      const newUser = await prisma.user.create({
-        data: {
-          email,
-          name,
-          picture,
-          role_id: "cm2i1c7r00001a9pvy3xn1nco",
-        },
-        include,
-      });
-
-      return newUser;
-    }
-
-    return user;
-  } catch (error) {
-    console.error(error);
-    return null;
+    return newUser;
   }
+
+  return user;
 };
 
 const profileCallback = async (profile) => {
@@ -54,6 +57,7 @@ const profileCallback = async (profile) => {
     profile.permissions = user.role.permissions.map(
       (permission) => permission.id,
     );
+    profile.picture = user.picture;
   }
   return profile;
 };
@@ -84,12 +88,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (user) {
         token.role = user.role;
         token.permissions = user.permissions;
+        token.picture = user.picture;
       }
       return token;
     },
     session({ session, token }) {
       session.user.role = token.role;
       session.user.permissions = token.permissions;
+      session.user.image = token.picture;
       return session;
     },
   },

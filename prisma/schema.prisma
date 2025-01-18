@@ -16,7 +16,7 @@ model User {
   email      String       @unique
   name       String
   picture    String?
-  role       Role         @relation(fields: [role_id], references: [id])
+  role       Role         @relation(fields: [role_id], references: [id], onDelete: Cascade)
   role_id    String
   created_at DateTime     @default(now())
   updated_at DateTime     @updatedAt
@@ -27,7 +27,7 @@ model User {
 
 model Role {
   id          String       @id @default(cuid())
-  name        String
+  name        String       @unique
   users       User[]
   permissions Permission[]
   created_at  DateTime     @default(now())
@@ -68,7 +68,7 @@ model Level {
   y_position    Int
   leetcode_url  String?
   // stars     Int
-  world         World        @relation(fields: [world_id], references: [id])
+  world         World        @relation(fields: [world_id], references: [id], onDelete: Cascade)
   world_id      String
   user_levels   User_Level[]
   prerequisites Level[]      @relation("LevelPrerequisites")
@@ -78,8 +78,8 @@ model Level {
 
 // Model to track user progress for each world
 model User_World {
-  user     User    @relation(fields: [user_id], references: [id])
-  world    World   @relation(fields: [world_id], references: [id])
+  user     User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  world    World   @relation(fields: [world_id], references: [id], onDelete: Cascade)
   user_id  String
   world_id String
   // stars_got Int       @default(0)
@@ -90,8 +90,8 @@ model User_World {
 
 // Model to track user progress for each Level
 model User_Level {
-  user     User         @relation(fields: [user_id], references: [id])
-  Level    Level        @relation(fields: [level_id], references: [id])
+  user     User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  level    Level        @relation(fields: [level_id], references: [id], onDelete: Cascade)
   user_id  String
   level_id String
   status   Level_Status @default(INCOMPLETE)

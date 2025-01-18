@@ -1,22 +1,22 @@
 services:
   dev:
     build: .
-    image: leetquest
+    image: leet-quest
     ports:
       - "3000:3000"
     volumes:
-      - ./src:/app/src
-      - ./public:/app/public
-    command: npm run dev
+      - ./src:/app/src:ro,Z
+      - ./public:/app/public:ro,Z
+    command: sh -c "npx prisma generate && npm run dev"
     network_mode: bridge
     pull_policy: never
 
   prisma:
-    image: leetquest
+    image: leet-quest
     ports:
       - "5555:5555"
     volumes:
-      - ./prisma:/app/prisma
+      - ./prisma:/app/prisma:ro,Z
     command: sh -c "npx prisma generate && npx prisma studio -b none"
     network_mode: bridge
     pull_policy: never

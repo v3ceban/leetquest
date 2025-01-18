@@ -1,4 +1,3 @@
-import React from "react";
 import { QuestProvider } from "@/components/quest/context";
 import { Quest } from "@/components/quest/quest";
 

@@ -1,9 +1,12 @@
+# Dev image
 .git
+.next
+node_modules
 public
 src
-node_modules
-.next
 .dockerignore
+.gitignore
 docker-compose.yml
 Dockerfile
+LICENCE
 README.md

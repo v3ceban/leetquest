@@ -1,4 +1,3 @@
-import React from "react";
 import { AuthButton } from "@/components/auth-button";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";

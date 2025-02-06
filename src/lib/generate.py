@@ -65,7 +65,7 @@ def extract_levels_from_pdf(pdf_path):
         levels_by_world[world_name].append(level_data)
     
     # Ensure output directory exists
-    os.makedirs("output", exist_ok=True)
+    os.makedirs("src/lib/output", exist_ok=True)
     
     # Write separate JS files for each world
     for world_name, levels in levels_by_world.items():
@@ -73,7 +73,7 @@ def extract_levels_from_pdf(pdf_path):
         world_name_after_hyphen = world_name.split(" - ", 1)[1] if " - " in world_name else world_name
         world_file_name = world_name_after_hyphen.replace(" ", "_").replace("-", "_") + "_Levels.js"
         
-        file_path = os.path.join("output", world_file_name)
+        file_path = os.path.join("src/lib/output", world_file_name)
         
         with open(file_path, "w") as f:
             #f.write('import { PrismaClient } from "@prisma/client"\n')
@@ -82,9 +82,12 @@ def extract_levels_from_pdf(pdf_path):
             header = """
 import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient();
-const _world = await prisma.world.findUnique({
+const _world = await prisma.world.findFirst({
 where: {
-        id: "Insert World Id from Prisma Database"
+        name: " """
+
+
+            header2 = """"
     }
 });
 
@@ -93,8 +96,8 @@ await prisma.level.deleteMany({
         world_id: _world.id
     }
 });
-
 """
+            header = header[:-1] + world_name_after_hyphen + header2
             f.write(header)
             
             # Assign levels to variables
@@ -167,4 +170,4 @@ await prisma.level.deleteMany({
             f.write(f'}});\n')
             
 if __name__ == "__main__":
-    extract_levels_from_pdf("Concept Roadmap Developer Mode.pdf")
+    extract_levels_from_pdf("src/lib/Concept Roadmap Developer Mode.pdf")

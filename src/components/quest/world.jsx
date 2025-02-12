@@ -18,7 +18,8 @@ const LIMIT_TO_BOUNDS = false;
 const LEVEL_DIAMETER = LEVEL_RADIUS * 2;
 
 function World({ worldData, isAWorld }) {
-  const { selectedWorld, selectedLevelName, closeLevel, closeWorld } = React.useContext(QuestContext);
+  const { selectedWorld, selectedLevelName, closeLevel, closeWorld } =
+    React.useContext(QuestContext);
 
   // console.log("world.jsx:23 World", worldData, isAWorld);
 
@@ -60,21 +61,21 @@ function World({ worldData, isAWorld }) {
       >
         <TransformComponent>
           <section className="relative w-screen h-dvh flex-grow animate-fadein">
-            {Object.values(worldData).map(({ name, x_position, y_position, color }) => (
-              <WorldNode
-                key={name}
-                isAWorld={isAWorld}
-                name={name}
-                x_position={x_position}
-                y_position={y_position}
-                value={name}
-                isAPreview={false}
-                color={color}
-              />
-            ))}
-            {worldData && (
-              <QuestArrows data={worldData} isAWorld={isAWorld} />
+            {Object.values(worldData).map(
+              ({ name, x_position, y_position, color }) => (
+                <WorldNode
+                  key={name}
+                  isAWorld={isAWorld}
+                  name={name}
+                  x_position={x_position}
+                  y_position={y_position}
+                  value={name}
+                  isAPreview={false}
+                  color={color}
+                />
+              ),
             )}
+            {worldData && <QuestArrows data={worldData} isAWorld={isAWorld} />}
           </section>
         </TransformComponent>
       </TransformWrapper>
@@ -82,20 +83,35 @@ function World({ worldData, isAWorld }) {
   );
 }
 
-function WorldNode({ name, isAWorld, color, x_position, y_position, value, isAPreview }) {
+World.propTypes = {
+  worldData: PropTypes.object,
+  isAWorld: PropTypes.bool,
+};
+
+function WorldNode({
+  name,
+  isAWorld,
+  color,
+  x_position,
+  y_position,
+  value,
+  isAPreview,
+}) {
   const { handleWorldClick, handleLevelClick } = React.useContext(QuestContext);
 
   // console.log("world.jsx:85 WorldNode", name, isAWorld, color, x_position, y_position, value, isAPreview);
 
-  const handleClick = isAPreview ? undefined : (event) => {
-    // Prevents the click from propagating to the World (which also closes tabs to the right if clicked, but prevents going to the newly clicked node in the same world)
-    event.stopPropagation();
-    if (!isAWorld) {
-      handleWorldClick(value);
-    } else {
-      handleLevelClick(name);
-    }
-  };
+  const handleClick = isAPreview
+    ? undefined
+    : (event) => {
+      // Prevents the click from propagating to the World (which also closes tabs to the right if clicked, but prevents going to the newly clicked node in the same world)
+      event.stopPropagation();
+      if (!isAWorld) {
+        handleWorldClick(value);
+      } else {
+        handleLevelClick(name);
+      }
+    };
 
   return !isAWorld ? (
     <button
@@ -107,7 +123,7 @@ function WorldNode({ name, isAWorld, color, x_position, y_position, value, isAPr
         width: WORLD_WIDTH,
         height: WORLD_HEIGHT,
         position: isAPreview ? "relative" : "absolute",
-        pointerEvents: isAPreview ? "none" : "auto"
+        pointerEvents: isAPreview ? "none" : "auto",
       }}
       onClick={handleClick}
     >
@@ -124,7 +140,7 @@ function WorldNode({ name, isAWorld, color, x_position, y_position, value, isAPr
         height: LEVEL_DIAMETER,
         backgroundColor: `var(--${color.toLowerCase()}-node)`,
         position: isAPreview ? "relative" : "absolute",
-        pointerEvents: isAPreview ? "none" : "auto"
+        pointerEvents: isAPreview ? "none" : "auto",
       }}
       onClick={handleClick}
     >
@@ -134,13 +150,13 @@ function WorldNode({ name, isAWorld, color, x_position, y_position, value, isAPr
 }
 
 WorldNode.propTypes = {
-  name: PropTypes.string,
-  type: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  isAWorld: PropTypes.bool,
   color: PropTypes.string,
-  x: PropTypes.number,
-  y: PropTypes.number,
-  onClick: PropTypes.func,
+  x_position: PropTypes.number.isRequired,
+  y_position: PropTypes.number.isRequired,
   value: PropTypes.string,
+  isAPreview: PropTypes.bool,
 };
 
 export { World, WorldNode };

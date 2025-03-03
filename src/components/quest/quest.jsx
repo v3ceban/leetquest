@@ -34,6 +34,7 @@ export const Quest = () => {
           <World worldData={selectedWorldData} isAWorld={true} />
         </section>
       )}
+      <span className="bg-[var(--surface-1)] pl-4 py-2 absolute right-4 z-40">Manual</span>
       <World worldData={worldsData} isAWorld={false} />
     </>
   );

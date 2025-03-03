@@ -56,7 +56,7 @@ def extract_levels_from_pdf(pdf_path):
             "color": match[4],
             "name": match[5],
             "x_position": x_position if match[6] == "TBD" else match[6],
-            "y_position": y_position if match[7] == "TBD" else match[6],
+            "y_position": y_position if match[7] == "TBD" else match[7],
             "leetcode_url": "null" if leetcode_url == "None" else f'"{leetcode_url}"',
             "prerequisites": [] if match[11] == "None" else re.findall(r'“([^”]*)”', match[11]), 
             "requiredBy": [] if match[12] == "None"  else re.findall(r'“([^”]*)”', match[12]), 

@@ -34,7 +34,7 @@ const _Contains_Duplicate = await prisma.level.create({
       color: "GREEN",
       name: "1",
       x_position: 20,
-      y_position: 100,
+      y_position: 120,
       leetcode_url: "https://leetcode.com/problems/contains-duplicate/description/",
       world: { connect: { id: _world.id } }
   }

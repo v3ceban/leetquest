@@ -74,7 +74,7 @@ const _Array_DP = await prisma.level.create({
       description: "None",
       type: "LEARN",
       color: "BLUE",
-      name: "II",
+      name: "III",
       x_position: 350,
       y_position: 250,
       leetcode_url: null,
@@ -187,8 +187,8 @@ const _Word_Break_II = await prisma.level.create({
       type: "BONUS",
       color: "RED",
       name: "C",
-      x_position: 250,
-      y_position: 750,
+      x_position: 50,
+      y_position: 650,
       leetcode_url: "https://leetcode.com/problems/word-break-ii/description/",
       world: { connect: { id: _world.id } }
   }
@@ -200,7 +200,7 @@ const _2D_DP = await prisma.level.create({
       description: "None",
       type: "LEARN",
       color: "BLUE",
-      name: "III",
+      name: "IV",
       x_position: 250,
       y_position: 850,
       leetcode_url: null,
@@ -299,7 +299,7 @@ const _Wildcard_Matching = await prisma.level.create({
       type: "BONUS",
       color: "RED",
       name: "G",
-      x_position: 250,
+      x_position: 350,
       y_position: 1500,
       leetcode_url: "https://leetcode.com/problems/wildcard-matching/description/",
       world: { connect: { id: _world.id } }

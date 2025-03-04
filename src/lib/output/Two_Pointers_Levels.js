@@ -451,7 +451,7 @@ await prisma.level.update({
 await prisma.level.update({
     where: { id: _Is_Subsequence.id },
     data: {
-        prerequisites: { connect: [{ id: _Find_the_Index_of_the_First_Occurrence_in_a_String.id }] }
+        prerequisites: { connect: [{ id: _Two_Structures.id }] }
     }
 });
 await prisma.level.update({

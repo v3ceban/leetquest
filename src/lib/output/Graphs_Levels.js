@@ -46,7 +46,7 @@ const _Number_of_Islands = await prisma.level.create({
       description: "Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands.",
       type: "PROBLEM",
       color: "YELLOW",
-      name: "1",
+      name: "2",
       x_position: 150,
       y_position: 250,
       leetcode_url: "https://leetcode.com/problems/number-of-islands/description/",
@@ -60,7 +60,7 @@ const _Surround_Regions = await prisma.level.create({
       description: "You are given an m x n matrix board containing letters 'X' and 'O', capture regions of ‘O’ that are surrounded by ‘X’. To capture a surrounded region, replace all 'O's with 'X's in-place within the original board.",
       type: "PROBLEM",
       color: "YELLOW",
-      name: "2",
+      name: "3",
       x_position: 50,
       y_position: 250,
       leetcode_url: "https://leetcode.com/problems/surrounded-regions/description/",
@@ -74,7 +74,7 @@ const _Max_Area_of_Island = await prisma.level.create({
       description: "Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the size of the largest island.",
       type: "PROBLEM",
       color: "YELLOW",
-      name: "3",
+      name: "4",
       x_position: 150,
       y_position: 350,
       leetcode_url: "https://leetcode.com/problems/max-area-of-island/description/",
@@ -116,7 +116,7 @@ const _Keys_and_Rooms = await prisma.level.create({
       description: "Given an array rooms where rooms[i] is the set of keys that you can obtain if you visited room i, return true if you can visit all the rooms, or false otherwise.",
       type: "PROBLEM",
       color: "YELLOW",
-      name: "4",
+      name: "1",
       x_position: 250,
       y_position: 250,
       leetcode_url: "https://leetcode.com/problems/keys-and-rooms/description/",
@@ -195,6 +195,12 @@ const _Word_Ladder_II = await prisma.level.create({
 });
 
 await prisma.level.update({
+    where: { id: _Depth_First_Search.id },
+    data: {
+        prerequisites: { connect: [{ id: _Graph_Basics.id }] }
+    }
+});
+await prisma.level.update({
     where: { id: _Number_of_Islands.id },
     data: {
         prerequisites: { connect: [{ id: _Depth_First_Search.id }] }
@@ -227,19 +233,19 @@ await prisma.level.update({
 await prisma.level.update({
     where: { id: _Keys_and_Rooms.id },
     data: {
-        prerequisites: { connect: [{ id: _Breadth_First_Search.id }] }
+        prerequisites: { connect: [{ id: _Depth_First_Search.id }, { id: _Breadth_First_Search.id }] }
     }
 });
 await prisma.level.update({
     where: { id: _Rotting_Oranges.id },
     data: {
-        prerequisites: { connect: [{ id: _Keys_and_Rooms.id }] }
+        prerequisites: { connect: [{ id: _Breadth_First_Search.id }] }
     }
 });
 await prisma.level.update({
     where: { id: _Course_Schedule.id },
     data: {
-        prerequisites: { connect: [{ id: _Keys_and_Rooms.id }] }
+        prerequisites: { connect: [{ id: _Rotting_Oranges.id }] }
     }
 });
 await prisma.level.update({

@@ -75,7 +75,7 @@ const _Task_Scheduler = await prisma.level.create({
       type: "PROBLEM",
       color: "YELLOW",
       name: "4",
-      x_position: 220,
+      x_position: 20,
       y_position: 420,
       leetcode_url: "https://leetcode.com/problems/task-scheduler/description/",
       world: { connect: { id: _world.id } }
@@ -89,7 +89,7 @@ const _Find_Median_From_Data_Stream = await prisma.level.create({
       type: "BONUS",
       color: "RED",
       name: "A",
-      x_position: 120,
+      x_position: -80,
       y_position: 520,
       leetcode_url: "https://leetcode.com/problems/find-median-from-data-stream/description/",
       world: { connect: { id: _world.id } }
@@ -103,7 +103,7 @@ const _IPO = await prisma.level.create({
       type: "BONUS",
       color: "RED",
       name: "B",
-      x_position: 320,
+      x_position: 120,
       y_position: 520,
       leetcode_url: "https://leetcode.com/problems/ipo/description/",
       world: { connect: { id: _world.id } }

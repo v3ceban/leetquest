@@ -229,7 +229,7 @@ const _Palindrome_Linked_List = await prisma.level.create({
       type: "PROBLEM",
       color: "GREEN",
       name: "10",
-      x_position: 820,
+      x_position: 720,
       y_position: 520,
       leetcode_url: "https://leetcode.com/problems/palindrome-linked-list/description/",
       world: { connect: { id: _world.id } }

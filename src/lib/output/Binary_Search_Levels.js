@@ -159,8 +159,8 @@ const _First_Bad_Version = await prisma.level.create({
       type: "PROBLEM",
       color: "GREEN",
       name: "7",
-      x_position: 320,
-      y_position: 220,
+      x_position: 120,
+      y_position: 120,
       leetcode_url: "https://leetcode.com/problems/first-bad-version/description/",
       world: { connect: { id: _world.id } }
   }

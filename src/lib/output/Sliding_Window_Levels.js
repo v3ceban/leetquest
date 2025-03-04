@@ -202,7 +202,7 @@ const _Repeated_DNA_Sequences = await prisma.level.create({
       color: "YELLOW",
       name: "7",
       x_position: 250,
-      y_position: 10250,
+      y_position: 1050,
       leetcode_url: "https://leetcode.com/problems/repeated-dna-sequences/description/",
       world: { connect: { id: _world.id } }
   }

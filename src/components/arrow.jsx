@@ -22,7 +22,7 @@ const RADIANS_TO_DEGREES_RATIO = 180 / Math.PI;
 function ArrowsWrapper({ children }) {
   return (
     <svg
-      className="w-full h-full"
+      className="size-[300%] -translate-y-300" // increase if arrows cut off
       stroke="var(--surface-1)"
       fill="var(--surface-1)"
       strokeWidth={2}

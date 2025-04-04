@@ -78,24 +78,28 @@ model Level {
 
 // Model to track user progress for each world
 model User_World {
-  user     User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  world    World   @relation(fields: [world_id], references: [id], onDelete: Cascade)
-  user_id  String
-  world_id String
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  world      World    @relation(fields: [world_id], references: [id], onDelete: Cascade)
+  user_id    String
+  world_id   String
   // stars_got Int       @default(0)
-  unlocked Boolean @default(false)
+  unlocked   Boolean  @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@id([user_id, world_id])
 }
 
 // Model to track user progress for each Level
 model User_Level {
-  user     User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  level    Level        @relation(fields: [level_id], references: [id], onDelete: Cascade)
-  user_id  String
-  level_id String
-  status   Level_Status @default(INCOMPLETE)
-  unlocked Boolean      @default(false)
+  user       User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  level      Level        @relation(fields: [level_id], references: [id], onDelete: Cascade)
+  user_id    String
+  level_id   String
+  status     Level_Status @default(INCOMPLETE)
+  unlocked   Boolean      @default(false)
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updatedAt
 
   @@id([user_id, level_id])
 }

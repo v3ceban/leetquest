@@ -40,7 +40,7 @@ body {
     --destructive: #f38ba8;
     --destructive-foreground: var(--dark);
     --destructive-hover: #ed8796;
-    --border: var(--dark);
+    --border: var(--light);
     --input: var(--light);
     --ring: var(--light);
     --radius: 0.5rem;
@@ -49,10 +49,10 @@ body {
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --blue-node: #A1E8FF;
-    --green-node: #9CFFA0;
-    --yellow-node: #FFE177;
-    --red-node: #FF6767;
+    --blue-node: #a1e8ff;
+    --green-node: #9cffa0;
+    --yellow-node: #ffe177;
+    --red-node: #ff6767;
     --node-shadow: -3px 3px 0 0 rgba(49, 50, 68, 0.5);
     --window-shadow: -3px 3px 5px 5px rgba(17, 17, 27, 0.2);
   }

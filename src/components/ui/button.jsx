@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
 import PropTypes from "prop-types";
@@ -44,8 +44,8 @@ const Button = React.forwardRef(
     const buttonProps = { ...props };
     if (variant === "wave") {
       const children = (
-        <div className="wave-btn flex items-center justify-center w-full h-full relative overflow-hidden">
-          <div className="mix-blend-difference flex items-center justify-center">
+        <div className="flex overflow-hidden relative justify-center items-center w-full h-full wave-btn">
+          <div className="flex justify-center items-center mix-blend-difference">
             {{ ...props }.children}
           </div>
         </div>

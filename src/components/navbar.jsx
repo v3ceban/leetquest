@@ -15,7 +15,7 @@ const Navbar = async () => {
   const session = await auth();
 
   return (
-    <header className="flex sticky top-0 gap-x-4 justify-between items-center py-4 bg-base">
+    <header className="flex sticky top-0 gap-x-4 justify-between items-center py-4 bg-background bg-base">
       <div className="text-5xl font-bold">
         <Link href="/">
           LeetQuest

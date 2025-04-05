@@ -48,21 +48,37 @@ const mockLevels = [
     name: "tree-traversal",
     world_id: "w2",
   },
-  // Add more mock levels...
 ];
 
 // Helper function to generate past dates
-const generatePastDates = (days) => {
+const generateLastYearToNowDates = () => {
   const dates = {};
   const today = new Date();
 
-  for (let i = 0; i < days; i++) {
-    const date = new Date(today);
-    date.setDate(date.getDate() - i);
-    const dateStr = date.toISOString().split("T")[0];
-    // Random number between 0 and 8 for activity count
+  // Find the start of the week from last year
+  const startDate = new Date(today);
+  startDate.setFullYear(today.getFullYear() - 1);
+  const dayOfWeek = startDate.getDay();
+  startDate.setDate(startDate.getDate() - dayOfWeek); // Go to start of week
+
+  let currentDate = new Date(startDate);
+  // Generate data until we reach today, ensuring we have complete weeks
+  while (currentDate <= today) {
+    const dateStr = currentDate.toISOString().split("T")[0];
     dates[dateStr] = Math.floor(Math.random() * 9);
+    currentDate.setDate(currentDate.getDate() + 1);
   }
+
+  // Add remaining days to complete the last week if necessary
+  const remainingDays = 7 - (Object.keys(dates).length % 7);
+  if (remainingDays < 7) {
+    for (let i = 0; i < remainingDays; i++) {
+      const dateStr = currentDate.toISOString().split("T")[0];
+      dates[dateStr] = Math.floor(Math.random() * 9);
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+  }
+
   return dates;
 };
 
@@ -71,7 +87,7 @@ const mockUserProgress = {
   totalLevels: 30,
   unlockedWorlds: 2,
   totalWorlds: 3,
-  dailyActivity: generatePastDates(365), // Last 365 days of activity
+  dailyActivity: generateLastYearToNowDates(),
   recentActivity: [
     {
       id: "act1",

@@ -17,6 +17,9 @@ export const metadata = {
 const RootLayout = async ({ children }) => {
   return (
     <html lang="en">
+      <head>
+        <meta name="apple-mobile-web-app-title" content="LeetQuest" />
+      </head>
       <body
         className={`${montserrat.variable} bg-background text-foreground antialiased`}
       >

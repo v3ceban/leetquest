@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/navbar";
+import { SessionProvider } from "next-auth/react";
 
 const montserrat = localFont({
   src: "./fonts/Montserrat.ttf",
@@ -23,8 +24,10 @@ const RootLayout = async ({ children }) => {
       <body
         className={`${montserrat.variable} bg-background text-foreground antialiased`}
       >
-        <Navbar className="container px-4 mx-auto md:px-0" />
-        <div className="container px-4 mx-auto md:px-0">{children}</div>
+        <SessionProvider>
+          <Navbar className="container px-4 mx-auto md:px-0" />
+          <div className="container px-4 mx-auto md:px-0">{children}</div>
+        </SessionProvider>
       </body>
     </html>
   );

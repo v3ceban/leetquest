@@ -18,7 +18,7 @@ import {
   FaRightFromBracket,
   FaRightToBracket,
 } from "react-icons/fa6";
-import { Spinner } from "@/components/ui/spinner";
+import { Loading } from "@/components/ui/spinner";
 import { usePathname } from "next/navigation";
 import { providers } from "@/lib/auth";
 
@@ -109,15 +109,6 @@ AuthButton.propTypes = {
   size: PropTypes.string,
   auto: PropTypes.bool,
   children: PropTypes.string,
-};
-
-const Loading = () => {
-  return (
-    <>
-      <Spinner className="inline-block mr-1 fill-dark" />
-      Loading...
-    </>
-  );
 };
 
 const LogoutButton = ({ className, loading, variant, size, onLogout }) => {

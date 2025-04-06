@@ -1,16 +1,42 @@
+"use client";
+
 import React from "react";
+import { Button } from "@/components/ui/button";
+import { Loading } from "@/components/ui/spinner";
 import { QuestContext } from "@/components/quest/context";
 import { WorldNode } from "@/components/quest/world";
+import { setLevelComplete } from "./fetch-data";
 
 const ProblemPreview = () => {
-  const { selectedWorldData, selectedLevelName } =
-    React.useContext(QuestContext);
+  const {
+    selectedWorldData,
+    selectedLevelName,
+    setWorldsData,
+    setSelectedWorldData,
+    closeLevel,
+  } = React.useContext(QuestContext);
+  const [loading, setLoading] = React.useState(false);
 
   // if needed, can implement a more efficient way to find the level e.g. by querying the database again or using a map
   const selectedLevelData =
     selectedWorldData && selectedLevelName
       ? selectedWorldData.find(({ name }) => name === selectedLevelName)
       : null;
+
+  const handleStartClick = async () => {
+    if (!selectedLevelData || loading) return;
+    setLoading(true);
+    try {
+      const { worldsData, selectedWorldData } =
+        await setLevelComplete(selectedLevelData);
+      setWorldsData(worldsData);
+      setSelectedWorldData(selectedWorldData);
+      closeLevel();
+    } catch (error) {
+      console.error("Error setting level complete:", error);
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-4 p-4 h-full">
@@ -33,13 +59,16 @@ const ProblemPreview = () => {
       </div>
       <p>{selectedLevelData.description}</p>
       <div className="flex justify-center mt-auto">
-        <button className="py-2 px-4 rounded-lg bg-foreground text-background w-fit">
-          Start
-        </button>
+        <Button
+          onClick={handleStartClick}
+          className="py-2 px-4 rounded-lg bg-foreground text-background w-fit"
+          disabled={loading}
+        >
+          {loading ? <Loading /> : "Start"}
+        </Button>
       </div>
     </div>
   );
 };
 
 export default ProblemPreview;
-

@@ -45,13 +45,21 @@ const Navbar = async ({ className }) => {
           {session ? (
             <>
               <Button variant="wave" size="wave">
-                <Link tabIndex={-1} href="/dashboard">
+                <Link
+                  className="flex justify-center items-center w-full h-full"
+                  tabIndex={-1}
+                  href="/dashboard"
+                >
                   <Home className="inline-block mr-1 w-4 h-4" />
                   Dashboard
                 </Link>
               </Button>
               <Button variant="wave" size="wave">
-                <Link tabIndex={-1} href="/quest">
+                <Link
+                  className="flex justify-center items-center w-full h-full"
+                  tabIndex={-1}
+                  href="/quest"
+                >
                   <MapPin className="inline-block mr-1 w-4 h-4" />
                   Quest
                 </Link>

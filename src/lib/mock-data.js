@@ -1,10 +1,3 @@
-const mockUser = {
-  id: "clg1234567",
-  email: "john.doe@example.com",
-  name: "John Doe",
-  picture: "https://api.dicebear.com/7.x/avatars/svg?seed=John",
-};
-
 const mockWorlds = [
   {
     id: "w1",

@@ -50,7 +50,7 @@ function World({ worldData, isAWorld }) {
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
     >
-      <h2 className="bg-[var(--surface-1)] pl-4 py-2">
+      <h2 className="py-2 pl-4 bg-[var(--surface-1)]">
         {isAWorld ? selectedWorld : "Worlds"}
       </h2>
       <TransformWrapper
@@ -60,7 +60,7 @@ function World({ worldData, isAWorld }) {
         limitToBounds={LIMIT_TO_BOUNDS}
       >
         <TransformComponent>
-          <section className="relative w-screen h-dvh flex-grow animate-fadein">
+          <section className="relative flex-grow w-screen h-dvh animate-fadein">
             {Object.values(worldData).map(
               ({ name, x_position, y_position, color }) => (
                 <WorldNode
@@ -104,19 +104,19 @@ function WorldNode({
   const handleClick = isAPreview
     ? undefined
     : (event) => {
-      // Prevents the click from propagating to the World (which also closes tabs to the right if clicked, but prevents going to the newly clicked node in the same world)
-      event.stopPropagation();
-      if (!isAWorld) {
-        handleWorldClick(value);
-      } else {
-        handleLevelClick(name);
-      }
-    };
+        // Prevents the click from propagating to the World (which also closes tabs to the right if clicked, but prevents going to the newly clicked node in the same world)
+        event.stopPropagation();
+        if (!isAWorld) {
+          handleWorldClick(value);
+        } else {
+          handleLevelClick(name);
+        }
+      };
 
   return !isAWorld ? (
     <button
       key={name}
-      className={`flex justify-center items-center rounded cursor-pointer text-background bg-foreground ${isAPreview ? "" : "shadow-node"}`}
+      className={`flex justify-center text-sm items-center rounded cursor-pointer text-background bg-foreground ${isAPreview ? "" : "shadow-node"}`}
       style={{
         left: x_position,
         top: y_position,

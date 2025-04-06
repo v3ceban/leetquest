@@ -1,40 +1,49 @@
 import propTypes from "prop-types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Globe } from "lucide-react";
+import { Globe, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export const WorldProgressCard = ({ className, progress }) => {
+export const WorldProgressCard = ({ className, progress, total }) => {
+  const toUnlock = total - progress.length;
   return (
     <Card className={cn(className)}>
       <CardHeader>
-        <CardTitle>World Progress</CardTitle>
+        <CardTitle>
+          <h2>World Progress</h2>
+        </CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          {progress.map((world) => (
-            <div key={world.worldId} className="space-y-2">
+      <CardContent className="space-y-4">
+        {progress.map((world) => {
+          const { worldId, worldName, completed, total } = world;
+          return (
+            <section key={worldId} className="space-y-2">
               <div className="flex justify-between items-center">
-                <div className="flex gap-2 items-center">
+                <h3 className="flex gap-2 items-center">
                   <Globe className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm font-medium">
-                    World {world.worldId}
-                  </span>
-                </div>
+                  <span className="text-sm font-medium">{worldName}</span>
+                </h3>
                 <span className="text-sm text-muted-foreground">
-                  {world.completed}/{world.total} levels
+                  {completed}/{total} levels
                 </span>
               </div>
-              <Progress value={(world.completed / world.total) * 100} />
-            </div>
-          ))}
-        </div>
+              <Progress value={(completed / total) * 100} />
+            </section>
+          );
+        })}
+        {toUnlock > 0 && (
+          <p className="flex gap-x-1 items-center text-sm text-muted-foreground">
+            <Lock className="w-4 h-4" />
+            {toUnlock} worlds not unlocked
+          </p>
+        )}
       </CardContent>
     </Card>
   );
 };
 
 WorldProgressCard.propTypes = {
+  className: propTypes.string,
   progress: propTypes.arrayOf(
     propTypes.shape({
       worldId: propTypes.number.isRequired,
@@ -42,5 +51,5 @@ WorldProgressCard.propTypes = {
       total: propTypes.number.isRequired,
     }),
   ).isRequired,
-  className: propTypes.string,
+  total: propTypes.number.isRequired,
 };

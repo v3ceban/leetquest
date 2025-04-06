@@ -7,36 +7,44 @@ export const RecentActivityCard = ({ className, activities }) => {
   return (
     <Card className={cn(className)}>
       <CardHeader>
-        <CardTitle>Recent Activity</CardTitle>
+        <CardTitle>
+          <h2>Recent Activity</h2>
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {activities.map((activity) => (
-            <div
-              key={activity.id}
-              className="flex justify-between items-center pb-2 border-b last:border-0"
-            >
-              <div className="flex gap-4 items-center">
-                {activity.type === "COMPLETE" ? (
-                  <Trophy className="w-4 h-4 text-yellow-500" />
-                ) : (
-                  <Star className="w-4 h-4 text-blue-500" />
-                )}
-                <div>
-                  <p className="text-sm font-medium">{activity.levelName}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {activity.worldName}
-                  </p>
+          {activities.length === 0 ? (
+            <p className="flex flex-col justify-center items-center py-4 text-sm text-muted-foreground">
+              No recent activity to display.
+            </p>
+          ) : (
+            activities.map((activity) => (
+              <div
+                key={activity.id}
+                className="flex justify-between items-center pb-2 border-b last:border-0"
+              >
+                <div className="flex gap-4 items-center">
+                  {activity.type === "COMPLETE" ? (
+                    <Trophy className="w-4 h-4 text-yellow-500" />
+                  ) : (
+                    <Star className="w-4 h-4 text-blue-500" />
+                  )}
+                  <div>
+                    <p className="text-sm font-medium">{activity.levelName}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {activity.worldName}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-2 items-center">
+                  <span className="text-xs text-muted-foreground">
+                    {activity.date}
+                  </span>
+                  <ChevronRight className="w-4 h-4 text-muted-foreground" />
                 </div>
               </div>
-              <div className="flex gap-2 items-center">
-                <span className="text-xs text-muted-foreground">
-                  {activity.date}
-                </span>
-                <ChevronRight className="w-4 h-4 text-muted-foreground" />
-              </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </CardContent>
     </Card>

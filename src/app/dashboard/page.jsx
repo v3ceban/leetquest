@@ -1,26 +1,30 @@
 import { Trophy, Target, Brain, Clock } from "lucide-react";
-import { mockUser, mockUserProgress } from "@/lib/mock-data";
 import { StatsCard } from "@/components/dashboard/stats";
 import { WorldProgressCard } from "@/components/dashboard/world-progress";
 import { RecentActivityCard } from "@/components/dashboard/recent-activity";
 import { ActivityHeatmap } from "@/components/dashboard/heat-map";
+import { getDashboardData } from "@/components/dashboard/get-data";
 
-export default function Dashboard() {
+export default async function Dashboard() {
   const {
+    user,
     completedLevels,
     totalLevels,
-    unlockedWorlds,
     totalWorlds,
-    recentActivity,
+    unlockedWorlds,
+    dailyActivity,
     worldProgress,
-  } = mockUserProgress;
+    recentActivity,
+    streak,
+    remaining,
+  } = await getDashboardData();
 
   return (
     <main className="container py-8 mx-auto space-y-8">
       <section>
         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
         <p className="text-muted-foreground">
-          {`Welcome back, ${mockUser.name}! Here's your progress overview.`}
+          {`Welcome back, ${user.name}! Here's your progress overview.`}
         </p>
       </section>
       <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -39,19 +43,27 @@ export default function Dashboard() {
         <StatsCard
           title="Unlocked Worlds"
           value={unlockedWorlds}
-          description={`${totalWorlds - unlockedWorlds} worlds remaining`}
+          description={
+            remaining > 0
+              ? `${remaining} worlds remaining`
+              : "All worlds unlocked!"
+          }
           icon={Brain}
         />
         <StatsCard
           title="Active Streak"
-          value="5 days"
-          description="Keep going!"
+          value={`${streak} days`}
+          description={streak > 0 ? "Keep going!" : "Let's get it started!"}
           icon={Clock}
         />
       </section>
-      <ActivityHeatmap dailyActivity={mockUserProgress.dailyActivity} />
+      <ActivityHeatmap dailyActivity={dailyActivity} />
       <div className="grid gap-4 md:grid-cols-7">
-        <WorldProgressCard className="md:col-span-4" progress={worldProgress} />
+        <WorldProgressCard
+          className="md:col-span-4"
+          progress={worldProgress}
+          total={totalWorlds}
+        />
         <RecentActivityCard
           className="md:col-span-3"
           activities={recentActivity}

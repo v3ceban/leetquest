@@ -74,7 +74,9 @@ export const ActivityHeatmap = ({ className, dailyActivity }) => {
   return (
     <Card className={cn(className, "grid col-span-full gap-4")}>
       <CardHeader className="flex flex-row justify-between items-center pb-2">
-        <CardTitle className="text-base font-medium">Activity</CardTitle>
+        <CardTitle className="text-2xl font-semibold">
+          <h2>Activity</h2>
+        </CardTitle>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>

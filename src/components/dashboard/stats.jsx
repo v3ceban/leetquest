@@ -1,16 +1,26 @@
 import PropTypes from "prop-types";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export const StatsCard = ({ title, value, description, icon: Icon }) => {
   return (
     <Card>
       <CardHeader className="flex flex-row justify-between items-center pb-2 space-y-0">
-        <CardTitle className="text-sm font-medium">{title}</CardTitle>
+        <CardTitle className="text-sm font-medium">
+          <h2>{title}</h2>
+        </CardTitle>
         <Icon className="w-4 h-4 text-muted-foreground" />
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">{value}</div>
-        <p className="text-xs text-muted-foreground">{description}</p>
+        <span className="text-2xl font-bold">{value}</span>
+        <CardDescription className="text-xs text-muted-foreground">
+          {description}
+        </CardDescription>
       </CardContent>
     </Card>
   );

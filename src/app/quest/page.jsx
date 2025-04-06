@@ -3,7 +3,7 @@ import { Quest } from "@/components/quest/quest";
 
 export default async function QuestPage() {
   return (
-    <main className="relative overflow-hidden max-h-[calc(100dvh-104px-20px)] bg-[--overlay] rounded-xl">
+    <main className="overflow-hidden relative mt-2 rounded-xl max-h-[calc(100dvh-104px-20px)] bg-[--overlay]">
       <QuestProvider>
         <Quest />
       </QuestProvider>

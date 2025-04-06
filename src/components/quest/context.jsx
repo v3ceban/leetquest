@@ -2,7 +2,10 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import { fetchWorldsData, fetchSelectedWorldData } from "@/components/quest/fetch-data";
+import {
+  fetchWorldsData,
+  fetchSelectedWorldData,
+} from "@/components/quest/fetch-data";
 
 const shiftDuration = 200;
 
@@ -21,13 +24,18 @@ const QuestProvider = ({ children }) => {
   const [levelShifted, setLevelShifted] = React.useState(false);
 
   React.useEffect(() => {
-    const fetchAndSetWorldsData = async () => setWorldsData(await fetchWorldsData());
+    const fetchAndSetWorldsData = async () =>
+      setWorldsData(await fetchWorldsData());
     fetchAndSetWorldsData();
   }, []);
 
   const fetchAndSetSelectedWorldData = async () => {
     fetchedSelectedWorld = selectedWorld;
-    return setSelectedWorldData(selectedWorld ? await fetchSelectedWorldData(worldsData, selectedWorld) : []);
+    setSelectedWorldData(
+      selectedWorld
+        ? await fetchSelectedWorldData(worldsData, selectedWorld)
+        : [],
+    );
   };
 
   const switchWorld = (nextWorld) => {
@@ -108,6 +116,8 @@ const QuestProvider = ({ children }) => {
         handleLevelClick,
         closeWorld,
         handleWorldClick,
+        setWorldsData,
+        setSelectedWorldData,
       }}
     >
       {children}

@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { QuestArrows } from "@/components/arrow";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { QuestContext } from "@/components/quest/context";
+import { cn } from "@/lib/utils";
 
 // also in src/components/arrow.jsx
 const WORLD_WIDTH = 100;
@@ -21,7 +22,7 @@ function World({ worldData, isAWorld }) {
   const { selectedWorld, selectedLevelName, closeLevel, closeWorld } =
     React.useContext(QuestContext);
 
-  // console.log("world.jsx:23 World", worldData, isAWorld);
+  //console.log("world.jsx:25 World", worldData, isAWorld);
 
   const [isDragging, setIsDragging] = React.useState(false);
 
@@ -62,9 +63,17 @@ function World({ worldData, isAWorld }) {
         <TransformComponent>
           <section className="relative flex-grow w-screen h-dvh animate-fadein">
             {Object.values(worldData).map(
-              ({ name, x_position, y_position, color }) => (
+              ({
+                id,
+                name,
+                x_position,
+                y_position,
+                color,
+                isWorldUnlocked,
+                unlocked: isLevelUnlocked,
+              }) => (
                 <WorldNode
-                  key={name}
+                  key={id}
                   isAWorld={isAWorld}
                   name={name}
                   x_position={x_position}
@@ -72,6 +81,8 @@ function World({ worldData, isAWorld }) {
                   value={name}
                   isAPreview={false}
                   color={color}
+                  isWorldUnlocked={isWorldUnlocked}
+                  isLevelUnlocked={isLevelUnlocked}
                 />
               ),
             )}
@@ -96,10 +107,12 @@ function WorldNode({
   y_position,
   value,
   isAPreview,
+  isWorldUnlocked,
+  isLevelUnlocked,
 }) {
   const { handleWorldClick, handleLevelClick } = React.useContext(QuestContext);
 
-  // console.log("world.jsx:85 WorldNode", name, isAWorld, color, x_position, y_position, value, isAPreview);
+  // console.log("world.jsx:115 WorldNode", name, isAWorld, color, x_position, y_position, value, isAPreview);
 
   const handleClick = isAPreview
     ? undefined
@@ -116,7 +129,12 @@ function WorldNode({
   return !isAWorld ? (
     <button
       key={name}
-      className={`flex justify-center text-sm items-center rounded cursor-pointer text-background bg-foreground ${isAPreview ? "" : "shadow-node"}`}
+      className={cn(
+        "flex justify-center text-sm items-center rounded cursor-pointer text-background bg-foreground",
+        isAPreview && "shadow-node",
+        !isWorldUnlocked && "opacity-50 cursor-not-allowed",
+      )}
+      disabled={!isWorldUnlocked}
       style={{
         left: x_position,
         top: y_position,
@@ -132,7 +150,12 @@ function WorldNode({
   ) : (
     <button
       key={name}
-      className={`text-black flex justify-center items-center cursor-pointer rounded-full text-xl text-[--surface-1] ${isAPreview ? "" : "shadow-node"}`}
+      className={cn(
+        "text-black flex justify-center items-center cursor-pointer rounded-full text-xl text-[--surface-1]",
+        isAPreview && "shadow-node",
+        !isLevelUnlocked && "opacity-50 cursor-not-allowed",
+      )}
+      disabled={!isLevelUnlocked}
       style={{
         left: x_position,
         top: y_position,
@@ -157,6 +180,8 @@ WorldNode.propTypes = {
   y_position: PropTypes.number.isRequired,
   value: PropTypes.string,
   isAPreview: PropTypes.bool,
+  isWorldUnlocked: PropTypes.bool,
+  isLevelUnlocked: PropTypes.bool,
 };
 
 export { World, WorldNode };

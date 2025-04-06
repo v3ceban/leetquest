@@ -39,28 +39,28 @@ ArrowsWrapper.propTypes = {
 function Arrow({ x1, y1, x2, y2, isAWorld, flipArrow }) {
   const [sx, sy, cx, cy, ex, ey, ae] = !isAWorld
     ? getBoxToBoxArrow(
-      x1,
-      y1,
-      WORLD_WIDTH,
-      WORLD_HEIGHT,
-      x2,
-      y2,
-      WORLD_WIDTH,
-      WORLD_HEIGHT,
-      { ...ARROW_OPTIONS, flip: flipArrow },
-    )
+        x1,
+        y1,
+        WORLD_WIDTH,
+        WORLD_HEIGHT,
+        x2,
+        y2,
+        WORLD_WIDTH,
+        WORLD_HEIGHT,
+        { ...ARROW_OPTIONS, flip: flipArrow },
+      )
     : getArrow(
-      x1 + LEVEL_RADIUS,
-      y1 + LEVEL_RADIUS,
-      x2 + LEVEL_RADIUS,
-      y2 + LEVEL_RADIUS,
-      {
-        ...ARROW_OPTIONS,
-        padStart: LEVEL_RADIUS,
-        padEnd: PAD_END + LEVEL_RADIUS,
-        flip: flipArrow,
-      },
-    );
+        x1 + LEVEL_RADIUS,
+        y1 + LEVEL_RADIUS,
+        x2 + LEVEL_RADIUS,
+        y2 + LEVEL_RADIUS,
+        {
+          ...ARROW_OPTIONS,
+          padStart: LEVEL_RADIUS,
+          padEnd: PAD_END + LEVEL_RADIUS,
+          flip: flipArrow,
+        },
+      );
   const endAngleAsDegrees = ae * RADIANS_TO_DEGREES_RATIO;
   return (
     <g>

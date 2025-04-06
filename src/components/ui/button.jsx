@@ -45,7 +45,7 @@ const Button = React.forwardRef(
     if (variant === "wave") {
       const children = (
         <div className="flex overflow-hidden relative justify-center items-center w-full h-full wave-btn">
-          <div className="flex justify-center items-center mix-blend-difference">
+          <div className="flex justify-center items-center w-full h-full mix-blend-difference">
             {{ ...props }.children}
           </div>
         </div>

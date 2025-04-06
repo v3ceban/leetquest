@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { cn } from "@/lib/utils";
 
-const Spinner = ({ className }) => {
+export const Spinner = ({ className }) => {
   return (
     <div role="status">
       <svg
@@ -32,4 +32,16 @@ Spinner.propTypes = {
   className: PropTypes.string,
 };
 
-export { Spinner };
+export const Loading = ({ className, children }) => {
+  return (
+    <>
+      <Spinner className={cn(className, "inline-block mr-1 fill-dark")} />
+      {children ? children : "Loading..."}
+    </>
+  );
+};
+
+Loading.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.node,
+};

@@ -20,10 +20,8 @@ const RootLayout = async ({ children }) => {
       <body
         className={`${montserrat.variable} bg-background text-foreground antialiased`}
       >
-        <div className="container mx-auto">
-          <Navbar />
-          {children}
-        </div>
+        <Navbar className="container px-4 mx-auto md:px-0" />
+        <div className="container px-4 mx-auto md:px-0">{children}</div>
       </body>
     </html>
   );

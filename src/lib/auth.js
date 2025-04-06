@@ -5,6 +5,27 @@ import { prisma } from "@/lib/prisma";
 
 export const providers = ["Google", "GitHub"];
 
+const createUserAssociations = async (user_id) => {
+  const allWorlds = await prisma.world.findMany({
+    include: {
+      prerequisites: true,
+    },
+  });
+
+  for (const world of allWorlds) {
+    const { id: world_id, prerequisites } = world;
+    const unlocked = prerequisites.length === 0;
+
+    await prisma.user_World.create({
+      data: {
+        user_id,
+        world_id,
+        unlocked,
+      },
+    });
+  }
+};
+
 const getOrCreateUser = async ({ email, name, picture }) => {
   const include = {
     role: {
@@ -42,6 +63,8 @@ const getOrCreateUser = async ({ email, name, picture }) => {
       include,
     });
 
+    await createUserAssociations(newUser.id);
+
     return newUser;
   }
 
@@ -58,6 +81,7 @@ const profileCallback = async (profile) => {
       (permission) => permission.id,
     );
     profile.picture = user.picture;
+    profile.db_id = user.id;
   }
   return profile;
 };
@@ -89,6 +113,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.role = user.role;
         token.permissions = user.permissions;
         token.picture = user.picture;
+        token.db_id = user.db_id;
       }
       return token;
     },
@@ -96,6 +121,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.user.role = token.role;
       session.user.permissions = token.permissions;
       session.user.image = token.picture;
+      session.user.id = token.db_id;
       return session;
     },
   },

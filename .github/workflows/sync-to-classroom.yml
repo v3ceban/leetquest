@@ -17,6 +17,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.CLASSROOM_PAT }}
+          fetch-depth: 0
       - name: Push to Classroom Repo
         env:
           CLASSROOM_PAT: ${{ secrets.CLASSROOM_PAT }}

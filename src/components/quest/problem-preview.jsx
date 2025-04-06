@@ -52,6 +52,7 @@ const ProblemPreview = () => {
               y={0}
               value={selectedLevelName}
               isAPreview={true}
+              className="opacity-100"
             />
           )}
         </div>

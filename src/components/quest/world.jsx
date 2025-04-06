@@ -109,6 +109,7 @@ function WorldNode({
   isAPreview,
   isWorldUnlocked,
   isLevelUnlocked,
+  className,
 }) {
   const { handleWorldClick, handleLevelClick } = React.useContext(QuestContext);
 
@@ -154,6 +155,7 @@ function WorldNode({
         "text-black flex justify-center items-center cursor-pointer rounded-full text-xl text-[--surface-1]",
         isAPreview && "shadow-node",
         !isLevelUnlocked && "opacity-50 cursor-not-allowed",
+        className,
       )}
       disabled={!isLevelUnlocked}
       style={{
@@ -182,6 +184,7 @@ WorldNode.propTypes = {
   isAPreview: PropTypes.bool,
   isWorldUnlocked: PropTypes.bool,
   isLevelUnlocked: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export { World, WorldNode };

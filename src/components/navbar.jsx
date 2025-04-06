@@ -24,7 +24,7 @@ const Navbar = async ({ className }) => {
   const session = await auth();
 
   return (
-    <header className="sticky top-0 border-b border-border bg-background bg-base">
+    <header className="sticky top-0 z-10 border-b border-border bg-background bg-base">
       <div
         className={cn(
           className,

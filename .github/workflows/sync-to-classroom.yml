@@ -1,0 +1,29 @@
+name: Sync to Classroom
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+jobs:
+  sync:
+    if: github.event.pull_request.merged == true || github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.CLASSROOM_PAT }}
+      - name: Push to Classroom Repo
+        env:
+          CLASSROOM_PAT: ${{ secrets.CLASSROOM_PAT }}
+        run: |
+          git config --global user.name "v3ceban"
+          git config --global user.email "v3ceban@proton.me"
+          git config --global credential.helper ""
+
+          git remote add classroom "https://x-access-token:${CLASSROOM_PAT}@github.com/CSEN196Lab-S2025/senior-design-project-03_dmvs_leetquest.git"
+          git push -f classroom main

@@ -178,9 +178,14 @@ export const setLevelComplete = async (levelData) => {
   const worldLevels = await prisma.level.findMany({
     where: {
       world_id: world_id,
+      type: {
+        not: 'BONUS'
+      }
+      /*
       requiredBy: {
         some: {}, // This ensures we only get levels that have requiredBy relationships
       },
+      */
     },
     include: {
       user_levels: {

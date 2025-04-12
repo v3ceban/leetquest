@@ -38,6 +38,68 @@ const ProblemPreview = () => {
     }
   };
 
+  const handleLeetCodeClick = async(url) => {
+    if (!selectedLevelData || loading || !url) return;
+    try{
+      window.open(url, "_blank", "noreferrer");
+    } catch (error) {
+      console.error("Error opening level in LeetCode:", error);
+      setLoading(false);
+    }
+  };
+
+  const handleLearningClick = async() => {
+    if (!selectedLevelData || loading) return;
+    try{
+      window.open("https://www.google.com", "_blank", "noreferrer");
+    } catch (error) {
+      console.error("Error expanding level:", error);
+      setLoading(false);
+    }
+  };
+
+  if (!selectedLevelData.leetcode_url){
+    return (
+      <div className="flex flex-col gap-4 p-4 h-full">
+        <div className="flex flex-row gap-4 items-center">
+          <div className="flex-shrink-0">
+            {selectedLevelData && (
+              <WorldNode
+                key={selectedLevelName}
+                isAWorld={true}
+                name={selectedLevelName}
+                color={selectedLevelData.color}
+                x={0}
+                y={0}
+                value={selectedLevelName}
+                isAPreview={true}
+                className="opacity-100"
+              />
+            )}
+          </div>
+          <h2 className="w-2/3 text-2xl">{selectedLevelData.title}</h2>
+        </div>
+        <p>{selectedLevelData.description}</p>
+        <div className="flex justify-center mt-auto gap-x-4">
+          <Button
+            onClick={handleStartClick}
+            className="py-2 px-4 rounded-lg bg-foreground text-background w-fit"
+            disabled={loading}
+          >
+            {loading ? <Loading /> : "Start"}
+          </Button>
+          <Button
+              onClick={handleLearningClick}
+              className="py-2 px-4 rounded-lg bg-foreground text-background w-fit"
+              disabled={loading}
+            >
+            {loading ? <Loading /> : "Learn"} 
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-4 p-4 h-full">
       <div className="flex flex-row gap-4 items-center">
@@ -59,13 +121,20 @@ const ProblemPreview = () => {
         <h2 className="w-2/3 text-2xl">{selectedLevelData.title}</h2>
       </div>
       <p>{selectedLevelData.description}</p>
-      <div className="flex justify-center mt-auto">
+      <div className="flex justify-center mt-auto gap-x-4">
         <Button
           onClick={handleStartClick}
           className="py-2 px-4 rounded-lg bg-foreground text-background w-fit"
           disabled={loading}
         >
           {loading ? <Loading /> : "Start"}
+        </Button>
+        <Button
+            onClick={() => handleLeetCodeClick(selectedLevelData.leetcode_url)}
+            className="py-2 px-4 rounded-lg bg-foreground text-background w-fit"
+            disabled={loading}
+          >
+          {loading ? <Loading /> : "LeetCode"} 
         </Button>
       </div>
     </div>

@@ -65,8 +65,8 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       animation: {
-        fadein: 'fadeIn 1s ease-in-out',
-        fadeout: 'fadeOut 1s ease-in-out',
+        fadein: "fadeIn 1s ease-in-out",
+        fadeout: "fadeOut 1s ease-in-out",
       },
       keyframes: {
         fadeIn: {
@@ -80,5 +80,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 };

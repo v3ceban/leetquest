@@ -133,9 +133,9 @@ function WorldNode({
       className={cn(
         "flex justify-center text-sm items-center rounded cursor-pointer text-background bg-foreground",
         isAPreview && "shadow-node",
-        !isWorldUnlocked && "opacity-50 cursor-not-allowed",
+        !isWorldUnlocked && "opacity-50",
       )}
-      disabled={!isWorldUnlocked}
+      // disabled={!isWorldUnlocked}
       style={{
         left: x_position,
         top: y_position,
@@ -154,10 +154,10 @@ function WorldNode({
       className={cn(
         "text-black flex justify-center items-center cursor-pointer rounded-full text-xl text-[--surface-1]",
         isAPreview && "shadow-node",
-        !isLevelUnlocked && "opacity-50 cursor-not-allowed",
+        !isLevelUnlocked && "opacity-50",
         className,
       )}
-      disabled={!isLevelUnlocked}
+      // disabled={!isLevelUnlocked}
       style={{
         left: x_position,
         top: y_position,

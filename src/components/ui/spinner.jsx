@@ -35,7 +35,9 @@ Spinner.propTypes = {
 export const Loading = ({ className, children }) => {
   return (
     <>
-      <Spinner className={cn(className, "inline-block mr-1 fill-dark")} />
+      <Spinner
+        className={cn(className, "inline-block mr-1 fill-dark text-foreground")}
+      />
       {children ? children : "Loading..."}
     </>
   );

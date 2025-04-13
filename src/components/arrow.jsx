@@ -63,7 +63,7 @@ function Arrow({ x1, y1, x2, y2, isAWorld, flipArrow }) {
       );
   const endAngleAsDegrees = ae * RADIANS_TO_DEGREES_RATIO;
   return (
-    <g className="animate-fadein">
+    <g>
       <path d={`M${sx},${sy} Q${cx},${cy} ${ex},${ey}`} fill="none" />
       <polygon
         points="0,-6 12,0, 0,6"

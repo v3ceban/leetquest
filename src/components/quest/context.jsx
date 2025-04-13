@@ -2,19 +2,13 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  fetchWorldsData,
-  fetchSelectedWorldData,
-} from "@/components/quest/fetch-data";
 
-const shiftDuration = 200;
-
-let fetchedSelectedWorld = null;
+const shiftDuration = 300;
 
 const QuestContext = React.createContext({});
 
-const QuestProvider = ({ children }) => {
-  const [worldsData, setWorldsData] = React.useState([]);
+const QuestProvider = ({ children, initialWorldsData }) => {
+  const [worldsData, setWorldsData] = React.useState(initialWorldsData);
   const [selectedWorldData, setSelectedWorldData] = React.useState([]);
 
   const [selectedWorld, setSelectedWorld] = React.useState(null);
@@ -23,19 +17,24 @@ const QuestProvider = ({ children }) => {
   const [selectedLevelName, setSelectedLevelName] = React.useState(null);
   const [levelShifted, setLevelShifted] = React.useState(false);
 
-  React.useEffect(() => {
-    const fetchAndSetWorldsData = async () =>
-      setWorldsData(await fetchWorldsData());
-    fetchAndSetWorldsData();
-  }, []);
+  const updateSelectedWorldData = (worldName) => {
+    if (!worldName) {
+      setSelectedWorldData([]);
+      return;
+    }
 
-  const fetchAndSetSelectedWorldData = async () => {
-    fetchedSelectedWorld = selectedWorld;
-    setSelectedWorldData(
-      selectedWorld
-        ? await fetchSelectedWorldData(worldsData, selectedWorld)
-        : [],
-    );
+    const world = worldsData.find((w) => w.name === worldName);
+    if (!world) return;
+
+    const levelsData = world.levels.map((level) => ({
+      ...level,
+      user_id: level.user_levels[0]?.user_id,
+      status: level.user_levels[0]?.status || "INCOMPLETE",
+      unlocked: level.user_levels[0]?.unlocked || false,
+      isWorldUnlocked: world.user_world[0]?.unlocked || false,
+    }));
+
+    setSelectedWorldData(levelsData);
   };
 
   const switchWorld = (nextWorld) => {
@@ -45,17 +44,13 @@ const QuestProvider = ({ children }) => {
         setSelectedLevelName(null);
         setWorldShifted(false);
         setTimeout(() => {
-          // can optimize by fetching before it's done shifting
           setSelectedWorldData([]);
-          fetchedSelectedWorld = null;
           setSelectedWorld(nextWorld);
         }, shiftDuration);
       }, shiftDuration);
     } else {
       setWorldShifted(false);
       setTimeout(() => {
-        setSelectedWorldData([]);
-        fetchedSelectedWorld = null;
         setSelectedWorld(nextWorld);
       }, shiftDuration);
     }
@@ -76,9 +71,7 @@ const QuestProvider = ({ children }) => {
   React.useEffect(() => {
     if (selectedWorld) {
       setWorldShifted(true);
-      if (selectedWorld !== fetchedSelectedWorld) {
-        fetchAndSetSelectedWorldData();
-      }
+      updateSelectedWorldData(selectedWorld);
     }
   }, [selectedWorld]);
 
@@ -126,7 +119,7 @@ const QuestProvider = ({ children }) => {
 };
 
 QuestProvider.propTypes = {
-  selectedWorldData: PropTypes.object,
+  initialWorldsData: PropTypes.array.isRequired,
   children: PropTypes.node,
 };
 

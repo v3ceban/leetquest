@@ -19,6 +19,28 @@ export async function fetchWorldsData() {
       levels: {
         select: {
           id: true,
+          title: true,
+          description: true,
+          type: true,
+          color: true,
+          name: true,
+          x_position: true,
+          y_position: true,
+          requiredBy: true,
+          prerequisites: true,
+          flip_arrow: true,
+          leetcode_url: true,
+          world_id: true,
+          user_levels: {
+            where: {
+              user_id: user.id,
+            },
+            select: {
+              user_id: true,
+              status: true,
+              unlocked: true,
+            },
+          },
         },
       },
       user_world: {
@@ -179,8 +201,8 @@ export const setLevelComplete = async (levelData) => {
     where: {
       world_id: world_id,
       type: {
-        not: 'BONUS'
-      }
+        not: "BONUS",
+      },
       /*
       requiredBy: {
         some: {}, // This ensures we only get levels that have requiredBy relationships
@@ -250,12 +272,16 @@ export const setLevelComplete = async (levelData) => {
     }
   }
 
-  const worldsData = await fetchWorldsData();
-  const selectedWorldData = await fetchSelectedWorldData(
-    worldsData,
-    null,
+  const updatedWorldsData = await fetchWorldsData();
+
+  const updatedLevelsData = await fetchSelectedWorldData(
+    updatedWorldsData,
+    undefined,
     world_id,
   );
 
-  return { worldsData, selectedWorldData };
+  return {
+    worldsData: updatedWorldsData,
+    selectedWorldData: updatedLevelsData,
+  };
 };

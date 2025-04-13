@@ -6,6 +6,8 @@ import { Loading } from "@/components/ui/spinner";
 import { QuestContext } from "@/components/quest/context";
 import { WorldNode } from "@/components/quest/world";
 import { setLevelComplete } from "./fetch-data";
+import { cn } from "@/lib/utils";
+import { CircleCheck, Play } from "lucide-react";
 
 const ProblemPreview = () => {
   const {
@@ -23,14 +25,18 @@ const ProblemPreview = () => {
       ? selectedWorldData.find(({ name }) => name === selectedLevelName)
       : null;
 
-  const handleStartClick = async () => {
-    if (!selectedLevelData || loading) return;
+  const handleCompleteClick = async () => {
+    if (
+      !selectedLevelData ||
+      loading ||
+      selectedLevelData.status === "COMPLETE"
+    )
+      return;
     setLoading(true);
     try {
-      const { worldsData, selectedWorldData } =
-        await setLevelComplete(selectedLevelData);
-      setWorldsData(worldsData);
-      setSelectedWorldData(selectedWorldData);
+      const result = await setLevelComplete(selectedLevelData);
+      setWorldsData(result.worldsData);
+      setSelectedWorldData(result.selectedWorldData);
       closeLevel();
     } catch (error) {
       console.error("Error setting level complete:", error);
@@ -40,69 +46,9 @@ const ProblemPreview = () => {
 
   const handleLeetCodeClick = async (url) => {
     if (!selectedLevelData || loading || !url) return;
-    try {
-      window.open(url, "_blank", "noreferrer");
-    } catch (error) {
-      console.error("Error opening level in LeetCode:", error);
-      setLoading(false);
-    }
+    open(url, "_blank", "noreferrer");
+    setLoading(false);
   };
-
-  const handleLearningClick = async () => {
-    if (!selectedLevelData || loading) return;
-    try {
-      window.open("https://www.google.com", "_blank", "noreferrer");
-    } catch (error) {
-      console.error("Error expanding level:", error);
-      setLoading(false);
-    }
-  };
-
-  if (!selectedLevelData.leetcode_url) {
-    return (
-      <div className="flex flex-col gap-4 p-4 h-full">
-        <div className="flex flex-row gap-4 items-center">
-          <div className="flex-shrink-0">
-            {selectedLevelData && (
-              <WorldNode
-                key={selectedLevelName}
-                isAWorld={true}
-                name={selectedLevelName}
-                color={selectedLevelData.color}
-                x={0}
-                y={0}
-                value={selectedLevelName}
-                isAPreview={true}
-                isLevelUnlocked={selectedLevelData.unlocked}
-                levelStatus={selectedLevelData.status}
-              />
-            )}
-          </div>
-          <h2 className="w-2/3 text-2xl">{selectedLevelData.title}</h2>
-        </div>
-        <div
-          className="prose prose-invert"
-          dangerouslySetInnerHTML={{ __html: selectedLevelData.description }}
-        />
-        <div className="flex gap-x-4 justify-center mt-auto">
-          <Button
-            onClick={handleStartClick}
-            className="py-2 px-4 rounded-lg bg-foreground text-background w-fit"
-            disabled={!selectedLevelData.unlocked || loading}
-          >
-            {loading ? <Loading /> : "Start"}
-          </Button>
-          <Button
-            onClick={handleLearningClick}
-            className="py-2 px-4 rounded-lg bg-foreground text-background w-fit"
-            disabled={!selectedLevelData.unlocked || loading}
-          >
-            {loading ? <Loading /> : "Learn"}
-          </Button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="flex flex-col gap-4 p-4 h-full">
@@ -118,11 +64,9 @@ const ProblemPreview = () => {
               y={0}
               value={selectedLevelName}
               isAPreview={true}
-              className={
-                selectedLevelData.unlocked ? "opacity-100" : "opacity-50"
-              }
               isLevelUnlocked={selectedLevelData.unlocked}
               levelStatus={selectedLevelData.status}
+              className="opacity-100"
             />
           )}
         </div>
@@ -132,21 +76,38 @@ const ProblemPreview = () => {
         className="prose prose-invert"
         dangerouslySetInnerHTML={{ __html: selectedLevelData.description }}
       />
-      <div className="flex gap-x-4 justify-center mt-auto">
+      <div
+        className={cn(
+          "grid gap-4 mx-auto mt-auto w-fit",
+          selectedLevelData.leetcode_url && "grid-cols-2",
+        )}
+      >
         <Button
-          onClick={handleStartClick}
-          className="py-2 px-4 rounded-lg bg-foreground text-background w-fit"
+          onClick={handleCompleteClick}
+          className="w-full bg-foreground text-background"
           disabled={!selectedLevelData.unlocked || loading}
         >
-          {loading ? <Loading /> : "Start"}
+          {loading ? (
+            <Loading />
+          ) : (
+            <>
+              <CircleCheck className="mr-2 w-5 h-5" />
+              {selectedLevelData.status === "COMPLETE"
+                ? "Completed"
+                : "Mark Complete"}
+            </>
+          )}
         </Button>
-        <Button
-          onClick={() => handleLeetCodeClick(selectedLevelData.leetcode_url)}
-          className="py-2 px-4 rounded-lg bg-foreground text-background w-fit"
-          disabled={!selectedLevelData.unlocked || loading}
-        >
-          {loading ? <Loading /> : "LeetCode"}
-        </Button>
+        {selectedLevelData.leetcode_url && (
+          <Button
+            onClick={() => handleLeetCodeClick(selectedLevelData.leetcode_url)}
+            className="w-full bg-foreground text-background"
+            disabled={!selectedLevelData.unlocked || loading}
+          >
+            <Play className="mr-2 w-4 h-4 fill-background" />
+            Start
+          </Button>
+        )}
       </div>
     </div>
   );

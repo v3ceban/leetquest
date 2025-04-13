@@ -59,7 +59,7 @@ function World({ worldData, isAWorld }) {
         {isAWorld ? selectedWorld : "Worlds"}
       </h2>
       <TransformWrapper
-        doubleClick={{ mode: 'reset'}}
+        doubleClick={{ mode: "reset" }}
         maxScale={MAX_SCALE}
         minScale={MIN_SCALE}
         limitToBounds={LIMIT_TO_BOUNDS}
@@ -210,7 +210,8 @@ function WorldNode({
                 </span>
                 <Progress
                   value={(completedLevels / totalLevels) * 100}
-                  className="rounded-none w-[78px] h-[3px] mt-[2px] bg-background"
+                  className="rounded-none w-[78px] h-[3px] mt-[2px] bg-primary"
+                  progressBarClass="bg-background"
                 />
               </>
             )}

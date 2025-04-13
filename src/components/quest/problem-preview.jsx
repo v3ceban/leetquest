@@ -6,7 +6,6 @@ import { Loading } from "@/components/ui/spinner";
 import { QuestContext } from "@/components/quest/context";
 import { WorldNode } from "@/components/quest/world";
 import { setLevelComplete } from "./fetch-data";
-import Markdown from "react-markdown";
 
 const ProblemPreview = () => {
   const {
@@ -39,9 +38,9 @@ const ProblemPreview = () => {
     }
   };
 
-  const handleLeetCodeClick = async(url) => {
+  const handleLeetCodeClick = async (url) => {
     if (!selectedLevelData || loading || !url) return;
-    try{
+    try {
       window.open(url, "_blank", "noreferrer");
     } catch (error) {
       console.error("Error opening level in LeetCode:", error);
@@ -49,9 +48,9 @@ const ProblemPreview = () => {
     }
   };
 
-  const handleLearningClick = async() => {
+  const handleLearningClick = async () => {
     if (!selectedLevelData || loading) return;
-    try{
+    try {
       window.open("https://www.google.com", "_blank", "noreferrer");
     } catch (error) {
       console.error("Error expanding level:", error);
@@ -59,7 +58,7 @@ const ProblemPreview = () => {
     }
   };
 
-  if (!selectedLevelData.leetcode_url){
+  if (!selectedLevelData.leetcode_url) {
     return (
       <div className="flex flex-col gap-4 p-4 h-full">
         <div className="flex flex-row gap-4 items-center">
@@ -80,10 +79,11 @@ const ProblemPreview = () => {
           </div>
           <h2 className="w-2/3 text-2xl">{selectedLevelData.title}</h2>
         </div>
-        <div className="prose prose-invert">
-          <Markdown>{selectedLevelData.description}</Markdown>
-        </div>
-        <div className="flex justify-center mt-auto gap-x-4">
+        <div
+          className="prose prose-invert"
+          dangerouslySetInnerHTML={{ __html: selectedLevelData.description }}
+        />
+        <div className="flex gap-x-4 justify-center mt-auto">
           <Button
             onClick={handleStartClick}
             className="py-2 px-4 rounded-lg bg-foreground text-background w-fit"
@@ -92,11 +92,11 @@ const ProblemPreview = () => {
             {loading ? <Loading /> : "Start"}
           </Button>
           <Button
-              onClick={handleLearningClick}
-              className="py-2 px-4 rounded-lg bg-foreground text-background w-fit"
-              disabled={loading}
-            >
-            {loading ? <Loading /> : "Learn"} 
+            onClick={handleLearningClick}
+            className="py-2 px-4 rounded-lg bg-foreground text-background w-fit"
+            disabled={loading}
+          >
+            {loading ? <Loading /> : "Learn"}
           </Button>
         </div>
       </div>
@@ -117,16 +117,19 @@ const ProblemPreview = () => {
               y={0}
               value={selectedLevelName}
               isAPreview={true}
-              className={selectedLevelData.unlocked ? "opacity-100" : "opacity-50"}
+              className={
+                selectedLevelData.unlocked ? "opacity-100" : "opacity-50"
+              }
             />
           )}
         </div>
         <h2 className="w-2/3 text-2xl">{selectedLevelData.title}</h2>
       </div>
-      <div className="prose prose-invert">
-        <Markdown>{selectedLevelData.description}</Markdown>
-      </div>
-      <div className="flex justify-center mt-auto gap-x-4">
+      <div
+        className="prose prose-invert"
+        dangerouslySetInnerHTML={{ __html: selectedLevelData.description }}
+      />
+      <div className="flex gap-x-4 justify-center mt-auto">
         <Button
           onClick={handleStartClick}
           className="py-2 px-4 rounded-lg bg-foreground text-background w-fit"
@@ -135,11 +138,11 @@ const ProblemPreview = () => {
           {loading ? <Loading /> : "Start"}
         </Button>
         <Button
-            onClick={() => handleLeetCodeClick(selectedLevelData.leetcode_url)}
-            className="py-2 px-4 rounded-lg bg-foreground text-background w-fit"
-            disabled={loading}
-          >
-          {loading ? <Loading /> : "LeetCode"} 
+          onClick={() => handleLeetCodeClick(selectedLevelData.leetcode_url)}
+          className="py-2 px-4 rounded-lg bg-foreground text-background w-fit"
+          disabled={loading}
+        >
+          {loading ? <Loading /> : "LeetCode"}
         </Button>
       </div>
     </div>

@@ -80,7 +80,9 @@ const ProblemPreview = () => {
           </div>
           <h2 className="w-2/3 text-2xl">{selectedLevelData.title}</h2>
         </div>
-        <p>{selectedLevelData.description}</p>
+        <div className="prose prose-invert">
+          <Markdown>{selectedLevelData.description}</Markdown>
+        </div>
         <div className="flex justify-center mt-auto gap-x-4">
           <Button
             onClick={handleStartClick}

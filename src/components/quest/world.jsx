@@ -143,7 +143,6 @@ function WorldNode({
         height: WORLD_HEIGHT,
         position: isAPreview ? "relative" : "absolute",
         pointerEvents: isAPreview ? "none" : "auto",
-        '--target-opacity': !isWorldUnlocked ? 0.5 : 1,
       }}
       onClick={handleClick}
     >
@@ -167,7 +166,6 @@ function WorldNode({
         backgroundColor: `var(--${color.toLowerCase()}-node)`,
         position: isAPreview ? "relative" : "absolute",
         pointerEvents: isAPreview ? "none" : "auto",
-        '--target-opacity': !isLevelUnlocked ? 0.5 : 1,
       }}
       onClick={handleClick}
     >

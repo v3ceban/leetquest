@@ -58,7 +58,7 @@ function World({ worldData, isAWorld }) {
         {isAWorld ? selectedWorld : "Worlds"}
       </h2>
       <TransformWrapper
-        doubleClick={{ disabled: true }}
+        doubleClick={{ mode: 'reset'}}
         maxScale={MAX_SCALE}
         minScale={MIN_SCALE}
         limitToBounds={LIMIT_TO_BOUNDS}

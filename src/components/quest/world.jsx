@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { QuestArrows } from "@/components/arrow";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
@@ -15,14 +16,14 @@ const WORLD_HEIGHT = 40;
 const LEVEL_RADIUS = 20;
 
 const MAX_SCALE = 5;
-const INITIAL_SCALE = 2;
+const INITIAL_SCALE = 1.6;
 const MIN_SCALE = 0.5;
 const LIMIT_TO_BOUNDS = false;
 
 const LEVEL_DIAMETER = LEVEL_RADIUS * 2;
 
 function World({ worldData, isAWorld }) {
-  const { selectedWorld, selectedLevelName, closeLevel, closeWorld } =
+  const { selectedWorld, selectedLevelName, closeLevel, closeWorld, worldShifted } =
     React.useContext(QuestContext);
 
   //console.log("world.jsx:25 World", worldData, isAWorld);
@@ -64,11 +65,15 @@ function World({ worldData, isAWorld }) {
         limitToBounds={LIMIT_TO_BOUNDS}
         initialScale={isAWorld ? 1 : INITIAL_SCALE}
       >
-        <TransformComponent>
-          <section className={"relative flex-grow w-screen h-dvh"}>
-            {Object.values(worldData).map(
-              (
-                {
+          {({ resetTransform }) => {
+            useEffect(() => {
+              resetTransform();
+            }, [worldShifted]);
+            return (
+            <TransformComponent>
+            <section className={"relative flex-grow w-screen h-dvh"}>
+              {Object.values(worldData).map(
+                ({
                   id,
                   name,
                   x_position,
@@ -76,10 +81,8 @@ function World({ worldData, isAWorld }) {
                   color,
                   isWorldUnlocked,
                   unlocked: isLevelUnlocked,
-                },
-                idx,
-              ) => {
-                return (
+                  status: levelStatus,
+                }, idx) => (
                   <WorldNode
                     key={id}
                     isAWorld={isAWorld}
@@ -91,14 +94,15 @@ function World({ worldData, isAWorld }) {
                     color={color}
                     isWorldUnlocked={isWorldUnlocked}
                     isLevelUnlocked={isLevelUnlocked}
+                    levelStatus={levelStatus}
                     worldData={worldData[idx]}
                   />
-                );
-              },
-            )}
-            {worldData && <QuestArrows data={worldData} isAWorld={isAWorld} />}
-          </section>
-        </TransformComponent>
+                ),
+              )}
+              {worldData && <QuestArrows data={worldData} isAWorld={isAWorld} />}
+            </section>
+          </TransformComponent>
+          )}}
       </TransformWrapper>
     </div>
   );
@@ -119,6 +123,7 @@ function WorldNode({
   isAPreview,
   isWorldUnlocked,
   isLevelUnlocked,
+  levelStatus,
   className,
   worldData,
 }) {
@@ -137,7 +142,8 @@ function WorldNode({
         }
       };
 
-  if (isAWorld) {
+  if (isAWorld) { // isAWorld means are you inside a world
+
     return (
       <button
         key={name}
@@ -145,6 +151,9 @@ function WorldNode({
           "text-black flex justify-center items-center cursor-pointer rounded-full text-xl text-[--surface-1]",
           isAPreview ? "shadow-node" : "animate-fadein",
           !isLevelUnlocked && "opacity-50",
+          // isLevelUnlocked && "border-2 border-[var(--surface-1)] border-solid border-black",
+          // (isLevelUnlocked && levelStatus === "COMPLETE") && "border-opacity-10", // frontier
+          // (isLevelUnlocked && levelStatus === "INCOMPLETE") && "border-opacity-50", // others
           className,
         )}
         style={{
@@ -165,7 +174,8 @@ function WorldNode({
     const totalLevels = worldData?.totalLevels || 0;
     const completedLevels = worldData?.user_world[0]?.user?.levels.filter(
       (level) => level.level.world_id === worldData.id,
-    ).length;
+    ).length; // optimize if needed, runs for each one of the nodes
+                // or, make it a field in the database object
 
     return (
       <button
@@ -223,6 +233,7 @@ WorldNode.propTypes = {
   isLevelUnlocked: PropTypes.bool, // might also be renamed to "unlocked"
   className: PropTypes.string,
   worldData: PropTypes.object.isRequired,
+  levelStatus: PropTypes.string,
 };
 
 export { World, WorldNode };

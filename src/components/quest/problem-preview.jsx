@@ -117,7 +117,7 @@ const ProblemPreview = () => {
               y={0}
               value={selectedLevelName}
               isAPreview={true}
-              className="opacity-100"
+              className={selectedLevelData.unlocked ? "opacity-100" : "opacity-50"}
             />
           )}
         </div>
@@ -130,7 +130,7 @@ const ProblemPreview = () => {
         <Button
           onClick={handleStartClick}
           className="py-2 px-4 rounded-lg bg-foreground text-background w-fit"
-          disabled={loading}
+          disabled={!selectedLevelData.unlocked || loading}
         >
           {loading ? <Loading /> : "Start"}
         </Button>

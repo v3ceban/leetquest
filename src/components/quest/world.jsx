@@ -61,7 +61,7 @@ function World({ worldData, isAWorld }) {
         limitToBounds={LIMIT_TO_BOUNDS}
       >
         <TransformComponent>
-          <section className="relative flex-grow w-screen h-dvh animate-fadein">
+          <section className={"relative flex-grow w-screen h-dvh"}>
             {Object.values(worldData).map(
               ({
                 id,
@@ -132,10 +132,10 @@ function WorldNode({
       key={name}
       className={cn(
         "flex justify-center text-sm items-center rounded cursor-pointer text-background bg-foreground",
-        isAPreview && "shadow-node",
-        !isWorldUnlocked && "opacity-50 cursor-not-allowed",
+        isAPreview ? "shadow-node" : "animate-fadein",
+        !isWorldUnlocked && "opacity-50",
       )}
-      disabled={!isWorldUnlocked}
+      // disabled={!isWorldUnlocked}
       style={{
         left: x_position,
         top: y_position,
@@ -143,6 +143,7 @@ function WorldNode({
         height: WORLD_HEIGHT,
         position: isAPreview ? "relative" : "absolute",
         pointerEvents: isAPreview ? "none" : "auto",
+        '--target-opacity': !isWorldUnlocked ? 0.5 : 1,
       }}
       onClick={handleClick}
     >
@@ -153,11 +154,11 @@ function WorldNode({
       key={name}
       className={cn(
         "text-black flex justify-center items-center cursor-pointer rounded-full text-xl text-[--surface-1]",
-        isAPreview && "shadow-node",
-        !isLevelUnlocked && "opacity-50 cursor-not-allowed",
+        isAPreview ? "shadow-node" : "animate-fadein",
+        !isLevelUnlocked && "opacity-50",
         className,
       )}
-      disabled={!isLevelUnlocked}
+      // disabled={!isLevelUnlocked}
       style={{
         left: x_position,
         top: y_position,
@@ -166,6 +167,7 @@ function WorldNode({
         backgroundColor: `var(--${color.toLowerCase()}-node)`,
         position: isAPreview ? "relative" : "absolute",
         pointerEvents: isAPreview ? "none" : "auto",
+        '--target-opacity': !isLevelUnlocked ? 0.5 : 1,
       }}
       onClick={handleClick}
     >
@@ -183,7 +185,7 @@ WorldNode.propTypes = {
   value: PropTypes.string,
   isAPreview: PropTypes.bool,
   isWorldUnlocked: PropTypes.bool,
-  isLevelUnlocked: PropTypes.bool,
+  isLevelUnlocked: PropTypes.bool, // might also be renamed to "unlocked"
   className: PropTypes.string,
 };
 

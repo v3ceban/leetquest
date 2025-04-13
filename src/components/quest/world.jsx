@@ -131,8 +131,8 @@ function WorldNode({
     <button
       key={name}
       className={cn(
-        "flex justify-center text-sm items-center rounded cursor-pointer text-background bg-foreground animate-fadein",
-        isAPreview && "shadow-node",
+        "flex justify-center text-sm items-center rounded cursor-pointer text-background bg-foreground",
+        isAPreview ? "shadow-node" : "animate-fadein",
         !isWorldUnlocked && "opacity-50",
       )}
       // disabled={!isWorldUnlocked}
@@ -153,8 +153,8 @@ function WorldNode({
     <button
       key={name}
       className={cn(
-        "text-black flex justify-center items-center cursor-pointer rounded-full text-xl text-[--surface-1] animate-fadein",
-        isAPreview && "shadow-node",
+        "text-black flex justify-center items-center cursor-pointer rounded-full text-xl text-[--surface-1]",
+        isAPreview ? "shadow-node" : "animate-fadein",
         !isLevelUnlocked && "opacity-50",
         className,
       )}

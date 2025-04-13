@@ -70,12 +70,12 @@ export default {
       },
       keyframes: {
         fadeIn: {
-          from: { opacity: 0 },
-          to: { opacity: 'var(--target-opacity, 1)' }, // Use CSS variable for target opacity
+          from: { filter: "opacity(0)" },
+          to: { filter: "opacity(100%)" },
         },
         fadeOut: {
-          from: { opacity: 'var(--target-opacity, 1)' }, // Start from the current opacity
-          to: { opacity: 0 },
+          from: { filter: "opacity(100%)" },
+          to: { filter: "opacity(0)" },
         },
       },
     },

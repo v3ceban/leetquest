@@ -71,10 +71,10 @@ export default {
       keyframes: {
         fadeIn: {
           from: { opacity: 0 },
-          to: { opacity: 1 },
+          to: { opacity: 'var(--target-opacity, 1)' }, // Use CSS variable for target opacity
         },
         fadeOut: {
-          from: { opacity: 1 },
+          from: { opacity: 'var(--target-opacity, 1)' }, // Start from the current opacity
           to: { opacity: 0 },
         },
       },

@@ -143,7 +143,7 @@ const ProblemPreview = () => {
         <Button
           onClick={() => handleLeetCodeClick(selectedLevelData.leetcode_url)}
           className="py-2 px-4 rounded-lg bg-foreground text-background w-fit"
-          disabled={loading}
+          disabled={!selectedLevelData.unlocked || loading}
         >
           {loading ? <Loading /> : "LeetCode"}
         </Button>

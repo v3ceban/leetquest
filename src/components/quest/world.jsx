@@ -16,15 +16,20 @@ const WORLD_HEIGHT = 40;
 const LEVEL_RADIUS = 20;
 
 const MAX_SCALE = 5;
-const INITIAL_SCALE = 1.6;
+const INITIAL_SCALE = 1.8;
 const MIN_SCALE = 0.5;
 const LIMIT_TO_BOUNDS = false;
 
 const LEVEL_DIAMETER = LEVEL_RADIUS * 2;
 
 function World({ worldData, isAWorld }) {
-  const { selectedWorld, selectedLevelName, closeLevel, closeWorld, worldShifted } =
-    React.useContext(QuestContext);
+  const {
+    selectedWorld,
+    selectedLevelName,
+    closeLevel,
+    closeWorld,
+    worldShifted,
+  } = React.useContext(QuestContext);
 
   //console.log("world.jsx:25 World", worldData, isAWorld);
 
@@ -58,58 +63,66 @@ function World({ worldData, isAWorld }) {
       <h2 className="py-2 pl-4 bg-[var(--surface-1)]">
         {isAWorld ? selectedWorld : "Worlds"}
       </h2>
-      <TransformWrapper
-        doubleClick={{ mode: "reset" }}
-        maxScale={MAX_SCALE}
-        minScale={MIN_SCALE}
-        limitToBounds={LIMIT_TO_BOUNDS}
-        initialScale={isAWorld ? 1 : INITIAL_SCALE}
-      >
+      <section className="px-4">
+        <TransformWrapper
+          doubleClick={{ mode: "reset" }}
+          maxScale={MAX_SCALE}
+          minScale={MIN_SCALE}
+          limitToBounds={LIMIT_TO_BOUNDS}
+          initialScale={isAWorld ? 1 : INITIAL_SCALE}
+        >
           {({ resetTransform }) => {
             useEffect(() => {
-              resetTransform();
+              isAWorld && resetTransform();
             }, [worldShifted]);
             return (
-            <TransformComponent>
-            <section className={"relative flex-grow w-screen h-dvh"}>
-              {Object.values(worldData).map(
-                ({
-                  id,
-                  name,
-                  x_position,
-                  y_position,
-                  color,
-                  isWorldUnlocked,
-                  unlocked: isLevelUnlocked,
-                  status: levelStatus,
-                }, idx) => (
-                  <WorldNode
-                    key={id}
-                    isAWorld={isAWorld}
-                    name={name}
-                    x_position={x_position}
-                    y_position={y_position}
-                    value={name}
-                    isAPreview={false}
-                    color={color}
-                    isWorldUnlocked={isWorldUnlocked}
-                    isLevelUnlocked={isLevelUnlocked}
-                    levelStatus={levelStatus}
-                    worldData={worldData[idx]}
-                  />
-                ),
-              )}
-              {worldData && <QuestArrows data={worldData} isAWorld={isAWorld} />}
-            </section>
-          </TransformComponent>
-          )}}
-      </TransformWrapper>
+              <TransformComponent>
+                <section className={"relative flex-grow w-screen h-dvh"}>
+                  {worldData.map(
+                    (
+                      {
+                        id,
+                        name,
+                        x_position,
+                        y_position,
+                        color,
+                        isWorldUnlocked,
+                        unlocked: isLevelUnlocked,
+                        status: levelStatus,
+                      },
+                      idx,
+                    ) => (
+                      <WorldNode
+                        key={id}
+                        isAWorld={isAWorld}
+                        name={name}
+                        x_position={x_position}
+                        y_position={y_position}
+                        value={name}
+                        isAPreview={false}
+                        color={color}
+                        isWorldUnlocked={isWorldUnlocked}
+                        isLevelUnlocked={isLevelUnlocked}
+                        levelStatus={levelStatus}
+                        worldData={worldData[idx]}
+                      />
+                    ),
+                  )}
+                  {worldData && (
+                    <QuestArrows data={worldData} isAWorld={isAWorld} />
+                  )}
+                </section>
+              </TransformComponent>
+            );
+          }}
+        </TransformWrapper>
+      </section>
     </div>
   );
 }
 
 World.propTypes = {
-  worldData: PropTypes.object,
+  worldData: PropTypes.array,
   isAWorld: PropTypes.bool,
 };
 
@@ -123,7 +136,7 @@ function WorldNode({
   isAPreview,
   isWorldUnlocked,
   isLevelUnlocked,
-  levelStatus,
+  //levelStatus,
   className,
   worldData,
 }) {
@@ -142,15 +155,14 @@ function WorldNode({
         }
       };
 
-  if (isAWorld) { // isAWorld means are you inside a world
-
+  if (isAWorld) {
+    // isAWorld means are you inside a world
     return (
       <button
         key={name}
         className={cn(
-          "text-black flex justify-center items-center cursor-pointer rounded-full text-xl text-[--surface-1]",
-          isAPreview ? "shadow-node" : "animate-fadein",
-          !isLevelUnlocked && "opacity-50",
+          "text-black shadow shadow-background flex justify-center items-center cursor-pointer rounded-full text-xl text-[--surface-1]",
+          (!isLevelUnlocked || !isWorldUnlocked) && "opacity-50",
           // isLevelUnlocked && "border-2 border-[var(--surface-1)] border-solid border-black",
           // (isLevelUnlocked && levelStatus === "COMPLETE") && "border-opacity-10", // frontier
           // (isLevelUnlocked && levelStatus === "INCOMPLETE") && "border-opacity-50", // others
@@ -174,15 +186,13 @@ function WorldNode({
     const totalLevels = worldData?.totalLevels || 0;
     const completedLevels = worldData?.user_world[0]?.user?.levels.filter(
       (level) => level.level.world_id === worldData.id,
-    ).length; // optimize if needed, runs for each one of the nodes
-                // or, make it a field in the database object
+    ).length; // optimize if needed, runs for each one of the nodes or, make it a field in the database object
 
     return (
       <button
         key={name}
         className={cn(
           "flex flex-col justify-center text-[8px] items-center rounded cursor-pointer text-background bg-foreground",
-          isAPreview ? "shadow-node" : "animate-fadein",
           !isWorldUnlocked && "opacity-50",
         )}
         style={{

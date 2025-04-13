@@ -6,13 +6,16 @@ import { QuestArrows } from "@/components/arrow";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { QuestContext } from "@/components/quest/context";
 import { cn } from "@/lib/utils";
+import { Lock } from "lucide-react";
+import { Progress } from "../ui/progress";
 
 // also in src/components/arrow.jsx
 const WORLD_WIDTH = 100;
 const WORLD_HEIGHT = 40;
 const LEVEL_RADIUS = 20;
 
-const MAX_SCALE = 2;
+const MAX_SCALE = 5;
+const INITIAL_SCALE = 2;
 const MIN_SCALE = 0.5;
 const LIMIT_TO_BOUNDS = false;
 
@@ -59,32 +62,39 @@ function World({ worldData, isAWorld }) {
         maxScale={MAX_SCALE}
         minScale={MIN_SCALE}
         limitToBounds={LIMIT_TO_BOUNDS}
+        initialScale={isAWorld ? 1 : INITIAL_SCALE}
       >
         <TransformComponent>
           <section className={"relative flex-grow w-screen h-dvh"}>
             {Object.values(worldData).map(
-              ({
-                id,
-                name,
-                x_position,
-                y_position,
-                color,
-                isWorldUnlocked,
-                unlocked: isLevelUnlocked,
-              }) => (
-                <WorldNode
-                  key={id}
-                  isAWorld={isAWorld}
-                  name={name}
-                  x_position={x_position}
-                  y_position={y_position}
-                  value={name}
-                  isAPreview={false}
-                  color={color}
-                  isWorldUnlocked={isWorldUnlocked}
-                  isLevelUnlocked={isLevelUnlocked}
-                />
-              ),
+              (
+                {
+                  id,
+                  name,
+                  x_position,
+                  y_position,
+                  color,
+                  isWorldUnlocked,
+                  unlocked: isLevelUnlocked,
+                },
+                idx,
+              ) => {
+                return (
+                  <WorldNode
+                    key={id}
+                    isAWorld={isAWorld}
+                    name={name}
+                    x_position={x_position}
+                    y_position={y_position}
+                    value={name}
+                    isAPreview={false}
+                    color={color}
+                    isWorldUnlocked={isWorldUnlocked}
+                    isLevelUnlocked={isLevelUnlocked}
+                    worldData={worldData[idx]}
+                  />
+                );
+              },
             )}
             {worldData && <QuestArrows data={worldData} isAWorld={isAWorld} />}
           </section>
@@ -110,9 +120,9 @@ function WorldNode({
   isWorldUnlocked,
   isLevelUnlocked,
   className,
+  worldData,
 }) {
   const { handleWorldClick, handleLevelClick } = React.useContext(QuestContext);
-
   // console.log("world.jsx:115 WorldNode", name, isAWorld, color, x_position, y_position, value, isAPreview);
 
   const handleClick = isAPreview
@@ -127,51 +137,78 @@ function WorldNode({
         }
       };
 
-  return !isAWorld ? (
-    <button
-      key={name}
-      className={cn(
-        "flex justify-center text-sm items-center rounded cursor-pointer text-background bg-foreground",
-        isAPreview ? "shadow-node" : "animate-fadein",
-        !isWorldUnlocked && "opacity-50",
-      )}
-      // disabled={!isWorldUnlocked}
-      style={{
-        left: x_position,
-        top: y_position,
-        width: WORLD_WIDTH,
-        height: WORLD_HEIGHT,
-        position: isAPreview ? "relative" : "absolute",
-        pointerEvents: isAPreview ? "none" : "auto",
-      }}
-      onClick={handleClick}
-    >
-      {name}
-    </button>
-  ) : (
-    <button
-      key={name}
-      className={cn(
-        "text-black flex justify-center items-center cursor-pointer rounded-full text-xl text-[--surface-1]",
-        isAPreview ? "shadow-node" : "animate-fadein",
-        !isLevelUnlocked && "opacity-50",
-        className,
-      )}
-      // disabled={!isLevelUnlocked}
-      style={{
-        left: x_position,
-        top: y_position,
-        width: LEVEL_DIAMETER,
-        height: LEVEL_DIAMETER,
-        backgroundColor: `var(--${color.toLowerCase()}-node)`,
-        position: isAPreview ? "relative" : "absolute",
-        pointerEvents: isAPreview ? "none" : "auto",
-      }}
-      onClick={handleClick}
-    >
-      {name}
-    </button>
-  );
+  if (isAWorld) {
+    return (
+      <button
+        key={name}
+        className={cn(
+          "text-black flex justify-center items-center cursor-pointer rounded-full text-xl text-[--surface-1]",
+          isAPreview ? "shadow-node" : "animate-fadein",
+          !isLevelUnlocked && "opacity-50",
+          className,
+        )}
+        style={{
+          left: x_position,
+          top: y_position,
+          width: LEVEL_DIAMETER,
+          height: LEVEL_DIAMETER,
+          backgroundColor: `var(--${color.toLowerCase()}-node)`,
+          position: isAPreview ? "relative" : "absolute",
+          pointerEvents: isAPreview ? "none" : "auto",
+        }}
+        onClick={handleClick}
+      >
+        {name}
+      </button>
+    );
+  } else {
+    const totalLevels = worldData?.totalLevels || 0;
+    const completedLevels = worldData?.user_world[0]?.user?.levels.filter(
+      (level) => level.level.world_id === worldData.id,
+    ).length;
+
+    return (
+      <button
+        key={name}
+        className={cn(
+          "flex flex-col justify-center text-[8px] items-center rounded cursor-pointer text-background bg-foreground",
+          isAPreview ? "shadow-node" : "animate-fadein",
+          !isWorldUnlocked && "opacity-50",
+        )}
+        style={{
+          left: x_position,
+          top: y_position,
+          width: WORLD_WIDTH,
+          height: WORLD_HEIGHT,
+          position: isAPreview ? "relative" : "absolute",
+          pointerEvents: isAPreview ? "none" : "auto",
+        }}
+        onClick={handleClick}
+      >
+        <span className="font-medium">{name}</span>
+        {!isAPreview && (
+          <>
+            {!isWorldUnlocked ? (
+              <span className="mt-1 text-[6px]">
+                <Lock className="inline-block mr-1 w-2 h-2" />
+                Locked
+              </span>
+            ) : (
+              <>
+                <span className="mt-1 text-[6px]">
+                  {completedLevels || 0}/{totalLevels || 0} levels
+                </span>
+                <Progress
+                  value={(completedLevels / totalLevels) * 100}
+                  className="rounded-none w-[78px] h-[3px] mt-[2px] bg-background"
+                />
+              </>
+            )}
+          </>
+        )}
+      </button>
+    );
+  }
 }
 
 WorldNode.propTypes = {
@@ -185,6 +222,7 @@ WorldNode.propTypes = {
   isWorldUnlocked: PropTypes.bool,
   isLevelUnlocked: PropTypes.bool, // might also be renamed to "unlocked"
   className: PropTypes.string,
+  worldData: PropTypes.object.isRequired,
 };
 
 export { World, WorldNode };

@@ -123,6 +123,8 @@ export const getDashboardData = async () => {
       id: ul.level_id,
       type: ul.status === "COMPLETE" ? "COMPLETE" : "UNLOCK",
       levelName: ul.level.title,
+      levelId: ul.level.name,
+      worldId: ul.level.world_id,
       worldName: ul.level.world.name,
       date: ul.updated_at.toISOString().split("T")[0],
     }));

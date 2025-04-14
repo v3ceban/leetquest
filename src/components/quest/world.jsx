@@ -8,7 +8,7 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { QuestContext } from "@/components/quest/context";
 import { cn } from "@/lib/utils";
 import { Lock } from "lucide-react";
-import { Progress } from "../ui/progress";
+import { Progress } from "@/components/ui/progress";
 
 // also in src/components/arrow.jsx
 const WORLD_WIDTH = 100;
@@ -23,15 +23,8 @@ const LIMIT_TO_BOUNDS = false;
 const LEVEL_DIAMETER = LEVEL_RADIUS * 2;
 
 function World({ worldData, isAWorld }) {
-  const {
-    selectedWorld,
-    selectedLevelName,
-    closeLevel,
-    closeWorld,
-    worldShifted,
-  } = React.useContext(QuestContext);
-
-  //console.log("world.jsx:25 World", worldData, isAWorld);
+  const { selectedWorld, selectedLevelName, closeLevel, closeWorld } =
+    React.useContext(QuestContext);
 
   const [isDragging, setIsDragging] = React.useState(false);
 
@@ -63,18 +56,25 @@ function World({ worldData, isAWorld }) {
       <h2 className="py-2 pl-4 bg-[var(--surface-1)]">
         {isAWorld ? selectedWorld : "Worlds"}
       </h2>
-      <section className="px-4">
+      <section>
         <TransformWrapper
           doubleClick={{ mode: "reset" }}
           maxScale={MAX_SCALE}
           minScale={MIN_SCALE}
           limitToBounds={LIMIT_TO_BOUNDS}
           initialScale={isAWorld ? 1 : INITIAL_SCALE}
+          wheel={{
+            step: 0.1,
+            smoothStep: 0.005,
+          }}
+          pinch={{
+            step: 10,
+          }}
         >
           {({ resetTransform }) => {
             useEffect(() => {
               isAWorld && resetTransform();
-            }, [worldShifted]);
+            }, []);
             return (
               <TransformComponent>
                 <section className={"relative flex-grow w-screen h-dvh"}>
@@ -141,7 +141,6 @@ function WorldNode({
   worldData,
 }) {
   const { handleWorldClick, handleLevelClick } = React.useContext(QuestContext);
-  // console.log("world.jsx:115 WorldNode", name, isAWorld, color, x_position, y_position, value, isAPreview);
 
   const handleClick = isAPreview
     ? undefined
@@ -161,7 +160,8 @@ function WorldNode({
       <button
         key={name}
         className={cn(
-          "text-black shadow shadow-background flex justify-center items-center cursor-pointer rounded-full text-xl text-[--surface-1]",
+          "text-black shadow shadow-black/60 flex justify-center items-center rounded-full text-xl text-[--surface-1]",
+          "cursor-pointer hover:shadow-black hover:saturate-150",
           (!isLevelUnlocked || !isWorldUnlocked) && "opacity-50",
           // isLevelUnlocked && "border-2 border-[var(--surface-1)] border-solid border-black",
           // (isLevelUnlocked && levelStatus === "COMPLETE") && "border-opacity-10", // frontier
@@ -184,15 +184,13 @@ function WorldNode({
     );
   } else {
     const totalLevels = worldData?.totalLevels || 0;
-    const completedLevels = worldData?.user_world[0]?.user?.levels.filter(
-      (level) => level.level.world_id === worldData.id,
-    ).length; // optimize if needed, runs for each one of the nodes or, make it a field in the database object
-
+    const completedLevels = worldData?.levelsCompleted || 0;
     return (
       <button
         key={name}
         className={cn(
-          "flex flex-col justify-center text-[8px] items-center rounded cursor-pointer text-background bg-foreground",
+          "flex shadow shadow-black/25 flex-col justify-center text-[8px] items-center rounded text-background bg-foreground",
+          " cursor-pointer hover:shadow-black/50 hover:saturate-150",
           !isWorldUnlocked && "opacity-50",
         )}
         style={{
@@ -216,11 +214,11 @@ function WorldNode({
             ) : (
               <>
                 <span className="mt-1 text-[6px]">
-                  {completedLevels || 0}/{totalLevels || 0} levels
+                  {completedLevels || 0}/{totalLevels || 0} Levels
                 </span>
                 <Progress
                   value={(completedLevels / totalLevels) * 100}
-                  className="rounded-none w-[78px] h-[3px] mt-[2px] bg-primary"
+                  className="w-[78px] h-[3px] mt-[2.5px] bg-primary"
                   progressBarClass="bg-background"
                 />
               </>
@@ -241,7 +239,7 @@ WorldNode.propTypes = {
   value: PropTypes.string,
   isAPreview: PropTypes.bool,
   isWorldUnlocked: PropTypes.bool,
-  isLevelUnlocked: PropTypes.bool, // might also be renamed to "unlocked"
+  isLevelUnlocked: PropTypes.bool,
   className: PropTypes.string,
   worldData: PropTypes.object.isRequired,
   levelStatus: PropTypes.string,

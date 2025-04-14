@@ -7,7 +7,7 @@ import { QuestContext } from "@/components/quest/context";
 import { WorldNode } from "@/components/quest/world";
 import { setLevelComplete } from "./fetch-data";
 import { cn } from "@/lib/utils";
-import { CircleCheck, Play } from "lucide-react";
+import { Check, Play, SquareCheck } from "lucide-react";
 
 const ProblemPreview = () => {
   const {
@@ -29,7 +29,8 @@ const ProblemPreview = () => {
     if (
       !selectedLevelData ||
       loading ||
-      selectedLevelData.status === "COMPLETE"
+      selectedLevelData.status === "COMPLETE" ||
+      !selectedLevelData.unlocked
     )
       return;
     setLoading(true);
@@ -45,7 +46,12 @@ const ProblemPreview = () => {
   };
 
   const handleLeetCodeClick = async (url) => {
-    if (!selectedLevelData || loading || !url) return;
+    if (
+      !selectedLevelData.unlocked ||
+      !selectedLevelData.isWorldUnlocked ||
+      !url
+    )
+      return;
     open(url, "_blank", "noreferrer");
     setLoading(false);
   };
@@ -85,16 +91,24 @@ const ProblemPreview = () => {
         <Button
           onClick={handleCompleteClick}
           className="w-full bg-foreground text-background"
-          disabled={!selectedLevelData.unlocked || loading}
+          variant="outline"
+          disabled={
+            !selectedLevelData.unlocked ||
+            !selectedLevelData.isWorldUnlocked ||
+            loading
+          }
         >
           {loading ? (
             <Loading />
+          ) : selectedLevelData.status === "COMPLETE" ? (
+            <>
+              <SquareCheck className="mr-2 w-5 h-5" />
+              Completed
+            </>
           ) : (
             <>
-              <CircleCheck className="mr-2 w-5 h-5" />
-              {selectedLevelData.status === "COMPLETE"
-                ? "Completed"
-                : "Mark Complete"}
+              <Check className="mr-2 w-5 h-5" />
+              Mark Complete
             </>
           )}
         </Button>
@@ -102,7 +116,11 @@ const ProblemPreview = () => {
           <Button
             onClick={() => handleLeetCodeClick(selectedLevelData.leetcode_url)}
             className="w-full bg-foreground text-background"
-            disabled={!selectedLevelData.unlocked || loading}
+            disabled={
+              !selectedLevelData.unlocked ||
+              !selectedLevelData.isWorldUnlocked ||
+              loading
+            }
           >
             <Play className="mr-2 w-4 h-4 fill-background" />
             Start

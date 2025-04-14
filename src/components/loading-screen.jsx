@@ -26,7 +26,7 @@ export const LoadingScreen = ({ children }) => {
   }, [progress]);
 
   return (
-    <section className="grid place-items-center w-full h-full duration-300 animate-in fade-in slide-in-from-bottom-4 min-h-[calc(100dvh-104px-20px)]">
+    <section className="grid place-items-center w-full h-full min-h-[calc(100dvh-104px-20px)]">
       <div className="flex flex-col justify-center items-center px-4 space-y-6 w-full max-w-md">
         <div className="flex gap-3 items-center">
           <Loader2 className="w-6 h-6 animate-spin" />

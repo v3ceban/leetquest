@@ -40,10 +40,10 @@ const Navbar = async ({ className }) => {
           </Link>
         </div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden gap-x-4 md:grid grid-cols-[150px_150px_150px]">
-          {session ? (
-            <>
+        {session ? (
+          <>
+            {" "}
+            <nav className="hidden gap-x-4 md:grid grid-cols-[150px_150px_150px]">
               <Button variant="wave" size="wave">
                 <Link
                   className="flex justify-center items-center w-full h-full"
@@ -87,77 +87,68 @@ const Navbar = async ({ className }) => {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-            </>
-          ) : (
-            <AuthButton
-              className="col-start-3 col-end-4"
-              session={session}
-              variant="wave"
-              size="wave"
-              auto="/login"
-            />
-          )}
-        </nav>
-
-        {/* Mobile Navigation */}
-        {session ? (
-          <Sheet>
-            <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon">
-                <Menu className="w-full h-full" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="px-0 border-border w-[250px]">
-              <nav className="flex flex-col gap-4 p-6">
-                <SheetHeader className="flex flex-row gap-2 justify-center items-center pb-4 mb-4 border-b border-border">
-                  <Image
-                    src={session.user.image}
-                    alt={session.user.name}
-                    width={32}
-                    height={32}
-                    className="rounded-full"
-                  />
-                  <SheetTitle className="!mt-0 text-base font-medium">
-                    {session.user.name}
-                  </SheetTitle>
-                </SheetHeader>
-                <Button
-                  variant="ghost"
-                  className="justify-start w-full"
-                  asChild
-                >
-                  <Link href="/dashboard">
-                    <Home className="mr-2 w-5 h-5" />
-                    Dashboard
-                  </Link>
+            </nav>
+            <Sheet>
+              <SheetTrigger asChild className="md:hidden">
+                <Button variant="ghost" size="icon">
+                  <Menu className="w-full h-full" />
                 </Button>
-                <Button
-                  variant="ghost"
-                  className="justify-start w-full"
-                  asChild
-                >
-                  <Link href="/quest">
-                    <MapPin className="mr-2 w-5 h-5" />
-                    Quest
-                  </Link>
-                </Button>
-                <div className="pt-4 mt-auto border-t border-border">
-                  <AuthButton
-                    session={session}
+              </SheetTrigger>
+              <SheetContent
+                side="right"
+                className="px-0 border-border w-[250px]"
+              >
+                <nav className="flex flex-col gap-4 p-6">
+                  <SheetHeader className="flex flex-row gap-2 justify-center items-center pb-4 mb-4 border-b border-border">
+                    <Image
+                      src={session.user.image}
+                      alt={session.user.name}
+                      width={32}
+                      height={32}
+                      className="rounded-full"
+                    />
+                    <SheetTitle className="!mt-0 text-base font-medium">
+                      {session.user.name}
+                    </SheetTitle>
+                  </SheetHeader>
+                  <Button
                     variant="ghost"
                     className="justify-start w-full"
-                  />
-                </div>
-              </nav>
-            </SheetContent>
-          </Sheet>
+                    asChild
+                  >
+                    <Link href="/dashboard">
+                      <Home className="mr-2 w-5 h-5" />
+                      Dashboard
+                    </Link>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    className="justify-start w-full"
+                    asChild
+                  >
+                    <Link href="/quest">
+                      <MapPin className="mr-2 w-5 h-5" />
+                      Quest
+                    </Link>
+                  </Button>
+                  <div className="pt-4 mt-auto border-t border-border">
+                    <AuthButton
+                      session={session}
+                      variant="ghost"
+                      className="justify-start w-full"
+                    />
+                  </div>
+                </nav>
+              </SheetContent>
+            </Sheet>
+          </>
         ) : (
           <AuthButton
             session={session}
             variant="wave"
             size="wave"
-            className="w-32 md:hidden"
-            auto="/login"
+            className="w-32"
+            primary
           />
         )}
       </div>

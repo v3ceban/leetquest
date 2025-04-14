@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Globe, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export const WorldProgressCard = ({ className, progress, total }) => {
   const toUnlock = total - progress.length;
@@ -17,8 +18,12 @@ export const WorldProgressCard = ({ className, progress, total }) => {
         {progress.map((world) => {
           const { worldId, worldName, completed, total } = world;
           return (
-            <section key={worldId} className="space-y-2">
-              <div className="flex justify-between items-center">
+            <Link
+              href={`/quest?world=${worldId}`}
+              key={worldId}
+              className="block space-y-2 hover:underline"
+            >
+              <section className="flex justify-between items-center">
                 <h3 className="flex gap-2 items-center">
                   <Globe className="w-4 h-4 text-muted-foreground" />
                   <span className="text-sm font-medium">{worldName}</span>
@@ -26,9 +31,9 @@ export const WorldProgressCard = ({ className, progress, total }) => {
                 <span className="text-sm text-muted-foreground">
                   {completed}/{total} levels
                 </span>
-              </div>
+              </section>
               <Progress value={(completed / total) * 100} />
-            </section>
+            </Link>
           );
         })}
         {toUnlock > 0 && (

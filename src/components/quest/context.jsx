@@ -17,6 +17,27 @@ const QuestProvider = ({ children, initialWorldsData }) => {
   const [selectedLevelName, setSelectedLevelName] = React.useState(null);
   const [levelShifted, setLevelShifted] = React.useState(false);
 
+  const [levelFull, setLevelFull] = React.useState(false);
+  const [descriptionFull, setDescriptionFull] = React.useState(false);
+
+  React.useEffect(function setWorldFromURL() {
+    const params = new URLSearchParams(location.search);
+    const worldParam = params.get("world");
+    const levelParam = params.get("level");
+
+    if (worldParam) {
+      const world = initialWorldsData.find((w) => w.id === worldParam);
+      if (world) {
+        setSelectedWorld(world.name);
+        updateSelectedWorldData(world.name);
+      }
+    }
+
+    if (levelParam) {
+      setSelectedLevelName(levelParam);
+    }
+  }, []);
+
   const updateSelectedWorldData = (worldName) => {
     if (!worldName) {
       setSelectedWorldData([]);
@@ -33,6 +54,10 @@ const QuestProvider = ({ children, initialWorldsData }) => {
       unlocked: level.user_levels[0]?.unlocked || false,
       isWorldUnlocked: world.user_world[0]?.unlocked || false,
     }));
+
+    const params = new URLSearchParams(location.search);
+    params.set("world", world.id);
+    history.replaceState({}, "", `${location.pathname}?${params}`);
 
     setSelectedWorldData(levelsData);
   };
@@ -65,6 +90,10 @@ const QuestProvider = ({ children, initialWorldsData }) => {
   };
 
   const closeWorld = () => {
+    const params = new URLSearchParams(location.search);
+    params.delete("world");
+    params.delete("level");
+    history.replaceState({}, "", `${location.pathname}?${params}`);
     switchWorld(null);
   };
 
@@ -82,11 +111,17 @@ const QuestProvider = ({ children, initialWorldsData }) => {
       setLevelShifted(false);
       setTimeout(() => setSelectedLevelName(levelName), shiftDuration);
     }
+    const params = new URLSearchParams(location.search);
+    params.set("level", levelName);
+    history.replaceState({}, "", `${location.pathname}?${params}`);
   };
 
   const closeLevel = () => {
     setLevelShifted(false);
     setTimeout(() => setSelectedLevelName(null), shiftDuration);
+    const params = new URLSearchParams(location.search);
+    params.delete("level");
+    history.replaceState({}, "", `${location.pathname}?${params}`);
   };
 
   React.useEffect(() => {
@@ -111,6 +146,10 @@ const QuestProvider = ({ children, initialWorldsData }) => {
         handleWorldClick,
         setWorldsData,
         setSelectedWorldData,
+        levelFull,
+        setLevelFull,
+        descriptionFull,
+        setDescriptionFull,
       }}
     >
       {children}

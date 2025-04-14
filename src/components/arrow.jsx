@@ -83,7 +83,6 @@ Arrow.propTypes = {
 };
 
 const QuestArrows = ({ data, isAWorld }) => {
-  // console.log("arrow.jsx:87 QuestArrows", data, isAWorld);
   return (
     <ArrowsWrapper>
       {Object.values(data).flatMap(

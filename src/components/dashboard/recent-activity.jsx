@@ -2,6 +2,7 @@ import propTypes from "prop-types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Trophy, ChevronRight, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export const RecentActivityCard = ({ className, activities }) => {
   return (
@@ -29,19 +30,30 @@ export const RecentActivityCard = ({ className, activities }) => {
                   ) : (
                     <Star className="w-4 h-4 text-blue-500" />
                   )}
-                  <div>
-                    <p className="text-sm font-medium">{activity.levelName}</p>
-                    <p className="text-xs text-muted-foreground">
+                  <div className="flex flex-col">
+                    <Link
+                      href={`/quest/?world=${activity.worldId}&level=${activity.levelId}`}
+                      className="text-sm font-medium hover:underline"
+                    >
+                      {activity.levelName}
+                    </Link>
+                    <Link
+                      href={`/quest/?world=${activity.worldId}`}
+                      className="text-xs hover:underline text-muted-foreground"
+                    >
                       {activity.worldName}
-                    </p>
+                    </Link>
                   </div>
                 </div>
-                <div className="flex gap-2 items-center">
-                  <span className="text-xs text-muted-foreground">
+                <Link
+                  href={`/quest/?world=${activity.worldId}&level=${activity.levelId}`}
+                  className="flex gap-2 items-center hover:underline"
+                >
+                  <p className="text-xs text-muted-foreground">
                     {activity.date}
-                  </span>
+                  </p>
                   <ChevronRight className="w-4 h-4 text-muted-foreground" />
-                </div>
+                </Link>
               </div>
             ))
           )}

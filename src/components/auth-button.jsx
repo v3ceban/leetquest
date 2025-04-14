@@ -19,7 +19,7 @@ import {
   FaRightToBracket,
 } from "react-icons/fa6";
 import { Loading } from "@/components/ui/spinner";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { providers } from "@/lib/auth";
 
 export const AuthButton = ({
@@ -28,16 +28,20 @@ export const AuthButton = ({
   variant,
   size,
   children,
-  auto,
+  primary = false,
 }) => {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [loading, setLoading] = React.useState(false);
-  const [open, setOpen] = React.useState(auto && pathname === auto);
+  const [open, setOpen] = React.useState(pathname === "/login" && primary);
 
   const handleLogin = (provider) => {
     if (providers.includes(loading)) return;
     setLoading(provider);
-    signIn(provider.toLowerCase(), { redirectTo: "/dashboard" });
+    const redirectUrl = ["/login", "/"].includes(pathname)
+      ? "/dashboard"
+      : `${pathname}?${searchParams.toString()}`;
+    signIn(provider.toLowerCase(), { redirectTo: redirectUrl });
   };
 
   const handleLogout = () => {
@@ -107,8 +111,8 @@ AuthButton.propTypes = {
   className: PropTypes.string,
   variant: PropTypes.string,
   size: PropTypes.string,
-  auto: PropTypes.bool,
   children: PropTypes.string,
+  primary: PropTypes.bool,
 };
 
 const LogoutButton = ({ className, loading, variant, size, onLogout }) => {

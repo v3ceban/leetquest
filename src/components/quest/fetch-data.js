@@ -6,7 +6,51 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function fetchWorldsData() {
-  const { user } = await auth();
+  const session = await auth();
+
+  const user = session?.user;
+
+  if (!user) {
+    const worldsData = await prisma.world.findMany({
+      select: {
+        id: true,
+        name: true,
+        x_position: true,
+        y_position: true,
+        requiredBy: true,
+        flip_arrow: true,
+        levels: {
+          select: {
+            id: true,
+            title: true,
+            description: true,
+            type: true,
+            color: true,
+            name: true,
+            x_position: true,
+            y_position: true,
+            requiredBy: true,
+            flip_arrow: true,
+            leetcode_url: true,
+          },
+        },
+      },
+    });
+
+    return worldsData.map((world) => ({
+      ...world,
+      levels: world.levels.map((level) => ({
+        ...level,
+        user_levels: [],
+        unlocked: false,
+        status: "INCOMPLETE",
+      })),
+      user_world: [],
+      totalLevels: world.levels.length,
+      levelsCompleted: 0,
+      isWorldUnlocked: false,
+    }));
+  }
 
   const worldsData = await prisma.world.findMany({
     select: {
@@ -73,6 +117,9 @@ export async function fetchWorldsData() {
   return worldsData.map((world) => ({
     ...world,
     totalLevels: world.levels.length,
+    levelsCompleted: world.user_world[0]?.user?.levels.filter(
+      (level) => level.level.world_id === world.id,
+    ).length,
     isWorldUnlocked: world.user_world[0].unlocked ?? false,
   }));
 }
@@ -82,8 +129,6 @@ export async function fetchSelectedWorldData(
   selectedWorld,
   selectedWorldId,
 ) {
-  // console.log("fetch-data.jsx:62 fetchSelectedWorldData fetching selected world data for", selectedWorld, "...");
-
   // if needed, can implement a more efficient way to find the world e.g. by querying the database again or using a map
   const worldId = selectedWorldId
     ? selectedWorldId
@@ -122,7 +167,6 @@ export async function fetchSelectedWorldData(
     });
   }
 
-  // console.log("fetch-data.jsx:102 fetchSelectedWorldData", selectedWorldData);
   const results = await prisma.user_Level.findMany({
     where: {
       user_id: user.id,
@@ -159,6 +203,7 @@ export async function fetchSelectedWorldData(
     user_id: level.user_id,
     status: level.status,
     unlocked: level.unlocked,
+    isWorldUnlocked: true,
   }));
 }
 

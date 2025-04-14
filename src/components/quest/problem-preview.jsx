@@ -2,12 +2,20 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Loading } from "@/components/ui/spinner";
 import { QuestContext } from "@/components/quest/context";
 import { WorldNode } from "@/components/quest/world";
 import { setLevelComplete } from "./fetch-data";
 import { cn } from "@/lib/utils";
 import { Check, Play, SquareCheck } from "lucide-react";
+import { Editor } from "@monaco-editor/react";
+import { executeCode, getLanguages } from "./api";
 
 const ProblemPreview = () => {
   const {
@@ -56,6 +64,35 @@ const ProblemPreview = () => {
     setLoading(false);
   };
 
+  const editorRef = React.useRef(null);
+  const [language, setLanguage] = React.useState(null);
+  /*const [languages, setLanguages] = React.useState([]);
+  getLanguages().then((result) => {
+    setLanguages(result);
+  })*/
+
+  function handleEditorDidMount(editor, monaco) {
+    editorRef.current = editor;
+  }
+
+  const [output, setOutput] = React.useState(null);
+  const [compileError, setCompileError] = React.useState(false);
+
+  const runCode = async () => {
+    const code = editorRef.current.getValue();
+    if (!code || !language) return;
+    try {
+      setLoading(true);
+      const result = await executeCode(language, code);
+      setOutput(result.run.output);
+      result.run.stderr ? setCompileError(true) : setCompileError(false);
+    } catch (error) {
+      console.error("Error Running Code:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4 p-4 h-full">
       <div className="flex flex-row gap-4 items-center">
@@ -82,6 +119,47 @@ const ProblemPreview = () => {
         className="prose prose-invert"
         dangerouslySetInnerHTML={{ __html: selectedLevelData.description }}
       />
+      <Button
+        onClick={() => setLanguage("python")}
+        className="bg-foreground text-background"
+        disabled={!selectedLevelData.unlocked || loading}
+      >
+        Python
+      </Button>
+      <Button
+        onClick={() => setLanguage("c")}
+        className="bg-foreground text-background"
+        disabled={!selectedLevelData.unlocked || loading}
+      >
+        C
+      </Button>
+      <Button
+        onClick={() => setLanguage("javascript")}
+        className="bg-foreground text-background"
+        disabled={!selectedLevelData.unlocked || loading}
+      >
+        Javascript
+      </Button>
+      <p>Current: {language ? language : "Please Choose a Language"}</p>
+      <Editor
+        height="50vh"
+        width="100%"
+        theme="vs-dark"
+        onMount={handleEditorDidMount}
+        path={language}
+        defaultLanguage={language}
+        defaultValue=""
+      />
+      <Button
+        onClick={() => runCode()}
+        className="w-full bg-foreground text-background"
+        disabled={!selectedLevelData.unlocked || loading}
+      >
+        Run Code
+      </Button>
+      <div className={`w-full text-2xl ${compileError ? "text-red-500" : ""}`}>
+        {output ? output : "Run Code to See Output"}
+      </div>
       <div
         className={cn(
           "grid gap-4 mx-auto mt-auto w-fit",

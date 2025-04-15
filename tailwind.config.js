@@ -78,6 +78,14 @@ export default {
           to: { filter: "opacity(0)" },
         },
       },
+      typography: {
+        DEFAULT: {
+					css: {
+						"code::before": { content: '""' },
+						"code::after": { content: '""' },
+					},
+				},
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],

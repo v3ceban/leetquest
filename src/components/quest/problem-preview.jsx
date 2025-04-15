@@ -79,7 +79,7 @@ const ProblemPreview = () => {
         <h2 className="w-2/3 text-2xl">{selectedLevelData.title}</h2>
       </div>
       <div
-        className="prose prose-invert"
+        className="prose prose-invert overflow-scroll"
         dangerouslySetInnerHTML={{ __html: selectedLevelData.description }}
       />
       <div

@@ -161,7 +161,7 @@ function WorldNode({
         key={name}
         className={cn(
           "text-black shadow shadow-black/60 flex justify-center items-center rounded-full text-xl text-[--surface-1]",
-          "cursor-pointer hover:shadow-black hover:saturate-150",
+          "cursor-pointer hover:shadow-black hover:brightness-[0.9]",
           (!isLevelUnlocked || !isWorldUnlocked) && "opacity-50",
           // isLevelUnlocked && "border-2 border-[var(--surface-1)] border-solid border-black",
           // (isLevelUnlocked && levelStatus === "COMPLETE") && "border-opacity-10", // frontier

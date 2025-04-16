@@ -3,14 +3,27 @@ import path from "path";
 import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient();
 
+// Settings
+let levels = [
+    "Set Basics",
+    "Set Conversion",
+    "Set Operations",]
+let fileNames = [
+    "set_basics.html",
+    "set_conversion.html",
+    "set_operations.html",]
 // do some processing to get levelId you're already doing
+
+// Loop through and update each level
+for (let i = 0; i < levels.length; i++) {
+
 let levelId = await prisma.level.findFirst({
     where: {
-        title: "Set Basics",
+        title: levels[i],
     },
 });
 
-const htmlFilePath = path.join(process.cwd(), "src/lib/levels/set_basics.html");
+const htmlFilePath = path.join(process.cwd(), "src/lib/levels/", fileNames[i]);
 const description = fs.readFileSync(htmlFilePath, "utf-8").replace(/\r?\n/g, ""); // need to delete new lines for it to be a proper string
 
 await prisma.level.update({
@@ -21,6 +34,7 @@ await prisma.level.update({
         description,
     },
 });
+}
 
 
 

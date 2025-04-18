@@ -78,13 +78,10 @@ const ProblemPreview = () => {
         </div>
         <h2 className="w-2/3 text-2xl">{selectedLevelData.title}</h2>
       </div>
-      <div>
-        
       <div
-        className="prose prose-invert overflow-scroll"
+        className="overflow-scroll prose prose-invert"
         dangerouslySetInnerHTML={{ __html: selectedLevelData.description }}
       />
-      </div>
       <div
         className={cn(
           "grid gap-4 mx-auto mt-auto w-fit",

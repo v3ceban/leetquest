@@ -57,3 +57,25 @@ body {
     --window-shadow: -3px 3px 5px 5px rgba(17, 17, 27, 0.2);
   }
 }
+
+.prose ul {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+}
+.prose #title {
+  font-size: large;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.prose #subtitle {
+  font-size: large;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.prose #code {
+  background-color: #4b5563;
+  padding: 0.15rem;
+  border-radius: 0.10rem;
+  color: white;
+}

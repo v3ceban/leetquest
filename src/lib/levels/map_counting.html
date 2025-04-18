@@ -1,0 +1,18 @@
+<h2 id="title">Using a Hash Map to Count List Elements</h2>
+<p>A common use of hash maps is to count the number of times an element appears in a list.</p>
+
+<p>When iterating through a list:</p>
+<ul>
+  <li>The first time you see an element, set its value to 1.</li>
+  <li>Every other time you see an element, increment its value by 1.</li>
+</ul>
+
+<h2 id="subtitle">Example Code</h2>
+<pre id="code">
+<p>hash_map = {}</p>
+<p>for i in arr:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;if i in hash_map:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hash_map[i] += 1</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;else:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hash_map[i] = 1</p>
+</pre>

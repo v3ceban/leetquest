@@ -1,17 +1,28 @@
 <h2 id="title">Syntax</h2>
-<p>Set Union: All elements in set1 <span style="color: #ef4444;">OR</span> set2</p>
+<p><b>Set Union:</b> All elements in set1 OR set2</p>
 <ul>
 <li><code id="code">set3 = set1 | set2</code></li>
+<li>Example: <code id="code">set3 = {<green>1</green>, <green>2</green>, <green>3</green>} | {<green>3</green>, <green>4</green>, <green>5</green>}</code> results in:</li>
+<p><code id="terminal"><green>></green> set3: {<green>1</green>, <green>2</green>, <green>3</green>, <green>4</green>, <green>5</green>}</code><p>
 </ul>
-<p>Set Intersection: All elements in set1 AND set2</p>
+<p><b>Set Intersection:</b> All elements in set1 AND set2</p>
 <ul>
 <li><code id="code">set3 = set1 & set2</code></li>
+<li>Example: <code id="code">set3 = {1, 2, <green>3</green>} & {<green>3</green>, 4, 5}</code> results in: </li>
+<p><code id="terminal"><green>></green> set3: {<green>3</green>}</code></p>
 </ul>
-<p>Set Difference: All elements in set1 that are NOT in set2</p>
+<p><b>Set Difference:</b> All elements in set1 that are NOT in set2</p>
 <ul>
 <li><code id="code">set3 = set1 - set2</code></li>
+<li>Example: <code id="code">set3 = {<green>1</green>, <green>2</green>, <red>3</red>} - {<red>3</red>, 4, 5}</code> results in:</li>
+<p><code id="terminal"><green>></green> set3: {<green>1</green>, <green>2</green>}</code></p>
 </ul>
-<p>Set Exclusive Union: All elements ONLY in set1 OR set2</p>
+<p><b>Set Exclusive Union:</b> All elements ONLY in set1 OR set2</p>
 <ul>
 <li><code id="code">set3 = set1 ^ set2</code></li>
+<li>Example: <code id="code">set3 = {<green>1</green>, <green>2</green>, <red>3</red>} ^ {<red>3</red>, <green>4</green>, <green>5</green>}</code> results in:</li>
+<p><code id="terminal"><green>></green> set3: {<green>1</green>, <green>2</green>, <green>4</green>, <green>5</green>}</code></p>
+<li>Tip: <code id="code">set1 ^ set2</code> is the same as</li>
+<p><code id="code">(set1 - set2) | (set2 - set1)</code></p>
 </ul>
+</div>

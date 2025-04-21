@@ -3,16 +3,21 @@
 
 <p>When iterating through a list:</p>
 <ul>
-  <li>The first time you see an element, set its value to 1.</li>
-  <li>Every other time you see an element, increment its value by 1.</li>
+  <li>The first time you see an element, set its <yellow>value</yellow> to 1.</li>
+  <li>Every other time you see an element, increment its <yellow>value</yellow> by 1.</li>
 </ul>
 
 <h2 id="subtitle">Example Code</h2>
 <pre id="code">
 <p>hash_map = {}</p>
 <p>for i in arr:</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;if i in hash_map:</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hash_map[i] += 1</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;if i not in hash_map:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hash_map[<purple>i</purple>] = <yellow>1</yellow></p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;else:</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hash_map[i] = 1</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hash_map[<purple>i</purple>] += <yellow>1</yellow></p>
 </pre>
+
+<h2 id="subtitle">Example</h2>
+<code id="code">arr = [1, 2, 3, 1, 2, 2]</code>
+<p>After the above code's execution, the hash map would be:</p>
+<code id="terminal"> <green>></green> hash_map = {<purple>1</purple>: <yellow>2</yellow>, <purple>2</purple>: <yellow>3</yellow>, <purple>3</purple>: <yellow>1</yellow>}</code>

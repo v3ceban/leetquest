@@ -1,17 +1,19 @@
 <h2 id="title">Problem Description</h2>
 <p>
-    Given two strings <code id="code">s</code> and <code id="code">t</code>, determine if they are isomorphic. Two strings <code id="code">s</code> and <code id="code">t</code> are isomorphic if the characters in <code id="code">s</code> can be replaced to get <code id="code">t</code>.
+    Given two strings <code id="code">s</code> and <code id="code">t</code>, determine if they are isomorphic. Two strings <code id="code">s</code> and <code id="code">t</code> are isomorphic if the characters in <code id="code">s</code> can be replaced to get <code id="code">t</code>. No two characters may map to the same character, but a character may map to itself.
 </p>
-<h2 id="subtitle">Example</h2>
-<div style="background-color: #393939; padding: 10px; border-radius: 5px;">
-    <p>Input: <code id="code">s = "hello", t = "trees"</code></p>
-    <p>Output: <code style="color: lightgreen;">true</code></p>
-    <p>Input: <code id="code">s = "add", t = "toe"</code></p>
-    <p>Output: <code style="color: lightcoral;">false</code></p>
+<h2 id="subtitle">Examples</h2>
+<div style="background-color: #4C4F69; padding: 10px; border-radius: 5px;">
+    <p><b>Input:</b> <code>s = "<blue>h</blue><red>e</red><purple>l</purple><purple>l</purple><yellow>o</yellow>", t = "<blue>t</blue><red>r</red><purple>e</purple><purple>e</purple><yellow>s</yellow>"</code></p>
+    <p><b>Output:</b> <code><green>true</green></code></p>
+    <p><b>Input:</b> <code>s = "<blue>a</blue><purple>d</purple><purple>d</purple>", t = "<blue>t</blue><purple>o</purple><purple>e</purple>"</code></p>
+    <p><b>Output:</b> <code><red>false</red></code></p>
+    <p><b>Input:</b> <code>s = "<blue>t</blue><purple>o</purple><red>e</red>", t = "<blue>a</blue><purple>d</purple><red>d</red>"</code></p>
+    <p><b>Output:</b> <code><red>false</red></code></p>
 </div>
 <h2 id="subtitle">Constraints</h2>
 <ul>
     <li><code id="code">1 &lt;= s.length &lt;= 5 * 10<sup>4</sup></code></li>
     <li><code id="code">t.length == s.length</code></li>
-    <li><code id="code">s</code> and <code id="code">t</code> consist of any valid ascii characters.</li>
+    <li><code id="code">s</code> and <code id="code">t</code> consist of any valid ASCII characters.</li>
 </ul>

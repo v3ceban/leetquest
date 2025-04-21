@@ -79,3 +79,27 @@ body {
   border-radius: 0.15rem;
   color: white;
 }
+
+.prose #terminal {
+  background-color: #000000;
+  padding: 0.1rem;
+  border-radius: 0.15rem;
+  color: white;
+}
+
+.prose green {
+  color: lightgreen;
+}
+.prose red {
+  color: lightcoral;
+}
+.prose purple {
+  color: rgb(200, 160, 238);
+}
+.prose yellow {
+  color: rgb(240, 240, 163);
+}
+
+.prose blue {
+  color: rgb(173, 216, 230);
+}

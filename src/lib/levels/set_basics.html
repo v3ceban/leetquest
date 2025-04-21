@@ -2,7 +2,7 @@
 <p>A hash set is an unordered collection (set) of elements.</p>
 <ul>
   <li>A hash set has no indices. To refer to an element, you have to know the name of the element itself.</li>
-  <li>A hash set has no duplicates. If you try to add a duplicate to a set, the set will not be affected.</li>
+  <li>A hash set has no duplicates. <yellow>If you try to add a duplicate to a set, the set will not be affected.</yellow></li>
 </ul>
 
 <h2 id="subtitle">Basic Syntax</h2>
@@ -14,15 +14,22 @@
 
 <p>Adding to a Hash Set:</p>
 <ul>
-  <li><code id="code">hash_set.add(4)</code></li>
+    <li><code id="code"><green>hash_set.add(4)</green></code></li>
+    <li><code id="terminal"> <green>></green> hash_set: {1, 2, 3, <green>4</green>}</code></li>
+    <li><code id="code"><yellow>hash_set.add(2)</yellow></code></li>
+    <li><code id="terminal"> <green>></green> hash_set: {1, <yellow>2</yellow>, 3, 4}</code></li>
 </ul>
 
 <p>Removing from a Hash Set:</p>
 <ul>
   <li><code id="code">hash_set.remove(2)</code></li>
+    <li><code id="terminal"> <green>></green> hash_set: {1, 3, 4}</code></li>
 </ul>
 
 <p>Checking if Element in Hash Set:</p>
 <ul>
   <li><code id="code">if 3 in hash_map:</code></li>
+    <li><code id="terminal"> <green>></green> <green>true</green></code></li>
+    <li><code id="code">if 2 in hash_map:</code></li>
+    <li><code id="terminal"> <green>></green> <red>false</red></code></li>
 </ul>

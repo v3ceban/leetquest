@@ -93,13 +93,15 @@ body {
 .prose red {
   color: lightcoral;
 }
+.prose orange {
+  color: rgb(255, 178, 102);
+}
 .prose purple {
   color: rgb(200, 160, 238);
 }
 .prose yellow {
   color: rgb(240, 240, 163);
 }
-
 .prose blue {
   color: rgb(151, 217, 238);
 }

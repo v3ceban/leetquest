@@ -66,7 +66,6 @@ let hash_map_file_names = [
     "group_anagrams.html",
     "integer_to_roman.html",
     "integer_to_english_words.html",];
-
 let stack_levels = [
     "Stack Basics",
     "Tracking Depth",
@@ -93,7 +92,6 @@ let stack_levels = [
     "Daily Temperatures",
     "Maximum Width Ramp",
     "Largest Rectangle in Histogram",];
-
 let stack_file_names = [
     "stack_basics.html",
     "tracking_depth.html",
@@ -120,9 +118,64 @@ let stack_file_names = [
     "daily_temperatures.html",
     "maximum_width_ramp.html",
     "largest_rectangle_in_histogram.html",];
+let two_pointers_levels = [
+    "Two Pointers Basics",
+    "Checking and Swapping",
+    "Reordering by Swapping",
+    "Two Structures",
+    "Advanced Checking",
+    "Reverse String",
+    "Reverse Vowels of a String",
+    "Reverse Words in a String",
+    "Sort Array by Parity",
+    "Sort Array by Parity II",
+    "Sort Colors",
+    "Move Zeros",
+    "Remove Element",
+    "Remove Duplicates from Sorted Array",
+    "Is Subsequence",
+    "Find the Index of the First Occurrence in a String",
+    "Compare Version Number",
+    "Merge Sorted Array",
+    "Assign Cookies",
+    "Shortest Distance to a Character",
+    "Valid Palindrome",
+    "Two Sum II - Input Array is Sorted",
+    "3Sum",
+    "4Sum",
+    "Container With Most Water",
+    "Trapping Rain Water",];
 
-let levels = stack_levels;
-let file_names = stack_file_names;
+let two_pointers_file_names = [
+    "two_pointers_basics.html",
+    "checking_and_swapping.html",
+    "reordering_by_swapping.html",
+    "two_structures.html",
+    "advanced_checking.html",
+    "reverse_string.html",
+    "reverse_vowels_of_a_string.html",
+    "reverse_words_in_a_string.html",
+    "sort_array_by_parity.html",
+    "sort_array_by_parity_ii.html",
+    "sort_colors.html",
+    "move_zeroes.html",
+    "remove_element.html",
+    "remove_duplicates_from_sorted_array.html",
+    "is_subsequence.html",
+    "find_the_index_of_the_first_occurrence_in_a_string.html",
+    "compare_version_number.html",
+    "merge_sorted_array.html",
+    "assign_cookies.html",
+    "shortest_distance_to_a_character.html",
+    "valid_palindrome.html",
+    "two_sum_ii_input_array_is_sorted.html",
+    "3sum.html",
+    "4sum.html",
+    "container_with_most_water.html",
+    "trapping_rain_water.html",];
+
+let levels = two_pointers_levels;
+let file_names = two_pointers_file_names;
 // do some processing to get levelId you're already doing
 
 // Loop through and update each level
@@ -138,7 +191,7 @@ if (!levelId) {
     continue; // Skip to the next iteration if levelId is not found
 }
 
-const htmlFilePath = path.join(process.cwd(), "src/lib/levels/stack/", file_names[i]);
+const htmlFilePath = path.join(process.cwd(), "src/lib/levels/two_pointers/", file_names[i]);
 const description = fs.readFileSync(htmlFilePath, "utf-8").replace(/\r?\n/g, ""); // need to delete new lines for it to be a proper string
 
 await prisma.level.update({

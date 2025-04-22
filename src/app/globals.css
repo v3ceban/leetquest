@@ -101,5 +101,9 @@ body {
 }
 
 .prose blue {
-  color: rgb(173, 216, 230);
+  color: rgb(151, 217, 238);
+}
+.prose a {
+  color: rgb(131, 169, 251);
+  text-decoration: none;
 }

@@ -1,0 +1,20 @@
+<h2 id="title">Problem Description</h2>
+<p>
+    Given two strings <code id="code">s</code> and <code id="code">t</code>, return <code id="code"><green>true</green></code> if they are equal when both are typed into empty text editors. <br>
+    <code id="code">s</code> and <code id="code">t</code> contain the characters <code id="code">'#'</code> which represents a backspace character.
+    <yellow>Note that after backspacing an empty text, the text will remain empty.</yellow>
+</p>
+<h2 id="subtitle">Examples</h2>
+<div style="background-color: #4C4F69; padding: 10px; border-radius: 5px;">
+    <p><b>Input:</b> <code>s = "<green>a<red>b#</red>c</green>", t = "<green>a<red>d#</red>c</green>"</code></p>
+    <p><b>Output:</b> <code><green>true</green></code></p>
+    <p><b>Input:</b> <code>s = "<red>ab##<yellow>#</yellow></red>", t = "<red>c#<yellow>#</yellow></red>"</code></p>
+    <p><b>Output:</b> <code><green>true</green></code></p>
+    <p><b>Input:</b> <code>s = "<red>a#</red><green>b</green>", t = "<green>a<red>b#</red></green>"</code></p>
+    <p><b>Output:</b> <code><red>false</red></code></p>
+</div>
+<h2 id="subtitle">Constraints</h2>
+<ul>
+    <li><code id="code">1 &lt;= s.length, t.length &lt;= 200</code></li>
+    <li><code id="code">s</code> and <code id="code">t</code> only contain lowercase letters and <code id="code">'#'</code> characters.</li>
+</ul>

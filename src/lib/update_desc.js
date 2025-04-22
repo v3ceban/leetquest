@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient();
 
 // Settings
-let levels = [
+let hash_map_levels = [
     "Set Basics",
     "Set Conversion",
     "Set Operations",
@@ -35,7 +35,7 @@ let levels = [
     "Group Anagrams",
     "Integer to Roman",
     "Integer to English Words",]
-let fileNames = [
+let hash_map_file_names = [
     "set_basics.html",
     "set_conversion.html",
     "set_operations.html",
@@ -66,6 +66,63 @@ let fileNames = [
     "group_anagrams.html",
     "integer_to_roman.html",
     "integer_to_english_words.html",];
+
+let stack_levels = [
+    "Stack Basics",
+    "Tracking Depth",
+    "Stack Reversal",
+    "Monotonic Stack",
+    "Valid Parentheses",
+    "Remove All Adjacent Duplicates In String",
+    "Minimum String Length After Removing Substrings",
+    "Backspace String Compare",
+    "Baseball Game",
+    "Evaluate Reverse Polish Notation",
+    "Asteroid Collision",
+    "Maximum Nesting Depth of the Parentheses",
+    "Crawler Log Folder",
+    "Reverse Prefix of Word",
+    "Minimum Add to Make Parentheses Valid",
+    "Minimum Remove to Make Valid Parentheses",
+    "Score of Parentheses",
+    "Decode String",
+    "Longest Valid Parentheses",
+    "Next Greater Element I",
+    "Final Prices With a Special Discount in a Shop",
+    "Remove K Digits",
+    "Daily Temperatures",
+    "Maximum Width Ramp",
+    "Largest Rectangle in Histogram",];
+
+let stack_file_names = [
+    "stack_basics.html",
+    "tracking_depth.html",
+    "stack_reversal.html",
+    "monotonic_stack.html",
+    "valid_parentheses.html",
+    "remove_all_adjacent_duplicates_in_string.html",
+    "minimum_string_length_after_removing_substrings.html",
+    "backspace_string_compare.html",
+    "baseball_game.html",
+    "evaluate_reverse_polish_notation.html",
+    "asteroid_collision.html",
+    "maximum_nesting_depth_of_the_parentheses.html",
+    "crawler_log_folder.html",
+    "reverse_prefix_of_word.html",
+    "minimum_add_to_make_parentheses_valid.html",
+    "minimum_remove_to_make_valid_parentheses.html",
+    "score_of_parentheses.html",
+    "decode_string.html",
+    "longest_valid_parentheses.html",
+    "next_greater_element_i.html",
+    "final_prices_with_a_special_discount_in_a_shop.html",
+    "remove_k_digits.html",
+    "daily_temperatures.html",
+    "maximum_width_ramp.html",
+    "largest_rectangle_in_histogram.html",];
+
+let levels = stack_levels;
+let file_names = stack_file_names;
 // do some processing to get levelId you're already doing
 
 // Loop through and update each level
@@ -81,7 +138,7 @@ if (!levelId) {
     continue; // Skip to the next iteration if levelId is not found
 }
 
-const htmlFilePath = path.join(process.cwd(), "src/lib/levels/", fileNames[i]);
+const htmlFilePath = path.join(process.cwd(), "src/lib/levels/stack/", file_names[i]);
 const description = fs.readFileSync(htmlFilePath, "utf-8").replace(/\r?\n/g, ""); // need to delete new lines for it to be a proper string
 
 await prisma.level.update({

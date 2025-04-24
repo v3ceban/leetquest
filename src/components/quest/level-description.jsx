@@ -41,7 +41,6 @@ const replacePlaceholders = (node) => {
   // }
   if (node.type === "tag" && node.name === "codetrier") {
     const defaultEditorValue = node.attribs.defaulteditorvalue;
-    console.log("defaultEditorValue", defaultEditorValue);
     return <CodeTrier defaultEditorValue={defaultEditorValue} />;
   }
 };

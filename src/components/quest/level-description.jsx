@@ -9,6 +9,10 @@ const Red = ({ children }) => (
   <span style={{ color: "lightcoral" }}>{children}</span>
 );
 
+const Orange = ({ children }) => (
+  <span style={{ color: "rgb(255, 178, 102)" }}>{children}</span>
+);
+
 const Purple = ({ children }) => (
   <span style={{ color: "rgb(200, 160, 238)" }}>{children}</span>
 );
@@ -24,6 +28,7 @@ const Blue = ({ children }) => (
 const colorComponents = {
   green: Green,
   red: Red,
+  orange: Orange,
   purple: Purple,
   yellow: Yellow,
   blue: Blue,

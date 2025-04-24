@@ -8,6 +8,7 @@ import { WorldNode } from "@/components/quest/world";
 import { setLevelComplete } from "./fetch-data";
 import { cn } from "@/lib/utils";
 import { Check, Play, SquareCheck } from "lucide-react";
+import LevelDescription from "./level-description";
 
 const ProblemPreview = () => {
   const {
@@ -78,10 +79,12 @@ const ProblemPreview = () => {
         </div>
         <h2 className="w-2/3 text-2xl">{selectedLevelData.title}</h2>
       </div>
-      <div
+
+      <LevelDescription
+        rawHtml={selectedLevelData.description} 
         className="overflow-scroll prose prose-invert"
-        dangerouslySetInnerHTML={{ __html: selectedLevelData.description }}
       />
+
       <div
         className={cn(
           "grid gap-4 mx-auto mt-auto w-fit",

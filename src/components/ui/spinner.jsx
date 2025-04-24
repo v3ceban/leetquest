@@ -34,12 +34,12 @@ Spinner.propTypes = {
 
 export const Loading = ({ className, children }) => {
   return (
-    <>
+    <div className="flex flex-row items-center">
       <Spinner
         className={cn(className, "inline-block mr-1 fill-dark text-foreground")}
       />
       {children ? children : "Loading..."}
-    </>
+    </div>
   );
 };
 

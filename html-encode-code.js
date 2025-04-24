@@ -17,4 +17,4 @@ print("2 in hash_set is", 2 in hash_set)`;
 
 let htmlEncoded = he.encode(pythonCode);
 htmlEncoded = htmlEncoded.replace(/\n/g, "&#10;");
-console.log("<CodeTrier defaultEditorValue=\"" + htmlEncoded + "\"/>");
+console.log("<codetrier defaulteditorvalue=\"" + htmlEncoded + "\"/>");

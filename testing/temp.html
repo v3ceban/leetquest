@@ -1,0 +1,34 @@
+<h2 id="title">What is a Hash Set?</h2>
+<p>A hash set is an unordered collection (set) of elements.</p>
+<ul>
+    <li>A hash set has no indices. To refer to an element, you have to know the name of the element itself.</li>
+    <li>A hash set has no duplicates. <yellow>If you try to add a duplicate to a set, the set will not be affected.
+        </yellow>
+    </li>
+</ul>
+<h2 id="subtitle">Basic Syntax</h2>
+<p>Initializing a Hash Set:</p>
+<ul>
+    <li>Empty Set: <code id="code">hash_set = set()</code></li>
+    <li>Non-Empty Set: <code id="code">hash_set = {1, 2, 3}</code></li>
+</ul>
+<p>Adding to a Hash Set:</p>
+<ul>
+    <li><code id="code"><green>hash_set.add(4)</green></code></li>
+    <li><code id="terminal"> <green>></green> hash_set: {1, 2, 3, <green>4</green>}</code></li>
+    <li><code id="code"><yellow>hash_set.add(2)</yellow></code></li>
+    <li><code id="terminal"> <green>></green> hash_set: {1, <yellow>2</yellow>, 3, 4}</code></li>
+</ul>
+<p>Removing from a Hash Set:</p>
+<ul>
+    <li><code id="code">hash_set.remove(2)</code></li>
+    <li><code id="terminal"> <green>></green> hash_set: {1, 3, 4}</code></li>
+</ul>
+<p>Checking if Element in Hash Set:</p>
+<ul>
+    <li><code id="code">if 3 in hash_map:</code></li>
+    <li><code id="terminal"> <green>></green> <green>true</green></code></li>
+    <li><code id="code">if 2 in hash_map:</code></li>
+    <li><code id="terminal"> <green>></green> <red>false</red></code></li>
+</ul>
+<CodeTrier defaultEditorValue="hash_set = {1, 2, 3}&#10;print(&#x22;hash_set =&#x22;, hash_set)&#10;&#10;hash_set.add(4)&#10;print(&#x22;after adding 4, hash_set =&#x22;, hash_set)&#10;&#10;hash_set.add(2)&#10;print(&#x22;after attempting to add 2, hash_set =&#x22;, hash_set)&#10;&#10;hash_set.remove(2)&#10;print(&#x22;after removing 2, hash_set =&#x22;, hash_set)&#10;&#10;print(&#x22;3 in hash_set is&#x22;, 3 in hash_set)&#10;print(&#x22;2 in hash_set is&#x22;, 2 in hash_set)"/>

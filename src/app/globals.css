@@ -102,10 +102,27 @@ body {
 .prose yellow {
   color: rgb(240, 240, 163);
 }
+
 .prose blue {
   color: rgb(151, 217, 238);
 }
 .prose a {
   color: rgb(131, 169, 251);
   text-decoration: none;
+}
+.editor-terminal {
+  background-color: #262626;
+  height: 300px;
+  width: 100%;
+  /* padding-left: 32px; */
+  overflow: scroll;
+}
+
+.editor-terminal > pre {
+  font-family: menlo;
+  font-size: 13px;
+}
+
+.editor-terminal > pre > span.error {
+  color: #f04d4b;
 }

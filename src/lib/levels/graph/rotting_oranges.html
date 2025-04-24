@@ -1,0 +1,25 @@
+<h2 id="title">Problem Description</h2>
+<p>
+    Given an <code id="code">m x n</code> grid, where each cell can have one of three values:
+    <ul>
+        <li><code id="code">0</code> - representing an empty cell</li>
+        <li><code id="code"><orange>1</orange></code> - representing a fresh orange</li>
+        <li><code id="code"><red>2</red></code> - representing a rotten orange</li>
+    </ul>
+    Each minute, any fresh orange that is adjacent (4-directionally) to a rotten orange becomes rotten. Return the minimum number of minutes until no cell has a fresh orange. If this is impossible, return <code id="code">-1</code>.
+</p>
+<h2 id="subtitle">Examples</h2>
+<div style="background-color: #4C4F69; padding: 10px; border-radius: 5px;">
+    <p><b>Input:</b> <code>grid = [<br>
+        [<red>2</red>,<orange>1</orange>,<orange>1</orange>],<br>
+        [<blue>0</blue>,<orange>1</orange>,<blue>0</blue>],<br>
+        [<orange>1</orange>,<orange>1</orange>,<red>2</red>]]</code></p>
+    <p><b>Output:</b> <code>2</code></p>
+</div>
+<h2 id="subtitle">Constraints</h2>
+<ul>
+    <li><code id="code">m == grid.length</code></li>
+    <li><code id="code">n == grid[i].length</code></li>
+    <li><code id="code">1 &lt;= m, n &lt;= 300</code></li>
+    <li><code id="code">grid[i][j]</code> is either <code id="code"><blue>0</blue></code>, <code id="code"><orange>1</orange></code>, or <code id="code"><red>2</red></code>.</li>
+</ul>

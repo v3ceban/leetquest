@@ -1,0 +1,20 @@
+<h2 id="title">Problem Description</h2>
+<p>
+    Given an array <code id="code">rooms</code>, where <code id="code">rooms[i]</code> is a list of keys you can obtain if you visit room <code id="code">i</code>, return <code id="code">true</code> if you can visit all rooms, or <code id="code">false</code> otherwise. You start in room <code id="code"><red>0</red></code> and to enter other rooms, you need to have the keys to those rooms.
+</p>
+<h2 id="subtitle">Examples</h2>
+<div style="background-color: #4C4F69; padding: 10px; border-radius: 5px;">
+    <p><b>Input:</b> <code>rooms = [<red>[<yellow>2</yellow>]</red>,<orange>[<green>3</green>]</orange>,<yellow>[<orange>1</orange>]</yellow>,<green>[<red>0</red>]</green>]</code></p>
+    <p><b>Output:</b> <code><green>true</green></code></p>
+    <p><b>Input:</b> <code>rooms = [<red>[<orange>1</orange>,<green>3</green>]</red>,<orange>[<green>3</green>,<red>0</red>,<blue>4</blue>]</orange>,<yellow>[<purple>5</purple>,<yellow>2</yellow>,<blue>4</blue>]</yellow>,<green>[<red>0</red>,<orange>1</orange>,<purple>5</purple>]</green>,<blue>[<blue>4</blue>,<green>3</green>]</blue>,<purple>[<blue>4</blue>,<orange>1</orange>,<purple>5</purple>]</purple>]</code></p>
+    <p><b>Output:</b> <code><red>false</red></code></p>
+</div>
+<h2 id="subtitle">Constraints</h2>
+<ul>
+    <li><code id="code">n == rooms.length</code></li>
+    <li><code id="code">2 &lt;= n &lt;= 1000</code></li>
+    <li><code id="code">0 &lt;= rooms[i].length &lt;= 1000</code></li>
+    <li><code id="code">1 &lt;= sum(rooms[i].length) &lt;= 3000</code></li>
+    <li><code id="code">0 &lt;= rooms[i][j] &lt; n</code></li>
+    <li>All the values of <code id="code">rooms[i]</code> are unique.</li>
+</ul>

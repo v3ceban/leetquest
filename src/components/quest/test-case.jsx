@@ -17,27 +17,29 @@ const TestCase = ({ number, testCase }) => {
           isCorrect ? (
             <span className="text-green-500">✔</span> // Green checkmark
           ) : (
-            <span className="stderr">✘</span> // Red X
+            <span className="text-red-500">✘</span> // Red X
           )
         ) : null}
       </h3>
       {!hidden && (
         <>
-          <p>
+          <div>
             <strong>Input: </strong>
-            <code className="inline-terminal">{stdin}</code>
-          </p>
-          <p>
+            <pre className="inline-terminal">{stdin}</pre>
+          </div>
+          <div>
             <strong>Expected: </strong>
-            <code className="inline-terminal">{expectedStdout}</code>
-          </p>
-          <p>
+            <pre className="inline-terminal">{expectedStdout}</pre>
+          </div>
+          <div>
             <strong>Output: </strong>
-            <code className="inline-terminal">
-              {stdout}
-              <span className="stderr">{stderr}</span>
-            </code>
-          </p>
+            {stdout !== undefined && (
+              <pre className="inline-terminal">
+                {stdout}
+                <span className="stderr">{stderr}</span>
+              </pre>
+            )}
+          </div>
         </>
       )}
     </div>

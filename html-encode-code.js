@@ -5,11 +5,14 @@ const codeTrier = false;
 // problem description/statement isn't a part of the CodeJudger component, can include
 // before it in the level description
 
-// CodeJudger boilerplate input examples if wanted:
+// CodeJudger boilerplate input/output examples if wanted:
 // line = input()
 // n = int(input())
 // a, b = map(int, input().split())
 // arr = list(map(int, input().split()))
+// print("Hello, World")
+// print("Arguments", sep=" ", end="\n")
+// print("n", n)
 
 const defaultPythonCode =`a = int(input())
 b = int(input())

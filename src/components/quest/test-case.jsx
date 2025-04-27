@@ -33,12 +33,10 @@ const TestCase = ({ number, testCase }) => {
           </div>
           <div>
             <strong>Output</strong>
-            {/* {stdout !== undefined && ( */}
-              <pre className="inline-terminal">
-                {stdout !== undefined ? stdout : " "}
-                <span className="stderr">{stderr}</span>
-              </pre>
-            // )}
+            <pre className="inline-terminal">
+              {stdout !== undefined ? stdout : " "}
+              <span className="stderr">{stderr}</span>
+            </pre>
           </div>
         </>
       )}

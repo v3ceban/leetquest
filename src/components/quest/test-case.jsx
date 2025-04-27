@@ -24,15 +24,15 @@ const TestCase = ({ number, testCase }) => {
       {!hidden && (
         <>
           <div>
-            <strong>Input: </strong>
+            <strong>Input</strong>
             <pre className="inline-terminal">{stdin}</pre>
           </div>
           <div>
-            <strong>Expected: </strong>
+            <strong>Expected</strong>
             <pre className="inline-terminal">{expectedStdout}</pre>
           </div>
           <div>
-            <strong>Output: </strong>
+            <strong>Output</strong>
             {stdout !== undefined && (
               <pre className="inline-terminal">
                 {stdout}

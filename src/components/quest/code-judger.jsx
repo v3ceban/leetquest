@@ -60,8 +60,8 @@ const CodeJudger = ({ defaultPythonCode, testCases }) => {
         );
       }
   
-      // Add a 200 ms delay before moving to the next test case
-      await new Promise((resolve) => setTimeout(resolve, 200));
+      // Add a 200 ms delay (with a little buffer) before moving to the next test case
+      await new Promise((resolve) => setTimeout(resolve, 220));
     }
   
     setLoading(false);

@@ -1,36 +1,41 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Editor } from "@monaco-editor/react";
 import { createHighlighter } from "shiki";
 import { shikiToMonaco } from "@shikijs/monaco";
 
-const MonacoEditorWrapper = ({ defaultValue, onCodeChange }) => {
+const lineHeight = 18;
+
+const MonacoEditorWrapper = ({ defaultValue, onCodeChange, setEditorHeight, editorHeight, fixedHeight }) => {
   const editorRef = useRef(null);
+
+  if (!fixedHeight) {
+    useEffect(() => {
+      const lineCount = defaultValue.split("\n").length;
+      setEditorHeight(lineCount * lineHeight);
+    }, [defaultValue, setEditorHeight]);
+  }
 
   const handleEditorDidMount = async (editor, monaco) => {
     editorRef.current = editor;
 
-    // Load Shiki highlighter
     const highlighter = await createHighlighter({
       themes: ["dark-plus"],
       langs: ["python"],
     });
 
-    // Register Python language
     monaco.languages.register({ id: "python" });
 
-    // Apply Shiki highlighter to Monaco
     shikiToMonaco(highlighter, monaco);
 
-    // Set editor options
     editor.updateOptions({
       language: "python",
       theme: "dark-plus",
-      automaticLayout: true,
       minimap: { enabled: false },
       lineNumbers: "on",
+      automaticLayout: true,
       stickyScroll: { enabled: false },
-      scrollbar: { vertical: "hidden" },
+      scrollbar: { vertical: "hidden", horizontal: "hidden" }, 
       overviewRulerBorder: false,
       overviewRulerLanes: 0,
       folding: false,
@@ -39,22 +44,28 @@ const MonacoEditorWrapper = ({ defaultValue, onCodeChange }) => {
       "bracketPairColorization.enabled": false,
       scrollBeyondLastLine: false,
     });
+    
+
   };
 
   return (
     <Editor
-      height="300px"
-      defaultValue={defaultValue} // Use the passed default value
+      height={`${editorHeight}px`}
+      defaultValue={defaultValue}
       defaultLanguage="python"
       theme="dark-plus"
       onMount={handleEditorDidMount}
-      onChange={(value) => onCodeChange(value)} // Pass the editor's value to the parent
+      onChange={(value) => onCodeChange(value)}
     />
   );
 };
+
 MonacoEditorWrapper.propTypes = {
   defaultValue: PropTypes.string.isRequired,
   onCodeChange: PropTypes.func.isRequired,
+  setEditorHeight: PropTypes.func,
+  editorHeight: PropTypes.number.isRequired,
+  fixedHeight: PropTypes.bool,
 };
 
 export default MonacoEditorWrapper;

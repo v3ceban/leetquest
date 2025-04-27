@@ -81,7 +81,7 @@ body {
 }
 
 .prose #terminal {
-  background-color: #000000;
+  background-color: #262626;
   padding: 0.1rem;
   border-radius: 0.15rem;
   color: white;
@@ -112,10 +112,16 @@ body {
 }
 .editor-terminal {
   background-color: #262626;
-  height: 300px;
+  height: 18px;
   width: 100%;
   /* padding-left: 32px; */
   overflow: scroll;
+}
+.inline-terminal {
+  background-color: #262626;
+  padding: 0.1rem;
+  border-radius: 0.15rem;
+  color: white;
 }
 
 .editor-terminal > pre {
@@ -123,6 +129,6 @@ body {
   font-size: 13px;
 }
 
-.editor-terminal > pre > span.error {
+.stderr {
   color: #f04d4b;
 }

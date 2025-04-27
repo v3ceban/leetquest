@@ -1,20 +1,51 @@
+
+// set to true if you want a CodeTrier, otherwise it will be a CodeJudger
+const codeTrier = false;
+
+// problem description/statement isn't a part of the CodeJudger component, can include
+// before it in the level description
+
+// CodeJudger boilerplate input examples if wanted:
+// line = input()
+// n = int(input())
+// a, b = map(int, input().split())
+// arr = list(map(int, input().split()))
+
+const defaultPythonCode =`a = int(input())
+b = int(input())
+print(a + b)`;
+
+// for CodeJudger, testCases is an array of objects with the following properties:
+// - hidden: boolean, whether the test case is hidden or not
+// - stdin: string, the input to the code
+// - expectedStdout: string, the expected output of the code. Newlines are ignored before comparison
+const testCases = [
+  {
+    hidden: false,
+    stdin: "1\n1",
+    expectedStdout: "2",
+  },
+  {
+    hidden: false,
+    stdin: "2\n2",
+    expectedStdout: "4",
+  },
+  {
+    hidden: true,
+    stdin: "1\n2",
+    expectedStdout: "3",
+  }
+];
+
 import he from "he";
 
-const pythonCode = `hash_set = {1, 2, 3}
-print("hash_set =", hash_set)
+function htmlEncode(str) {
+  return he.encode(str).replace(/\n/g, "&#10;");
+}
 
-hash_set.add(4)
-print("after adding 4, hash_set =", hash_set)
-
-hash_set.add(2)
-print("after attempting to add 2, hash_set =", hash_set)
-
-hash_set.remove(2)
-print("after removing 2, hash_set =", hash_set)
-
-print("3 in hash_set is", 3 in hash_set)
-print("2 in hash_set is", 2 in hash_set)`;
-
-let htmlEncoded = he.encode(pythonCode);
-htmlEncoded = htmlEncoded.replace(/\n/g, "&#10;");
-console.log("<codetrier defaulteditorvalue=\"" + htmlEncoded + "\"></codetrier>");
+if (codeTrier) {
+  console.log("<codetrier defaultpythoncode=\"" + htmlEncode(defaultPythonCode) + "\"></codetrier>");
+} else {
+  const testCasesStr = JSON.stringify(testCases);
+  console.log("<codejudger defaultpythoncode=\"" + htmlEncode(defaultPythonCode) + "\" testcases=\"" + htmlEncode(testCasesStr) + "\"></codejudger>");
+}

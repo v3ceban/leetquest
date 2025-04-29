@@ -145,33 +145,11 @@ export async function fetchSelectedWorldData(
     },
   });
 
-  const levelIds = selectedWorldData.map((level) => level.id);
-
-  const userLevelsCount = await prisma.user_Level.count({
-    where: {
-      user_id: user.id,
-      level_id: {
-        in: levelIds,
-      },
-    },
-  });
-
-  if (userLevelsCount === 0) {
-    await prisma.user_Level.createMany({
-      data: selectedWorldData.map((level) => ({
-        user_id: user.id,
-        level_id: level.id,
-        status: "INCOMPLETE",
-        unlocked: level.prerequisites.length === 0,
-      })),
-    });
-  }
-
   const results = await prisma.user_Level.findMany({
     where: {
       user_id: user.id,
       level_id: {
-        in: levelIds,
+        in: selectedWorldData.map((level) => level.id),
       },
     },
     select: {
@@ -211,48 +189,43 @@ export const setLevelComplete = async (levelData) => {
   const { user } = await auth();
 
   const { id, requiredBy, world_id } = levelData;
-
-  // Mark the current level as complete
-  await prisma.user_Level.update({
-    where: {
-      user_id_level_id: {
-        user_id: user.id,
-        level_id: id,
-      },
-    },
-    data: {
-      status: "COMPLETE",
-    },
-  });
-
-  // Unlock levels that require this level
   const requiredByIds = requiredBy.map((level) => level.id);
-  if (requiredByIds.length > 0) {
-    await prisma.user_Level.updateMany({
+
+  await Promise.all([
+    prisma.user_Level.update({
       where: {
-        user_id: user.id,
-        level_id: {
-          in: requiredByIds,
+        user_id_level_id: {
+          user_id: user.id,
+          level_id: id,
         },
       },
       data: {
-        unlocked: true,
+        status: "COMPLETE",
       },
-    });
-  }
+    }),
+    requiredByIds.length > 0 &&
+      prisma.user_Level.updateMany({
+        where: {
+          user_id: user.id,
+          level_id: {
+            in: requiredByIds,
+          },
+        },
+        data: {
+          unlocked: true,
+        },
+      }),
+  ]);
 
-  // Check if all required levels in the world are complete
   const worldLevels = await prisma.level.findMany({
     where: {
       world_id: world_id,
       type: {
         not: "BONUS",
       },
-      /*
-      requiredBy: {
-        some: {}, // This ensures we only get levels that have requiredBy relationships
-      },
-      */
+      // requiredBy: {
+      //   some: {}, // This ensures we only get levels that have requiredBy relationships
+      // },
     },
     include: {
       user_levels: {
@@ -268,62 +241,75 @@ export const setLevelComplete = async (levelData) => {
   );
 
   if (allRequiredLevelsComplete) {
-    // Mark the current world as complete
-    await prisma.user_World.upsert({
-      where: {
-        user_id_world_id: {
-          user_id: user.id,
-          world_id: world_id,
-        },
-      },
-      update: {
-        unlocked: true,
-      },
-      create: {
-        user_id: user.id,
-        world_id: world_id,
-        unlocked: true,
-      },
-    });
-
-    // Find and unlock worlds that require this world
-    const worldsToUnlock = await prisma.world.findMany({
-      where: {
-        prerequisites: {
-          some: {
-            id: world_id,
+    const [worldsToUnlock] = await Promise.all([
+      prisma.world.findMany({
+        where: {
+          prerequisites: {
+            some: {
+              id: world_id,
+            },
           },
         },
-      },
-    });
-
-    for (const worldToUnlock of worldsToUnlock) {
-      await prisma.user_World.upsert({
+        include: {
+          levels: {
+            include: {
+              prerequisites: true,
+            },
+          },
+        },
+      }),
+      prisma.user_World.update({
         where: {
           user_id_world_id: {
             user_id: user.id,
-            world_id: worldToUnlock.id,
+            world_id: world_id,
           },
         },
-        update: {
+        data: {
           unlocked: true,
         },
-        create: {
+      }),
+    ]);
+
+    const levelIdsToUnlock = [];
+    const worldIdsToUnlock = worldsToUnlock.map((world) => {
+      world.levels.map(
+        (level) =>
+          level.prerequisites.length === 0 && levelIdsToUnlock.push(level.id),
+      );
+      return world.id;
+    });
+
+    await Promise.all([
+      prisma.user_World.updateMany({
+        where: {
           user_id: user.id,
-          world_id: worldToUnlock.id,
+          world_id: {
+            in: worldIdsToUnlock,
+          },
+        },
+        data: {
           unlocked: true,
         },
-      });
-    }
+      }),
+      prisma.user_Level.updateMany({
+        where: {
+          user_id: user.id,
+          level_id: {
+            in: levelIdsToUnlock,
+          },
+        },
+        data: {
+          unlocked: true,
+        },
+      }),
+    ]);
   }
 
-  const updatedWorldsData = await fetchWorldsData();
-
-  const updatedLevelsData = await fetchSelectedWorldData(
-    updatedWorldsData,
-    undefined,
-    world_id,
-  );
+  const [updatedWorldsData, updatedLevelsData] = await Promise.all([
+    fetchWorldsData(),
+    fetchSelectedWorldData(updatedWorldsData, undefined, world_id),
+  ]);
 
   return {
     worldsData: updatedWorldsData,

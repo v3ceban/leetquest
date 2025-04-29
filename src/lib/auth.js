@@ -9,21 +9,69 @@ const createUserAssociations = async (user_id) => {
   const allWorlds = await prisma.world.findMany({
     include: {
       prerequisites: true,
+      levels: {
+        include: {
+          prerequisites: true,
+        },
+      },
     },
   });
 
-  for (const world of allWorlds) {
+  const userLevelData = [];
+  const userWorldData = allWorlds.map((world) => {
     const { id: world_id, prerequisites } = world;
     const unlocked = prerequisites.length === 0;
 
-    await prisma.user_World.create({
-      data: {
+    world.levels.map((level) => {
+      const { id: level_id, prerequisites } = level;
+      const levelUnlocked = unlocked && prerequisites.length === 0;
+
+      userLevelData.push({
         user_id,
-        world_id,
-        unlocked,
-      },
+        level_id,
+        unlocked: levelUnlocked,
+      });
     });
-  }
+
+    return {
+      user_id,
+      world_id,
+      unlocked,
+    };
+  });
+
+  await prisma.user_World.createMany({
+    data: userWorldData,
+  });
+  await prisma.user_Level.createMany({
+    data: userLevelData,
+  });
+
+  // for (const world of allWorlds) {
+  //   const { id: world_id, prerequisites } = world;
+  //   const unlocked = prerequisites.length === 0;
+  //
+  //   await prisma.user_World.create({
+  //     data: {
+  //       user_id,
+  //       world_id,
+  //       unlocked,
+  //     },
+  //   });
+  //
+  //   for (const level of world.levels) {
+  //     const { id: level_id, prerequisites } = level;
+  //     const levelUnlocked = unlocked && prerequisites.length === 0;
+  //
+  //     await prisma.user_Level.create({
+  //       data: {
+  //         user_id,
+  //         level_id,
+  //         unlocked: levelUnlocked,
+  //       },
+  //     });
+  //   }
+  // }
 };
 
 const getOrCreateUser = async ({ email, name, picture }) => {

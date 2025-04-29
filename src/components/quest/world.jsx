@@ -151,17 +151,15 @@ function WorldNode({
 }) {
   const { handleWorldClick, handleLevelClick } = React.useContext(QuestContext);
 
-  const handleClick = isAPreview
-    ? undefined
-    : (event) => {
-        // Prevents the click from propagating to the World (which also closes tabs to the right if clicked, but prevents going to the newly clicked node in the same world)
-        event.stopPropagation();
-        if (isAWorld) {
-          handleLevelClick(name);
-        } else {
-          handleWorldClick(value);
-        }
-      };
+  const handleClick = (event) => {
+    // Prevents the click from propagating to the World (which also closes tabs to the right if clicked, but prevents going to the newly clicked node in the same world)
+    event.stopPropagation();
+    if (isAWorld) {
+      handleLevelClick(name);
+    } else {
+      handleWorldClick(value);
+    }
+  };
 
   if (isAWorld) {
     // isAWorld means are you inside a world

@@ -1,0 +1,26 @@
+<h2 id="title">What is Breadth First Search?</h2>
+<p>Breadth First Search (BFS) is a graph traversal algorithm that explores all the neighbors of a node before moving on to the next level of nodes. It is often implemented using a queue data structure.</p>
+<p>The level order tree traversal algorithm uses BFS to visit all the nodes in a tree or graph.</p>
+
+<h2 id="subtitle">BFS Process</h2>
+<ul>
+    <li>Step 1: Initialize visited set. This set will store the nodes that the algorithm has already covered.</li>
+    <li>Step 2: Start at the root node. This is the first node that the algorithm will visit.</li>
+    <li>Step 3: Mark the current node as visited. This ensures that the algorithm does not visit this node multiple times.</li>
+    <li>Step 4: Visit all the neighbors of the current node that are NOT in the visited set. This is done by adding each neighbor to a queue.</li>
+    <li>Step 5: Dequeue the next node from the queue and repeat steps 3-4 until the queue is empty.</li>
+</ul>
+<h3>BFS Boilerplate</h3>
+<p>Here is a simple BFS implementation in Python:</p>
+<pre id="code">
+def bfs(node):<br>
+    visited = set()<br>
+    queue = [node]<br>
+    while queue:<br>
+        current = queue.pop(0)<br>
+        if current not in visited:<br>
+            visited.add(current)<br>
+            for neighbor in current.neighbors:<br>
+                if neighbor not in visited:<br>
+                    queue.append(neighbor)<br>
+</pre>

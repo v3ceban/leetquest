@@ -1,0 +1,13 @@
+<h2 id="title">What is a Fast Pointer?</h2>
+<p>A fast pointer is a pointer that moves at a faster speed than the slow pointer.</p>
+<p>The following code shows how a fast pointer moves through a list:</p>
+<pre id="code">
+current = head<br>
+while current is not None:<br>
+    current = current.next      # 1st Move<br>
+    if current is not None:     # Prevent errors <br>
+        current = current.next  # 2nd Move<br>
+</pre>
+<br>
+<p>The if statement is there to ensure that <code id="code">current</code> is not <code id="code">None</code> when <code id="code">current.next</code> is accessed</p>
+<p>There are a couple of applications that a fast pointer has in linked lists that are explored in the problems in this section.</p>

@@ -435,7 +435,6 @@ let dynamic_programming_file_names = [
     "binary_tree_maximum_path_sum_trees.html",
     "trapping_rain_water_two_pointers.html",]
 
-
 let levels = dynamic_programming_levels;
 let file_names = dynamic_programming_file_names;
 // do some processing to get levelId you're already doing

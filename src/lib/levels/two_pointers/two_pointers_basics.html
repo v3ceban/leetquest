@@ -1,0 +1,42 @@
+<h2 id="title">What is Two Pointers?</h2>
+<p>Two pointers is an algorithm that uses two pointers (obviously) to traverse a data structure. It is often used to solve problems that involve searching or comparing elements in a list or array.</p>
+<p>To start off, most of the following problems in this section will familiarize you with the inherent technique of iterating the two pointers across the data structure. The two pointers will be initialized at the start and end of the data structure (typically called left and right), and they will move towards each other until they meet in the middle.</p>
+<p>Additionally, the main theme of the following problems will be swapping elements that the two pointers are pointing at.</p>
+<h2 id="subtitle">Useful Syntax</h2>
+<h3>Initializing the Pointers at Different Ends</h3>
+<ul>
+    <li><code id="code">left = 0</code></li>
+    <li><code id="code">right = len(arr) - 1</code></li>
+</ul>
+<h3>While Loop Condition</h3>
+<ul>
+    <li><code id="code">while left &lt; right:</code></li>
+</ul>
+<h3>Iterating the Pointers</h3>
+<ul>
+    <li><code id="code">left += 1</code></li>
+    <li><code id="code">right -= 1</code></li>
+</ul>
+<h3>Recap: Swapping Elements</h3>
+<ul>
+    <li>With a Temporary Variable:
+        <ul>
+            <li><code id="code">temp = arr[left]</code></li>
+            <li><code id="code">arr[left] = arr[right]</code></li>
+            <li><code id="code">arr[right] = temp</code></li>
+        </ul>
+    </li>
+    <li>Without a Temporary Variable (One Line):
+        <ul>
+            <li><code id="code">arr[left], arr[right] = arr[right], arr[left]</code></li>
+        </ul>
+    </li>
+</ul>
+<h3>Typical Two Pointers Problem Structure</h3>
+<pre id="code">
+left = 0<br>
+right = len(arr) - 1<br>
+while left &lt; right:<br>
+    left += 1<br>
+    right -= 1<br>
+</pre>

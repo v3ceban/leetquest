@@ -67,6 +67,10 @@ body {
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
+.prose h3 {
+  font-size: medium;
+  text-decoration: underline;
+}
 .prose #subtitle {
   font-size: large;
   font-weight: bold;
@@ -102,7 +106,6 @@ body {
 .prose yellow {
   color: rgb(240, 240, 163);
 }
-
 .prose blue {
   color: rgb(151, 217, 238);
 }

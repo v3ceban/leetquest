@@ -1,0 +1,42 @@
+<h2 id="title">Dynamic Programming using Arrays</h2>
+<p>In the previous node, we discussed how we could use variables to store the important information in a problem. However, only being able to store a select number of variables will not cut it for all DP problems. In this node, we will discuss how we can use arrays to store the important information in a problem.</p>
+
+<h2 id="subtitle">Another Classic Example</h2>
+<p>Consider Pascal's Triangle, where each number is the sum of the two numbers above it. A naive recursive approach would involve recalculating the same numbers multiple times, leading to exponential time complexity. By using dynamic programming with arrays, we can store the results of previously computed numbers and retrieve them when needed, significantly improving efficiency.</p>
+<p>Here is a simple implementation of Pascal's Triangle using arrays:</p>
+<pre id="code">
+def pascal_triangle(n):<br>
+    triangle = [1]
+    for i in range(n):<br>
+        row = [0] * (i + 1)<br>
+        row[0] = 1<br>
+        row[i] = 1<br>
+        for j in range(1, i):<br>
+            row[j] = triangle[i - 1][j - 1] + triangle[i - 1][j]<br>
+    return triangle<br>
+</pre>
+<p>In the above example:</p>
+<ul>
+    <li>We initialize an array for the first row of the triangle.</li>
+    <li>We iterate through each row, filling in the values based on the previous row.</li>
+    <li>We return the completed triangle.</li>
+</ul>
+
+<h2 id="subtitle">A More Practical Example</h2>
+<p>The previous example uses an array to store information, but not in the typical way that array DP is utilized. We still only used one variable to store the information, where the information ended up being an array of numbers representing a row of Pascal's triangle.</p>
+<p>In this example, we will show how one array can store a dynamic number of variables. This is a more practical example of how to use arrays in dynamic programming.</p>
+<p>Given an array of positive and negative integers <code id="code">nums</code>, determine the maximum number of points you can obtain if you can choose to skip over one number every step.</p>
+<p>For example, if the array is <code id="code">[1, 2, -3, 4, 5]</code>, the maximum number of points you can obtain is <code id="code">12</code> by skipping the <code id="code">-3</code>.</p>
+<p>However, if the array is <code id="code">[1, 2, -3, -4, 5]</code>, the maximum number of points you can obtain is <code id="code">5</code> by skipping the <code id="code">-4</code>.</p>
+<p>The way we can determine the best path through the array is to keep track of the maximum score we could have at each index. Then, to find the maximum score at the next index, we can either add the current number to the maximum score of the previous index or skip the current number and take the maximum score of the index before that.</p>
+<p>Here is a simple implementation of this problem using arrays:</p>
+<pre id="code">
+def max_points(nums):<br>
+    n = len(nums)<br>
+    dp = [0] * n<br>
+    dp[0] = nums[0]<br>
+    dp[1] = nums[1]
+    for i in range(1, n):<br>
+        dp[i] = max(dp[i - 1], dp[i - 2]) + nums[i]<br>
+    return dp[-1]<br>
+</pre>

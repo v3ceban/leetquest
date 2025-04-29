@@ -1,0 +1,16 @@
+<h2 id="title">Utilizing Multiple Cursors</h2>
+<p>In some problems, a single cursor is not sufficient to carry out the task. For example, if you wanted to reverse a linked list, you would need to keep track of the current node, the next node, and the previous node, otherwise you would lose your connection to the entire list. In this case, you can use multiple pointers to keep track of the other related nodes in the list.</p>
+<h2 id="subtitle">A Two Node Example</h2>
+<p>If we want to reverse the connection between two nodes, we need to use three cursors.</p>
+<p>Let's say for this example that prev.next = cursor and cursor.next = succ, which connects to the rest of the list</p>
+<p>To make it such that cursor.next = prev, we need to make sure the succ pointer exists, otherwise our only reference to the rest of the list is lost.</p>
+<p>Now we can set cursor.next = prev, which will reverse the connection between the two nodes.</p>
+<p>Finally, we can move the prev and cursor pointers to the succ node, which will allow us to continue this process for the rest of the list.</p>
+<p>As a process, it looks like this:</p>
+<ul>
+    <li>Set the succ pointer to cursor.next to keep connections with the rest of the list.</li>
+    <li>Set cursor.next to prev to reverse the connection.</li>
+    <li>Set prev to cursor to move the prev pointer forward.</li>
+    <li>Set cursor to succ to move the cursor pointer forward.</li>
+</ul>
+<p>The above process can be repeated until the end of the list to reverse the connections between all the nodes.</p>

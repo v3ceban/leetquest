@@ -1,0 +1,20 @@
+<h2 id="title">Conditions for Iteration</h2>
+<p>Iterating and swapping elements was hopefully straightforward. However, a majority of the time, we will be iterating one pointer at a time until a certain condition is met. This is the most common way two pointers is used.</p>
+<p>In the following problems, we will be iterating one pointer at a time until a certain condition is met, then do the same for the other pointer. Then another condition will be checked, and if the condition is met, the two pointers will swap elements. This process will repeat until the two pointers meet in the middle.</p>
+<h2 id="subtitle">Syntax</h2>
+<h3>Actual Two Pointers Problem Structure</h3>
+<pre id="code">
+left = 0<br>
+right = len(arr) - 1<br>
+while left &lt; right:<br>
+    while [condition for left pointer]:<br>
+        left += 1<br>
+        if left == right:<br>
+            break<br>
+    while [condition for right pointer]:<br>
+        right -= 1<br>
+        if left == right:<br>
+            break<br>
+    if [condition for swapping]:<br>
+        arr[left], arr[right] = arr[right], arr[left]<br>
+</pre>

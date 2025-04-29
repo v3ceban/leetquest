@@ -1,13 +1,22 @@
-<h2 id="title">Problem Description</h2>
-<p>
-    Placeholder content for "Tracking Depth".
-</p>
-<h2 id="subtitle">Examples</h2>
-<div style="background-color: #4C4F69; padding: 10px; border-radius: 5px;">
-    <p><b>Input:</b> <code>Example input</code></p>
-    <p><b>Output:</b> <code>Example output</code></p>
-</div>
-<h2 id="subtitle">Constraints</h2>
-<ul>
-    <li>Placeholder constraints for "Tracking Depth".</li>
-</ul>
+<h2 id="title">With the Size of the Stack</h2>
+<p>In some stack problems, knowing the depth of nested parentheses or other structures that are best represented as a stack is important.</p>
+<p>In these problems, it is a good idea to get the depth by getting the size of the stack using the <code><blue>len()</blue></code> function.</p>
+
+<h2 id="subtitle">Example</h2>
+<p>If you wanted to count the number of letters in a string <code id="code">s</code> at depth 1, you could do it like this:</p>
+<pre id="code">
+<p>count = 0</p>
+<p>stack = []</p>
+<p>for i in range(len(s)):</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;if s[i] == "(":</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stack.append(s[i])</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;elif s[i] == ")":</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stack.pop()</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;else:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if <blue>len(stack) == 1</blue>:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;count += 1</p>
+<p>print("count = ", count)</p>
+</pre>
+<br>
+<p>If <code id="code">s = "a(<green>b</green>(c)<green>d</green>(e(f)g)<green>h</green>(i)<green>j</green>)k"</code>, the output would be:</p>
+<code id="terminal"><green>></green> count = <green>4</green></code>

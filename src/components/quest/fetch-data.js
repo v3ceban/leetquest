@@ -1,9 +1,7 @@
 "use server";
 
 import { auth } from "@/lib/auth";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 async function isWorldUnlockedForUser(world, user) {
   if (!world.prerequisites || world.prerequisites.length === 0) {

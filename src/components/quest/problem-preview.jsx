@@ -7,7 +7,7 @@ import { QuestContext } from "@/components/quest/context";
 import { WorldNode } from "@/components/quest/world";
 import { setLevelComplete } from "./fetch-data";
 import { cn } from "@/lib/utils";
-import { Check, Play, SquareCheck } from "lucide-react";
+import { CheckCircle2, Circle, Play } from "lucide-react";
 
 const ProblemPreview = () => {
   const {
@@ -73,7 +73,6 @@ const ProblemPreview = () => {
               isAPreview={true}
               isLevelUnlocked={selectedLevelData.unlocked}
               levelStatus={selectedLevelData.status}
-              className="opacity-100"
             />
           )}
         </div>
@@ -85,14 +84,13 @@ const ProblemPreview = () => {
       />
       <div
         className={cn(
-          "grid gap-4 mx-auto mt-auto w-fit",
-          selectedLevelData.leetcode_url && "grid-cols-2",
+          "grid gap-4 mx-auto w-full mt-auto max-w-xl",
+          selectedLevelData.leetcode_url && "lg:grid-cols-2 grid-cols-1",
         )}
       >
         <Button
           onClick={handleCompleteClick}
-          className="w-full bg-foreground text-background"
-          variant="outline"
+          className="bg-foreground text-background"
           disabled={
             !selectedLevelData.unlocked ||
             !selectedLevelData.isWorldUnlocked ||
@@ -103,12 +101,12 @@ const ProblemPreview = () => {
             <Loading />
           ) : selectedLevelData.status === "COMPLETE" ? (
             <>
-              <SquareCheck className="mr-2 w-5 h-5" />
+              <CheckCircle2 className="mr-2 w-5 h-5" />
               Completed
             </>
           ) : (
             <>
-              <Check className="mr-2 w-5 h-5" />
+              <Circle className="mr-2 w-5 h-5" />
               Mark Complete
             </>
           )}
@@ -116,7 +114,7 @@ const ProblemPreview = () => {
         {selectedLevelData.leetcode_url && (
           <Button
             onClick={() => handleLeetCodeClick(selectedLevelData.leetcode_url)}
-            className="w-full bg-foreground text-background"
+            className="bg-foreground text-background"
             disabled={
               !selectedLevelData.unlocked ||
               !selectedLevelData.isWorldUnlocked ||

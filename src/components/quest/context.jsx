@@ -2,12 +2,14 @@
 
 import React from "react";
 import PropTypes from "prop-types";
+import { useMobile } from "@/hooks/use-mobile";
 
 const shiftDuration = 300;
 
 const QuestContext = React.createContext({});
 
 const QuestProvider = ({ children, initialWorldsData }) => {
+  const isMobile = useMobile();
   const [worldsData, setWorldsData] = React.useState(initialWorldsData);
   const [selectedWorldData, setSelectedWorldData] = React.useState([]);
 
@@ -19,6 +21,21 @@ const QuestProvider = ({ children, initialWorldsData }) => {
 
   const [levelFull, setLevelFull] = React.useState(false);
   const [descriptionFull, setDescriptionFull] = React.useState(false);
+
+  React.useEffect(
+    function setFullScreenOnMobile() {
+      if (isMobile) {
+        setLevelFull(true);
+        setDescriptionFull(true);
+      }
+
+      return () => {
+        setLevelFull(false);
+        setDescriptionFull(false);
+      };
+    },
+    [isMobile],
+  );
 
   React.useEffect(function setWorldFromURL() {
     const params = new URLSearchParams(location.search);

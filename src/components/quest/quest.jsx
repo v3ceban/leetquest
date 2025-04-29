@@ -12,7 +12,7 @@ const ButtonsContainer = ({ children, className }) => {
   return (
     <nav
       className={cn(
-        "absolute right-2 top-[6px] flex items-center justify-center gap-3",
+        "absolute right-2 top-[6px] flex items-center justify-center gap-3 bg-[--surface-1]",
         className,
       )}
     >
@@ -101,6 +101,7 @@ export const Quest = () => {
                 setDescriptionFull(false);
               }}
               open={levelFull}
+              className="hidden md:block"
             />
             <CloseButton onClick={closeWorld} />
           </ButtonsContainer>
@@ -116,6 +117,7 @@ export const Quest = () => {
                 <ResizeButton
                   onClick={() => setDescriptionFull((prev) => !prev)}
                   open={descriptionFull}
+                  className="hidden md:block"
                 />
                 <CloseButton onClick={closeLevel} />
               </ButtonsContainer>

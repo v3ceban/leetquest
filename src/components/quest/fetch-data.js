@@ -5,6 +5,38 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+async function isWorldUnlockedForUser(world, user) {
+  if (!world.prerequisites || world.prerequisites.length === 0) {
+    return true;
+  }
+  const prereqWorldIds = world.prerequisites.map((w) => w.id);
+  const prereqWorlds = await prisma.world.findMany({
+    where: { id: { in: prereqWorldIds } },
+    include: {
+      levels: {
+        where: { type: { not: "BONUS" } },
+        select: { id: true },
+      },
+    },
+  });
+  for (const prereqWorld of prereqWorlds) {
+    if (prereqWorld.levels.length === 0) {
+      return false;
+    }
+    const completedCount = await prisma.user_Level.count({
+      where: {
+        user_id: user.id,
+        level_id: { in: prereqWorld.levels.map((l) => l.id) },
+        status: "COMPLETE",
+      },
+    });
+    if (completedCount < prereqWorld.levels.length) {
+      return false;
+    }
+  }
+  return true;
+}
+
 export async function fetchWorldsData() {
   const session = await auth();
 
@@ -59,6 +91,7 @@ export async function fetchWorldsData() {
       x_position: true,
       y_position: true,
       requiredBy: true,
+      prerequisites: true,
       flip_arrow: true,
       levels: {
         select: {
@@ -80,6 +113,7 @@ export async function fetchWorldsData() {
               user_id: user.id,
             },
             select: {
+              level_id: true,
               user_id: true,
               status: true,
               unlocked: true,
@@ -92,6 +126,7 @@ export async function fetchWorldsData() {
           user_id: user.id,
         },
         select: {
+          world_id: true,
           unlocked: true,
           user: {
             select: {
@@ -114,13 +149,106 @@ export async function fetchWorldsData() {
     },
   });
 
+  const existingWorldIds = new Set();
+  const existingUserWorldIds = new Set();
+  const existingLevelIds = new Set();
+  const existingUserLevelIds = new Set();
+  worldsData.map((world) => {
+    existingWorldIds.add(world.id);
+    world.user_world.map((uw) => {
+      existingUserWorldIds.add(uw.world_id);
+    });
+    world.levels.map((level) => {
+      existingLevelIds.add(level.id);
+      level.user_levels.map((ul) => {
+        existingUserLevelIds.add(ul.level_id);
+      });
+    });
+  });
+
+  if (existingWorldIds.size !== existingUserWorldIds.size) {
+    const missingIds = [...existingWorldIds].filter(
+      (id) => !existingUserWorldIds.has(id),
+    );
+    for (const id of missingIds) {
+      const world = worldsData.find((w) => w.id === id);
+      const unlocked = await isWorldUnlockedForUser(world, user);
+      const missingUserWorlds = await prisma.user_World.create({
+        data: {
+          user_id: user.id,
+          world_id: id,
+          unlocked,
+        },
+        select: {
+          world_id: true,
+          unlocked: true,
+          user: {
+            select: {
+              levels: {
+                where: {
+                  status: "COMPLETE",
+                },
+                select: {
+                  level: {
+                    select: {
+                      world_id: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      });
+      worldsData.map((world) => {
+        if (world.id === missingUserWorlds.world_id) {
+          world.user_world.push(missingUserWorlds);
+        }
+      });
+    }
+  }
+
+  if (existingLevelIds.size !== existingUserLevelIds.size) {
+    const missingIds = [...existingLevelIds].filter(
+      (id) => !existingUserLevelIds.has(id),
+    );
+    const missingUserLevels = await prisma.user_Level.createManyAndReturn({
+      data: missingIds.map((id) => {
+        const world = worldsData.find((w) =>
+          w.levels.some((level) => level.id === id),
+        );
+        const level = world.levels.find((level) => level.id === id);
+        return {
+          user_id: user.id,
+          level_id: id,
+          unlocked: level.prerequisites.length === 0,
+        };
+      }),
+      select: {
+        level_id: true,
+        user_id: true,
+        status: true,
+        unlocked: true,
+      },
+    });
+    worldsData.map((world) => {
+      world.levels.map((level) => {
+        if (missingUserLevels.some((ul) => ul.level_id === level.id)) {
+          level.user_levels.push(
+            missingUserLevels.find((ul) => ul.level_id === level.id),
+          );
+        }
+      });
+    });
+  }
+
   return worldsData.map((world) => ({
     ...world,
     totalLevels: world.levels.length,
     levelsCompleted: world.user_world[0]?.user?.levels.filter(
       (level) => level.level.world_id === world.id,
     ).length,
-    isWorldUnlocked: world.user_world[0].unlocked ?? false,
+    isWorldUnlocked: world.user_world[0]?.unlocked ?? false,
   }));
 }
 
@@ -129,7 +257,6 @@ export async function fetchSelectedWorldData(
   selectedWorld,
   selectedWorldId,
 ) {
-  // if needed, can implement a more efficient way to find the world e.g. by querying the database again or using a map
   const worldId = selectedWorldId
     ? selectedWorldId
     : worldsData.find(({ name }) => name === selectedWorld).id;
@@ -306,10 +433,12 @@ export const setLevelComplete = async (levelData) => {
     ]);
   }
 
-  const [updatedWorldsData, updatedLevelsData] = await Promise.all([
-    fetchWorldsData(),
-    fetchSelectedWorldData(updatedWorldsData, undefined, world_id),
-  ]);
+  const updatedWorldsData = await fetchWorldsData();
+  const updatedLevelsData = await fetchSelectedWorldData(
+    updatedWorldsData,
+    undefined,
+    world_id,
+  );
 
   return {
     worldsData: updatedWorldsData,

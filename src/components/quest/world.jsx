@@ -183,7 +183,6 @@ function WorldNode({
             position: "relative",
             pointerEvents: "none",
           }}
-          onClick={handleClick}
         >
           {name}
         </button>

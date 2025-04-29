@@ -1,7 +1,7 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 
 export const getDashboardData = async () => {
   const { user } = await auth();
@@ -74,6 +74,14 @@ export const getDashboardData = async () => {
   const userLevels = await prisma.user_Level.findMany({
     where: {
       user_id: user.id,
+      OR: [
+        {
+          status: "COMPLETE",
+        },
+        {
+          unlocked: true,
+        },
+      ],
     },
     include: {
       level: {
@@ -117,7 +125,11 @@ export const getDashboardData = async () => {
     });
 
   const recentActivity = userLevels
-    .filter((ul) => ul.status === "COMPLETE" || ul.unlocked)
+    .filter(
+      (ul) =>
+        (ul.status === "COMPLETE" || ul.unlocked) &&
+        ul.created_at.toString() !== ul.updated_at.toString(),
+    )
     .slice(0, 10)
     .map((ul) => ({
       id: ul.level_id,
@@ -133,11 +145,13 @@ export const getDashboardData = async () => {
   const startDate = new Date();
   startDate.setFullYear(startDate.getFullYear() - 1);
 
-  const activityByDate = userLevels.reduce((acc, ul) => {
-    const date = ul.updated_at.toISOString().split("T")[0];
-    acc[date] = (acc[date] || 0) + 1;
-    return acc;
-  }, {});
+  const activityByDate = userLevels
+    .filter((ul) => ul.status === "COMPLETE")
+    .reduce((acc, ul) => {
+      const date = ul.updated_at.toISOString().split("T")[0];
+      acc[date] = (acc[date] || 0) + 1;
+      return acc;
+    }, {});
 
   let currentDate = new Date(startDate);
   while (currentDate <= new Date()) {

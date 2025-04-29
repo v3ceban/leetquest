@@ -136,7 +136,7 @@ function WorldNode({
   isAPreview,
   isWorldUnlocked,
   isLevelUnlocked,
-  //levelStatus,
+  levelStatus,
   className,
   worldData,
 }) {
@@ -147,10 +147,10 @@ function WorldNode({
     : (event) => {
         // Prevents the click from propagating to the World (which also closes tabs to the right if clicked, but prevents going to the newly clicked node in the same world)
         event.stopPropagation();
-        if (!isAWorld) {
-          handleWorldClick(value);
-        } else {
+        if (isAWorld) {
           handleLevelClick(name);
+        } else {
+          handleWorldClick(value);
         }
       };
 
@@ -163,8 +163,10 @@ function WorldNode({
           "text-black shadow shadow-black/60 flex justify-center items-center rounded-full text-xl text-[--surface-1]",
           "cursor-pointer hover:shadow-black hover:brightness-[0.9]",
           (!isLevelUnlocked || !isWorldUnlocked) && "opacity-50",
-          // isLevelUnlocked && "border-2 border-[var(--surface-1)] border-solid border-black",
-          // (isLevelUnlocked && levelStatus === "COMPLETE") && "border-opacity-10", // frontier
+          isLevelUnlocked &&
+            !isAPreview &&
+            "border-2 border-[var(--surface-1)] border-solid border-black border-opacity-50",
+          isLevelUnlocked && levelStatus === "COMPLETE" && "border-opacity-0", // frontier
           // (isLevelUnlocked && levelStatus === "INCOMPLETE") && "border-opacity-50", // others
           className,
         )}

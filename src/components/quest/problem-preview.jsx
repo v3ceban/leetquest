@@ -31,8 +31,9 @@ const ProblemPreview = () => {
       loading ||
       selectedLevelData.status === "COMPLETE" ||
       !selectedLevelData.unlocked
-    )
+    ) {
       return;
+    }
     setLoading(true);
     try {
       const result = await setLevelComplete(selectedLevelData);
@@ -57,7 +58,7 @@ const ProblemPreview = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4 p-4 h-full">
+    <div className="flex overflow-scroll flex-col gap-4 p-4 h-full">
       <div className="flex flex-row gap-4 items-center">
         <div className="flex-shrink-0">
           {selectedLevelData && (

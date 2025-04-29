@@ -7,8 +7,15 @@ import { QuestArrows } from "@/components/arrow";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { QuestContext } from "@/components/quest/context";
 import { cn } from "@/lib/utils";
-import { Lock } from "lucide-react";
+import { CheckCircle2, Circle, Star } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { FaCircleCheck, FaLock } from "react-icons/fa6";
 
 // also in src/components/arrow.jsx
 const WORLD_WIDTH = 100;
@@ -77,41 +84,43 @@ function World({ worldData, isAWorld }) {
             }, []);
             return (
               <TransformComponent>
-                <section className={"relative flex-grow w-screen h-dvh"}>
-                  {worldData.map(
-                    (
-                      {
-                        id,
-                        name,
-                        x_position,
-                        y_position,
-                        color,
-                        isWorldUnlocked,
-                        unlocked: isLevelUnlocked,
-                        status: levelStatus,
-                      },
-                      idx,
-                    ) => (
-                      <WorldNode
-                        key={id}
-                        isAWorld={isAWorld}
-                        name={name}
-                        x_position={x_position}
-                        y_position={y_position}
-                        value={name}
-                        isAPreview={false}
-                        color={color}
-                        isWorldUnlocked={isWorldUnlocked}
-                        isLevelUnlocked={isLevelUnlocked}
-                        levelStatus={levelStatus}
-                        worldData={worldData[idx]}
-                      />
-                    ),
-                  )}
-                  {worldData && (
-                    <QuestArrows data={worldData} isAWorld={isAWorld} />
-                  )}
-                </section>
+                <TooltipProvider>
+                  <section className={"relative flex-grow w-screen h-dvh"}>
+                    {worldData.map(
+                      (
+                        {
+                          id,
+                          name,
+                          x_position,
+                          y_position,
+                          color,
+                          isWorldUnlocked,
+                          unlocked: isLevelUnlocked,
+                          status: levelStatus,
+                        },
+                        idx,
+                      ) => (
+                        <WorldNode
+                          key={id}
+                          isAWorld={isAWorld}
+                          name={name}
+                          x_position={x_position}
+                          y_position={y_position}
+                          value={name}
+                          isAPreview={false}
+                          color={color}
+                          isWorldUnlocked={isWorldUnlocked}
+                          isLevelUnlocked={isLevelUnlocked}
+                          levelStatus={levelStatus}
+                          worldData={worldData[idx]}
+                        />
+                      ),
+                    )}
+                    {worldData && (
+                      <QuestArrows data={worldData} isAWorld={isAWorld} />
+                    )}
+                  </section>
+                </TooltipProvider>
               </TransformComponent>
             );
           }}
@@ -156,80 +165,104 @@ function WorldNode({
 
   if (isAWorld) {
     // isAWorld means are you inside a world
+    const levelLocked = !isLevelUnlocked || !isWorldUnlocked;
+    if (isAPreview) {
+      return (
+        <button
+          key={name}
+          className={cn(
+            "text-black shadow shadow-black/60 flex justify-center items-center rounded-full text-xl text-[--surface-1]",
+            "cursor-pointer hover:shadow-black hover:brightness-[0.9]",
+          )}
+          style={{
+            left: x_position,
+            top: y_position,
+            width: LEVEL_DIAMETER,
+            height: LEVEL_DIAMETER,
+            backgroundColor: `var(--${color.toLowerCase()}-node)`,
+            position: "relative",
+            pointerEvents: "none",
+          }}
+          onClick={handleClick}
+        >
+          {name}
+        </button>
+      );
+    }
     return (
-      <button
-        key={name}
-        className={cn(
-          "text-black shadow shadow-black/60 flex justify-center items-center rounded-full text-xl text-[--surface-1]",
-          "cursor-pointer hover:shadow-black hover:brightness-[0.9]",
-          (!isLevelUnlocked || !isWorldUnlocked) && "opacity-50",
-          isLevelUnlocked &&
-            !isAPreview &&
-            "border-2 border-[var(--surface-1)] border-solid border-black border-opacity-50",
-          isLevelUnlocked && levelStatus === "COMPLETE" && "border-opacity-0", // frontier
-          // (isLevelUnlocked && levelStatus === "INCOMPLETE") && "border-opacity-50", // others
-          className,
-        )}
-        style={{
-          left: x_position,
-          top: y_position,
-          width: LEVEL_DIAMETER,
-          height: LEVEL_DIAMETER,
-          backgroundColor: `var(--${color.toLowerCase()}-node)`,
-          position: isAPreview ? "relative" : "absolute",
-          pointerEvents: isAPreview ? "none" : "auto",
-        }}
-        onClick={handleClick}
-      >
-        {name}
-      </button>
-    );
-  } else {
-    const totalLevels = worldData?.totalLevels || 0;
-    const completedLevels = worldData?.levelsCompleted || 0;
-    return (
-      <button
-        key={name}
-        className={cn(
-          "flex shadow shadow-black/25 flex-col justify-center text-[8px] items-center rounded text-background bg-foreground",
-          " cursor-pointer hover:shadow-black/50 hover:saturate-150",
-          !isWorldUnlocked && "opacity-50",
-        )}
-        style={{
-          left: x_position,
-          top: y_position,
-          width: WORLD_WIDTH,
-          height: WORLD_HEIGHT,
-          position: isAPreview ? "relative" : "absolute",
-          pointerEvents: isAPreview ? "none" : "auto",
-        }}
-        onClick={handleClick}
-      >
-        <span className="font-medium">{name}</span>
-        {!isAPreview && (
-          <>
-            {!isWorldUnlocked ? (
-              <span className="mt-1 text-[6px]">
-                <Lock className="inline-block mr-1 w-2 h-2" />
-                Locked
-              </span>
-            ) : (
-              <>
-                <span className="mt-1 text-[6px]">
-                  {completedLevels || 0}/{totalLevels || 0} Levels
-                </span>
-                <Progress
-                  value={(completedLevels / totalLevels) * 100}
-                  className="w-[78px] h-[3px] mt-[2.5px] bg-primary"
-                  progressBarClass="bg-background"
-                />
-              </>
-            )}
-          </>
-        )}
-      </button>
+      <Tooltip>
+        <TooltipTrigger
+          key={name}
+          className={cn(
+            "text-black shadow shadow-black/60 flex justify-center items-center rounded-full text-xl text-[--surface-1]",
+            "cursor-pointer hover:shadow-black hover:brightness-[0.9]",
+            levelLocked && "opacity-50",
+            className,
+          )}
+          style={{
+            left: x_position,
+            top: y_position,
+            width: LEVEL_DIAMETER,
+            height: LEVEL_DIAMETER,
+            backgroundColor: `var(--${color.toLowerCase()}-node)`,
+            position: "absolute",
+            pointerEvents: "auto",
+          }}
+          onClick={handleClick}
+        >
+          <h3>{name}</h3>
+          {levelStatus === "COMPLETE" && (
+            <FaCircleCheck className="absolute w-3 h-3 rounded-full -right-[1px] -top-[1px] bg-[--overlay]" />
+          )}
+        </TooltipTrigger>
+        <LevelTooltipContent level={worldData} />
+      </Tooltip>
     );
   }
+  const totalLevels = worldData?.totalLevels || 0;
+  const completedLevels = worldData?.levelsCompleted || 0;
+  return (
+    <button
+      key={name}
+      className={cn(
+        "flex shadow shadow-black/25 flex-col justify-center text-[8px] items-center rounded text-background bg-foreground",
+        " cursor-pointer hover:shadow-black/50 hover:saturate-150",
+        !isWorldUnlocked && "opacity-50",
+      )}
+      style={{
+        left: x_position,
+        top: y_position,
+        width: WORLD_WIDTH,
+        height: WORLD_HEIGHT,
+        position: isAPreview ? "relative" : "absolute",
+        pointerEvents: isAPreview ? "none" : "auto",
+      }}
+      onClick={handleClick}
+    >
+      <h3 className="font-medium">{name}</h3>
+      {!isAPreview && (
+        <>
+          {!isWorldUnlocked ? (
+            <span className="mt-1 text-[6px]">
+              <FaLock className="inline-block mr-1 w-2 h-2" />
+              Locked
+            </span>
+          ) : (
+            <>
+              <span className="mt-1 text-[6px]">
+                {completedLevels || 0}/{totalLevels || 0} Levels
+              </span>
+              <Progress
+                value={(completedLevels / totalLevels) * 100}
+                className="w-[78px] h-[3px] mt-[2.5px] bg-primary"
+                progressBarClass="bg-background"
+              />
+            </>
+          )}
+        </>
+      )}
+    </button>
+  );
 }
 
 WorldNode.propTypes = {
@@ -245,6 +278,41 @@ WorldNode.propTypes = {
   className: PropTypes.string,
   worldData: PropTypes.object.isRequired,
   levelStatus: PropTypes.string,
+};
+
+function LevelTooltipContent({ level }) {
+  const levelComplete = level.status === "COMPLETE";
+  return (
+    <TooltipContent className="absolute left-6 space-y-1 w-48 text-xs rounded-sm shadow-background/75">
+      <h4 className="font-semibold">{level.title}</h4>
+      <p className="flex gap-1 items-center">
+        <Star className="w-3 h-3 fill-foreground" />
+        <span>{level.type[0] + level.type.slice(1).toLowerCase()}</span>
+      </p>
+      <p className="flex gap-1 items-center">
+        {level.unlocked ? (
+          levelComplete ? (
+            <CheckCircle2 className="w-3 h-3" />
+          ) : (
+            <Circle className="w-3 h-3" />
+          )
+        ) : (
+          <FaLock className="w-3 h-3" />
+        )}
+        <span>
+          {level.unlocked
+            ? levelComplete
+              ? "Completed"
+              : "Incomplete"
+            : "Locked"}
+        </span>
+      </p>
+    </TooltipContent>
+  );
+}
+
+LevelTooltipContent.propTypes = {
+  level: PropTypes.object.isRequired,
 };
 
 export { World, WorldNode };

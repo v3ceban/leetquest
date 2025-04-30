@@ -58,33 +58,31 @@ const ProblemPreview = () => {
   };
 
   return (
-    <div className="flex overflow-scroll flex-col gap-4 p-4 h-full">
-      <div className="flex flex-row gap-4 items-center">
-        <div className="flex-shrink-0">
-          {selectedLevelData && (
-            <WorldNode
-              key={selectedLevelName}
-              isAWorld={true}
-              name={selectedLevelName}
-              color={selectedLevelData.color}
-              x={0}
-              y={0}
-              value={selectedLevelName}
-              isAPreview={true}
-              isLevelUnlocked={selectedLevelData.unlocked}
-              levelStatus={selectedLevelData.status}
-            />
-          )}
-        </div>
+    <section className="flex overflow-scroll relative flex-col gap-4 pb-4 h-full">
+      <header className="flex sticky top-0 flex-row gap-4 items-center p-4 shadow-md shadow-background/75 bg-[var(--surface-1)]">
+        {selectedLevelData && (
+          <WorldNode
+            key={selectedLevelName}
+            isAWorld={true}
+            name={selectedLevelName}
+            color={selectedLevelData.color}
+            x={0}
+            y={0}
+            value={selectedLevelName}
+            isAPreview={true}
+            isLevelUnlocked={selectedLevelData.unlocked}
+            levelStatus={selectedLevelData.status}
+          />
+        )}
         <h2 className="w-2/3 text-2xl">{selectedLevelData.title}</h2>
-      </div>
-      <div
-        className="prose prose-invert"
+      </header>
+      <main
+        className="px-4 prose prose-invert"
         dangerouslySetInnerHTML={{ __html: selectedLevelData.description }}
       />
-      <div
+      <footer
         className={cn(
-          "grid gap-4 mx-auto w-full mt-auto max-w-xl",
+          "grid gap-4 mx-auto w-full mt-auto max-w-xl px-4 pb-4",
           selectedLevelData.leetcode_url && "lg:grid-cols-2 grid-cols-1",
         )}
       >
@@ -125,8 +123,8 @@ const ProblemPreview = () => {
             Start
           </Button>
         )}
-      </div>
-    </div>
+      </footer>
+    </section>
   );
 };
 

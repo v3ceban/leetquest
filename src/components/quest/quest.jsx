@@ -1,18 +1,19 @@
 "use client";
 
-import React from "react";
+import { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { World } from "@/components/quest/world";
 import { QuestContext } from "@/components/quest/context";
 import ProblemPreview from "./problem-preview";
 import { cn } from "@/lib/utils";
-import { CircleX, Expand, Minimize } from "lucide-react";
+import { CircleX, Expand, Minimize, BookOpen } from "lucide-react";
+import { Manual } from "./manual";
 
 const ButtonsContainer = ({ children, className }) => {
   return (
     <nav
       className={cn(
-        "absolute right-2 top-[6px] flex items-center justify-center gap-3 bg-[--surface-1]",
+        "absolute right-4 top-[7px] flex items-center justify-center gap-3",
         className,
       )}
     >
@@ -82,10 +83,22 @@ export const Quest = () => {
     setDescriptionFull,
     closeWorld,
     closeLevel,
-  } = React.useContext(QuestContext);
+  } = useContext(QuestContext);
+
+  const [manualOpen, setManualOpen] = useState(false);
 
   return (
     <section>
+      <button
+        type="button"
+        aria-label="Open Manual"
+        className="fixed top-6 right-6 z-50 p-2 rounded-full border shadow-lg transition-colors bg-[--surface-1] border-border hover:bg-[--surface-2]"
+        onClick={() => setManualOpen(true)}
+      >
+        <BookOpen className="w-6 h-6 text-primary" />
+      </button>
+      <Manual open={manualOpen} onOpenChange={setManualOpen} />
+
       {selectedWorld && (
         <section
           className={cn(
@@ -113,7 +126,8 @@ export const Quest = () => {
                 descriptionFull ? "w-full" : "w-2/3",
               )}
             >
-              <ButtonsContainer>
+              <ProblemPreview />
+              <ButtonsContainer className="top-6">
                 <ResizeButton
                   onClick={() => setDescriptionFull((prev) => !prev)}
                   open={descriptionFull}
@@ -121,7 +135,6 @@ export const Quest = () => {
                 />
                 <CloseButton onClick={closeLevel} />
               </ButtonsContainer>
-              <ProblemPreview />
             </section>
           )}
           <World worldData={selectedWorldData} isAWorld={true} />

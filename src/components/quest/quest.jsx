@@ -45,7 +45,7 @@ export const ResizeButton = ({ onClick, className, open }) => {
       aria-label="Maximize"
       onClick={onClick}
       className={cn(
-        "w-[22px] h-[22px] cursor-pointer",
+        "w-[24px] h-[24px] cursor-pointer",
         "hover:text-primary",
         className,
       )}

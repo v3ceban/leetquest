@@ -29,6 +29,7 @@ ButtonsContainer.propTypes = {
 const AnimatedButton = ({ children, onClick, className, title, ariaLabel }) => {
   return (
     <button
+      type="button"
       onClick={onClick}
       className={cn(
         "flex relative justify-center items-center w-6 h-6 hover:text-primary",
@@ -52,7 +53,7 @@ AnimatedButton.propTypes = {
 export const ResizeButton = ({ onClick, className, open }) => {
   return (
     <AnimatedButton
-      aria-label={open ? "Minimize" : "Minimize"}
+      aria-label={open ? "Minimize" : "Maximize"}
       title={open ? "Minimize" : "Maximize"}
       onClick={onClick}
       className={className}

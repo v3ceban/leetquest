@@ -62,7 +62,7 @@ const HomePage = async () => {
   return (
     <main>
       <section className="py-20 md:py-32">
-        <div className="flex flex-col gap-12 justify-between items-center md:flex-row">
+        <div className="flex flex-col gap-12 justify-between items-center lg:flex-row">
           <div className="space-y-8">
             <h1 className="font-bold tracking-tight text-4xl/tight md:text-6xl/tight">
               Master LeetCode,
@@ -75,7 +75,7 @@ const HomePage = async () => {
                 "Transform your coding journey with LeetQuest's gamified learning experience. Navigate through themed worlds, track your progress, and level up your problem-solving skills."
               }
             </p>
-            <div className="flex flex-col gap-4 pt-4 sm:flex-row">
+            <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2">
               {session ? (
                 <Button size="lg" asChild>
                   <Link href="/dashboard" className="group">
@@ -95,7 +95,7 @@ const HomePage = async () => {
             </div>
           </div>
           <Image
-            className="relative rounded-lg shadow-2xl"
+            className="relative w-full rounded-lg shadow-2xl lg:max-w-[400px]"
             src="/img/worlds.webp"
             alt="LeetQuest Worlds Preview"
             width={400}
@@ -105,7 +105,6 @@ const HomePage = async () => {
         </div>
       </section>
 
-      {/* Features Section */}
       <section className="py-20">
         <div className="mb-16 text-center">
           <h2 className="mb-4 text-3xl font-bold">Why Choose LeetQuest?</h2>
@@ -121,7 +120,6 @@ const HomePage = async () => {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-20">
         <div className="overflow-hidden relative p-8 bg-gradient-to-r rounded-3xl md:p-12 from-primary/90 to-primary">
           <div className="relative z-10 mx-auto max-w-3xl text-center text-white">

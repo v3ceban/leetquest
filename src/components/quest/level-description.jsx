@@ -38,7 +38,11 @@ const colorComponents = {
 const replacePlaceholders = (node) => {
   if (node.type === "tag" && colorComponents[node.name]) {
     const Component = colorComponents[node.name.toLowerCase()];
-    return <Component>{node.children.map((child) => replacePlaceholders(child) || child.data)}</Component>;
+    return (
+      <Component>
+        {node.children.map((child) => replacePlaceholders(child) || child.data)}
+      </Component>
+    );
   } else if (node.type === "tag" && node.name === "codetrier") {
     const defaultPythonCode = node.attribs.defaultpythoncode;
     return <CodeTrier defaultPythonCode={defaultPythonCode} />;
@@ -46,16 +50,19 @@ const replacePlaceholders = (node) => {
     const defaultPythonCode = node.attribs.defaultpythoncode;
     const testCasesStr = node.attribs.testcases;
     const testCases = JSON.parse(testCasesStr);
-    return <CodeJudger defaultPythonCode={defaultPythonCode} testCases={testCases} />;
+    return (
+      <CodeJudger defaultPythonCode={defaultPythonCode} testCases={testCases} />
+    );
   }
 };
 
 const LevelDescription = ({ rawHtml, className }) => {
   return (
-    <div className={className}>
+    <main className={className}>
       {parse(rawHtml, { replace: replacePlaceholders })}
-    </div>
+    </main>
   );
 };
 
 export default LevelDescription;
+

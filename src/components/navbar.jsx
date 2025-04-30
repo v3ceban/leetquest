@@ -31,19 +31,18 @@ const Navbar = async ({ className }) => {
           "flex gap-x-4 justify-between items-center py-4",
         )}
       >
-        <div className="text-3xl font-bold md:text-5xl">
+        <h1 className="text-3xl font-bold md:text-5xl">
           <Link href="/">
             LeetQuest
             <span className="block text-sm font-normal md:text-base">
               Learning to code can be fun
             </span>
           </Link>
-        </div>
+        </h1>
 
         {session ? (
           <>
-            {" "}
-            <nav className="hidden gap-x-4 md:grid grid-cols-[150px_150px_150px]">
+            <nav className="hidden gap-x-2 md:grid lg:gap-x-4 grid-cols-[150px_150px_150px]">
               <Button variant="wave" size="wave">
                 <Link
                   className="flex justify-center items-center w-full h-full"

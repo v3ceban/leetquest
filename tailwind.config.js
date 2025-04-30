@@ -65,27 +65,53 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       animation: {
-        fadein: 'fadeIn 1s ease-in-out',
-        fadeout: 'fadeOut 1s ease-in-out',
+        fadein: "fadeIn 1s ease-in-out",
+        fadeout: "fadeOut 1s ease-in-out",
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
       keyframes: {
         fadeIn: {
-          from: { filter: "opacity(0)" },
-          to: { filter: "opacity(100%)" },
+          from: {
+            filter: "opacity(0)",
+          },
+          to: {
+            filter: "opacity(100%)",
+          },
         },
         fadeOut: {
-          from: { filter: "opacity(100%)" },
-          to: { filter: "opacity(0)" },
+          from: {
+            filter: "opacity(100%)",
+          },
+          to: {
+            filter: "opacity(0)",
+          },
+        },
+        "accordion-down": {
+          from: {
+            height: "0",
+          },
+          to: {
+            height: "var(--radix-accordion-content-height)",
+          },
+        },
+        "accordion-up": {
+          from: {
+            height: "var(--radix-accordion-content-height)",
+          },
+          to: {
+            height: "0",
+          },
         },
       },
       typography: {
         DEFAULT: {
-					css: {
-						"code::before": { content: '""' },
-						"code::after": { content: '""' },
-					},
-				},
-      }
+          css: {
+            "code::before": { content: '""' },
+            "code::after": { content: '""' },
+          },
+        },
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

@@ -7,7 +7,7 @@ import { QuestContext } from "@/components/quest/context";
 import { WorldNode } from "@/components/quest/world";
 import { setLevelComplete } from "./fetch-data";
 import { cn } from "@/lib/utils";
-import { Check, Play, SquareCheck } from "lucide-react";
+import { CheckCircle2, Circle, Play } from "lucide-react";
 import LevelDescription from "./level-description";
 
 const ProblemPreview = () => {
@@ -32,8 +32,9 @@ const ProblemPreview = () => {
       loading ||
       selectedLevelData.status === "COMPLETE" ||
       !selectedLevelData.unlocked
-    )
+    ) {
       return;
+    }
     setLoading(true);
     try {
       const result = await setLevelComplete(selectedLevelData);
@@ -58,43 +59,39 @@ const ProblemPreview = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4 p-4 h-full">
-      <div className="flex flex-row gap-4 items-center">
-        <div className="flex-shrink-0">
-          {selectedLevelData && (
-            <WorldNode
-              key={selectedLevelName}
-              isAWorld={true}
-              name={selectedLevelName}
-              color={selectedLevelData.color}
-              x={0}
-              y={0}
-              value={selectedLevelName}
-              isAPreview={true}
-              isLevelUnlocked={selectedLevelData.unlocked}
-              levelStatus={selectedLevelData.status}
-              className="opacity-100"
-            />
-          )}
-        </div>
+    <section className="flex overflow-scroll relative flex-col gap-4 pb-4 h-full">
+      <header className="flex sticky top-0 flex-row gap-4 items-center p-4 shadow-md shadow-background/75 bg-[var(--surface-1)]">
+        {selectedLevelData && (
+          <WorldNode
+            key={selectedLevelName}
+            isAWorld={true}
+            name={selectedLevelName}
+            color={selectedLevelData.color}
+            x={0}
+            y={0}
+            value={selectedLevelName}
+            isAPreview={true}
+            isLevelUnlocked={selectedLevelData.unlocked}
+            levelStatus={selectedLevelData.status}
+          />
+        )}
         <h2 className="w-2/3 text-2xl">{selectedLevelData.title}</h2>
-      </div>
+      </header>
 
       <LevelDescription
-        rawHtml={selectedLevelData.description} 
-        className="overflow-scroll prose prose-invert"
+        rawHtml={selectedLevelData.description}
+        className="overflow-scroll px-4 prose prose-invert"
       />
 
-      <div
+      <footer
         className={cn(
-          "grid gap-4 mx-auto mt-auto w-fit",
-          selectedLevelData.leetcode_url && "grid-cols-2",
+          "grid gap-4 mx-auto w-full mt-auto max-w-xl px-4 pb-4",
+          selectedLevelData.leetcode_url && "lg:grid-cols-2 grid-cols-1",
         )}
       >
         <Button
           onClick={handleCompleteClick}
-          className="w-full bg-foreground text-background"
-          variant="outline"
+          className="bg-foreground text-background"
           disabled={
             !selectedLevelData.unlocked ||
             !selectedLevelData.isWorldUnlocked ||
@@ -105,12 +102,12 @@ const ProblemPreview = () => {
             <Loading />
           ) : selectedLevelData.status === "COMPLETE" ? (
             <>
-              <SquareCheck className="mr-2 w-5 h-5" />
+              <CheckCircle2 className="mr-2 w-5 h-5" />
               Completed
             </>
           ) : (
             <>
-              <Check className="mr-2 w-5 h-5" />
+              <Circle className="mr-2 w-5 h-5" />
               Mark Complete
             </>
           )}
@@ -118,7 +115,7 @@ const ProblemPreview = () => {
         {selectedLevelData.leetcode_url && (
           <Button
             onClick={() => handleLeetCodeClick(selectedLevelData.leetcode_url)}
-            className="w-full bg-foreground text-background"
+            className="bg-foreground text-background"
             disabled={
               !selectedLevelData.unlocked ||
               !selectedLevelData.isWorldUnlocked ||
@@ -129,8 +126,8 @@ const ProblemPreview = () => {
             Start
           </Button>
         )}
-      </div>
-    </div>
+      </footer>
+    </section>
   );
 };
 

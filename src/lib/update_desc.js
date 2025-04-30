@@ -302,6 +302,104 @@ let linked_list_file_names = [
     "intersection_of_two_linked_lists.html",
     "merge_k_sorted_lists.html",
     "reorder_list.html",]
+let tree_levels = [
+    "Tree Basics",
+    "Recursion Logistics",
+    "Level Order Traversal",
+    "N-ary Trees",
+    "Binary Tree Preorder Traversal",
+    "Binary Tree Inorder Traversal",
+    "Binary Tree Postorder Traversal",
+    "Search in a Binary Search Tree",
+    "Kth Smallest Element in a BST",
+    "Minimum Absolute Difference in BST",
+    "Two Sum IV - Input is a BST",
+    "Same Tree",
+    "Symmetric Tree",
+    "Subtree of Another Tree",
+    "Leaf Similar Trees",
+    "Flip Equivalent Binary Trees",
+    "Invert Binary Tree",
+    "Increasing Order Search Tree",
+    "Flatten Binary Tree to Linked List",
+    "Validate Binary Search Tree",
+    "Maximum Depth of Binary Tree",
+    "Minimum Depth of Binary Tree",
+    "Cousins in Binary Tree",
+    "Balanced Binary Tree",
+    "Diameter of Binary Tree",
+    "Path Sum",
+    "Count Complete Tree Nodes",
+    "Univalued Binary Tree",
+    "Find Mode in Binary Search Tree",
+    "Second Minimum Node in a Binary Tree",
+    "Path Sum II",
+    "Path Sum III",
+    "Binary Tree Maximum Path Sum",
+    "Range Sum of BST",
+    "Binary Tree Paths",
+    "Binary Tree Tilt",
+    "Sum of Left Leaves",
+    "Sum Root to Leaf Numbers",
+    "Binary Tree Level Order Traversal",
+    "Binary Tree Zigzag Level Order Traversal",
+    "Binary Tree Right Side View",
+    "Populating Next Right Pointers in Each Node",
+    "Populating Next Right Pointers in Each Node II",
+    "Frog Position After T Seconds",
+    "N-ary Tree Preorder Traversal",
+    "N-ary Tree Postorder Traversal",
+    "Maximum Depth of N-ary Tree",
+    "N-ary Tree Level Order Traversal",]
+let tree_file_names = [
+    "tree_basics.html",
+    "recursion_logistics.html",
+    "level_order_traversal.html",
+    "n_ary_trees.html",
+    "binary_tree_preorder_traversal.html",
+    "binary_tree_inorder_traversal.html",
+    "binary_tree_postorder_traversal.html",
+    "search_in_a_binary_search_tree.html",
+    "kth_smallest_element_in_a_bst.html",
+    "minimum_absolute_difference_in_bst.html",
+    "two_sum_iv_input_is_a_bst.html",
+    "same_tree.html",
+    "symmetric_tree.html",
+    "subtree_of_another_tree.html",
+    "leaf_similar_trees.html",
+    "flip_equivalent_binary_trees.html",
+    "invert_binary_tree.html",
+    "increasing_order_search_tree.html",
+    "flatten_binary_tree_to_linked_list.html",
+    "validate_binary_search_tree.html",
+    "maximum_depth_of_binary_tree.html",
+    "minimum_depth_of_binary_tree.html",
+    "cousins_in_binary_tree.html",
+    "balanced_binary_tree.html",
+    "diameter_of_binary_tree.html",
+    "path_sum.html",
+    "count_complete_tree_nodes.html",
+    "univalued_binary_tree.html",
+    "find_mode_in_binary_search_tree.html",
+    "second_minimum_node_in_a_binary_tree.html",
+    "path_sum_ii.html",
+    "path_sum_iii.html",
+    "binary_tree_maximum_path_sum_trees.html",
+    "range_sum_of_bst_trees.html",
+    "binary_tree_paths_trees.html",
+    "binary_tree_tilt_trees.html",
+    "sum_of_left_leaves_trees.html",
+    "sum_root_to_leaf_numbers_trees.html",
+    "binary_tree_level_order_traversal_trees.html",
+    "binary_tree_zigzag_level_order_traversal_trees.html",
+    "binary_tree_right_side_view_trees.html",
+    "populating_next_right_pointers_in_each_node_trees.html",
+    "populating_next_right_pointers_in_each_node_ii_trees.html",
+    "frog_position_after_t_seconds_trees.html",
+    "n_ary_tree_preorder_traversal_trees.html",
+    "n_ary_tree_postorder_traversal_trees.html",
+    "maximum_depth_of_n_ary_tree_trees.html",
+    "n_ary_tree_level_order_traversal_trees.html",]
 let graph_levels = [
     "Graph Basics",
     "Depth First Search",
@@ -435,8 +533,8 @@ let dynamic_programming_file_names = [
     "binary_tree_maximum_path_sum_trees.html",
     "trapping_rain_water_two_pointers.html",]
 
-let levels = dynamic_programming_levels;
-let file_names = dynamic_programming_file_names;
+let levels = tree_levels;
+let file_names = tree_file_names;
 // do some processing to get levelId you're already doing
 
 // Loop through and update each level
@@ -452,7 +550,7 @@ if (!levelId) {
     continue; // Skip to the next iteration if levelId is not found
 }
 
-const htmlFilePath = path.join(process.cwd(), "src/lib/levels/dynamic_programming/", file_names[i]);
+const htmlFilePath = path.join(process.cwd(), "src/lib/levels/tree/", file_names[i]);
 const description = fs.readFileSync(htmlFilePath, "utf-8").replace(/\r?\n/g, ""); // need to delete new lines for it to be a proper string
 
 await prisma.level.update({

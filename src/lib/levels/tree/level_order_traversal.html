@@ -1,0 +1,33 @@
+<h2 id="title">A Different Type of Tree Traversal</h2>
+<p>In this section, we will look at a different type of tree traversal called level order traversal.</p>
+<p>Level order traversal does not use recursion. Instead, it uses a queue to keep track of the nodes at each level of the tree.</p>
+<p>Level order traversal utilizes an algorithm called breadth-first search (BFS), which will be explored more in the graph world, so this node will give a brief overview of it.</p>
+<p>In level order traversal, we start at the root node and explore all the neighboring nodes at the present depth before moving on to nodes at the next depth level.</p>
+<p>For example, given the following tree:</p>
+<code id="code">   1   <br> 2  3 <br>4 5 6 7</code>
+<p>We can traverse it like this:</p>
+<ul>
+    <li>Start at the root (1)</li>
+    <li>Explore all neighboring nodes at the present depth (2, 3)</li>
+    <li>Explore all neighboring nodes at the next depth level (4, 5, 6, 7)</li>
+    <li>Since we have visited all nodes, we are done</li>
+</ul>
+<p>In code, this can be done using a queue:</p>
+<pre id="code">
+
+def bfs_boilerplate(start):<br>
+    queue = [start]<br>
+    result = []<br>
+    while queue:<br>
+        current_level = []<br>
+        next_queue = []<br>
+        for element in queue:<br>
+            current_level.append(element)<br>
+            for (<span style="font-style: italic">each neighbor that element has</span>):<br>
+                next_queue.append(neighbor)<br>
+        result.append(current_level)<br>
+        queue = next_queue<br>
+    return result<br>
+</pre>
+<p>In this example, the function <code id="code">level_order_traversal</code> uses a queue to keep track of the nodes at each level of the tree. It starts at the root node and explores all neighboring nodes at the present depth before moving on to nodes at the next depth level.</p>
+<p>The result is a list of lists, where each inner list contains the values of the nodes at that level.</p>

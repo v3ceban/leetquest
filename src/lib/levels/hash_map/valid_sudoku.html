@@ -1,0 +1,38 @@
+<h2 id="title">Problem Description</h2>
+<p>
+    Given a 9x9 Sudoku board, determine if it is valid. A valid Sudoku board must have the digits 1 through 9 in each row, column, and 3x3 box without repetition.
+</p>
+<h2 id="subtitle">Examples</h2>
+<div style="background-color: #4C4F69; padding: 10px; border-radius: 5px;">
+    <p><b>Input:</b> <code>board =</code></p>
+    <p><code>
+    [["<green>5</green>","<green>3</green>",".",".","<green>7</green>",".",".",".","."],
+     ["<green>6</green>",".",".","<green>1</green>","<green>9</green>","<green>5</green>",".",".","."],
+     [".","<green>9</green>","<green>8</green>",".",".",".",".","<green>6</green>","."],
+     ["<green>8</green>",".",".",".","<green>6</green>",".",".",".","<green>3</green>"],
+     ["<green>4</green>",".",".","<green>8</green>",".","<green>3</green>",".",".","<green>1</green>"],
+     ["<green>7</green>",".",".",".","<green>2</green>",".",".",".","<green>6</green>"],
+     [".","<green>6</green>",".",".",".",".","<green>2</green>","<green>8</green>","."],
+     [".",".",".","<green>4</green>","<green>1</green>","<green>9</green>",".",".","<green>5</green>"],
+     [".",".",".",".","<green>8</green>",".",".","<green>7</green>","<green>9</green>"]]
+    </code></p>
+    <p><b>Output:</b> <code><green>true</green></code></p>
+    <p><b>Input:</b> <code>board =</code></p>
+    <p><code>
+        [["<green>5</green>","<green>3</green>",".",".","<green>7</green>",".",".",".","<red>9</red>"],
+        ["<green>6</green>",".",".","<green>1</green>","<green>9</green>","<green>5</green>",".",".","."],
+        [".","<green>9</green>","<green>8</green>",".",".",".",".","<green>6</green>","."],
+        ["<green>8</green>",".",".",".","<green>6</green>",".",".",".","<green>3</green>"],
+        ["<green>4</green>",".",".","<green>8</green>",".","<green>3</green>",".",".","<green>1</green>"],
+        ["<green>7</green>",".",".",".","<green>2</green>",".",".",".","<green>6</green>"],
+        [".","<green>6</green>",".",".",".",".","<green>2</green>","<green>8</green>","."],
+        [".",".",".","<green>4</green>","<green>1</green>","<green>9</green>",".",".","<green>5</green>"],
+        [".",".",".",".","<green>8</green>",".",".","<green>7</green>","<red>9</red>"]]
+    <p><b>Output:</b> <code><red>false</red></code></p>
+</div>
+<h2 id="subtitle">Constraints</h2>
+<ul>
+    <li><code id="code">board.length == 9</code></li>
+    <li><code id="code">board[i].length == 9</code></li>
+    <li><code id="code">board[i][j] is a digit or '.'</code></li>
+</ul>

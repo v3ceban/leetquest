@@ -1,0 +1,54 @@
+<h2 id="title">What is a Stack?</h2>
+<p>A stack is an ordered list of elements where adding and removing elements always occurs at the same end of the list. This end is called the "top" of the stack. The other end is called the "bottom" of the stack.</p>
+<p>A stack has two main operations:</p>
+<ul>
+  <li><code id="code"><green>push</green></code>: Add an element to the top of the stack.</li>
+  <li><code id="code"><red>pop</red></code>: Remove the top element from the stack.</li>
+</ul>
+<p>Other operations include:</p>
+<ul>
+  <li><code id="code"><yellow>peek</yellow></code>: Get the top element without removing it.</li>
+  <li><code id="code"><purple>is_empty</purple></code>: Check if the stack is empty.</li>
+  <li><code id="code"><blue>size</blue></code>: Get the number of elements in the stack.</li>
+</ul>
+<p>Note: In Python, stacks are often implemented using arrays, where the top of the stack is at the end of the array, but you can also use the <code id="code">collections.deque</code> module for better performance. The following syntax will only include the array implementation.</p>
+<h2 id="subtitle">Basic Syntax</h2>
+<p>Initializing a Stack:</p>
+<ul>
+  <li>Empty Stack: <code id="code">stack = []</code></li>
+  <li>Non-Empty Stack: <code id="code">stack = [1, 2, 3]</code></li>
+</ul>
+<p>Pushing to a Stack:</p>
+<ul>
+    <li><code id="code"><green>stack.append(4)</green></code></li>
+    <li><code id="terminal"> <green>></green> stack: [1, 2, 3, <green>4</green>]</code></li>
+    <li><code id="code"><green>stack.append(2)</green></code></li>
+    <li><code id="terminal"> <green>></green> stack: [1, 2, 3, 4, <green>2</green>]</code></li>
+</ul>
+
+<p>Popping from a Stack:</p>
+<ul>
+  <li><code id="code"><red>stack.pop()</red></code></li>
+    <li><code id="terminal"> <green>></green> stack: [1, 2, 3, 4]</code></li>
+    <li><code id="code"><red>stack.pop()</red></code></li>
+    <li><code id="terminal"> <green>></green> stack: [1, 2, 3]</code></li>
+</ul>
+
+<p>Getting the Top Element:</p>
+<ul>
+    <li><code id="code"><yellow>top = stack[-1]</yellow></code></li>
+    <li><code id="terminal"> <green>></green> top: <yellow>3</yellow></code></li>
+</ul>
+
+<p>Checking if the Stack is Empty:</p>
+<ul>
+    <li><code id="code"><purple>is_empty = len(stack) == 0</purple></code></li>
+    <li>or <code id="code"><purple>is_empty = not stack</purple></code></li>
+    <li><code id="terminal"> <green>></green> is_empty: <red>False</red></code></li>
+</ul>
+
+<p>Getting the Size of the Stack: (Same Syntax as Array)</p>
+<ul>
+    <li><code id="code"><blue>size = len(stack)</blue></code></li>
+    <li><code id="terminal"> <green>></green> size: <blue>3</blue></code></li>
+</ul>

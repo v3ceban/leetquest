@@ -1,0 +1,122 @@
+<h2 id="title">What is a Linked List?</h2>
+<p>A linked list is a linear data structure consisting of objects called nodes</p>
+<p>Each node has the following:</p>
+<ul>
+    <li>Data: The value stored in the node</li>
+    <li>Pointer: A reference to the next node in the list</li>
+</ul>
+<p>The first node in the linked list is called the head, No nodes point to the head.</p>
+<p>The last node in the linked list is called the tail. Since there are no nodes after it, the tail's pointer is set to null or <code id="code">None</code>.</p>
+
+<h2 id="title">Traversing a Linked List</h2>
+<p>To traverse a linked list, start at the head and follow the pointers to each subsequent node until you reach the tail.</p>
+<p>For example, given the following linked list:</p>
+<code id="code">head -> 1 -> 2 -> 3 -> 4 -> None</code>
+<p>You can traverse it like this:</p>
+<ul>
+    <li>Start at the head (1)</li>
+    <li>Follow the pointer to the next node (2)</li>
+    <li>Follow the pointer to the next node (3)</li>
+    <li>Follow the pointer to the next node (4)</li>
+    <li>Follow the pointer to None, indicating the end of the list</li>
+</ul>
+<p>In code, this can be done using a while loop:</p>
+<pre id="code">
+current = head<br>
+while current is not None:<br>
+    print(current.data)<br>
+    current = current.next<br>
+</pre>
+
+<h2 id="title">Linked List Operations</h2>
+<p>Common operations on linked lists include:</p>
+<ul>
+    <li>Accessing: Retrieving the value of a node</li>
+    <li>Insertion: Adding a new node to the list</li>
+    <li>Deletion: Removing a node from the list</li>
+</ul>
+<h3>Accessing the Front of a Linked List</h3>
+<p>To access the front of a linked list, simply return the head node.</p>
+<pre id="code">
+print(head.val)<br>
+</pre>
+<h3>Accessing the Back of a Linked List</h3>
+<p>To access the back of a linked list, traverse the list until you reach the tail node.</p>
+<pre id="code">
+current = head<br>
+while current.next is not None:<br>
+    current = current.next<br>
+print(current.val)<br>
+</pre>
+<h3>Accessing Somewhere in the Middle of a Linked List</h3>
+<p>To access a node in the middle of a linked list, you can use a loop to traverse the list until you reach the desired index or value</p>
+<pre id="code">
+current = head<br>
+index = 0<br>
+while current is not None and index < target_index:<br>
+    current = current.next<br>
+    index += 1<br>
+if current is not None:<br>
+    print(current.val)<br>
+else:<br>
+    print("Index out of range")<br>
+</pre>
+
+<h3>Inserting a Node at the Front of a Linked List</h3>
+<p>To insert a new node at the front of a linked list, create a new node and set its pointer to the current head. Then update the head to point to the new node.</p>
+<pre id="code">
+new_node = Node(value)<br>
+new_node.next = head<br>
+head = new_node<br>
+</pre>
+<h3>Inserting a Node at the Back of a Linked List</h3>
+<p>To insert a new node at the back of a linked list, traverse the list until you reach the tail node. Then create a new node and set the tail's pointer to point to the new node.</p>
+<pre id="code">
+current = head<br>
+while current.next is not None:<br>
+    current = current.next<br>
+new_node = Node(value)<br>
+current.next = new_node<br>
+</pre>
+<h3>Inserting a Node Somewhere in the Middle of a Linked List</h3>
+<p>To insert a new node somewhere in the middle of a linked list, traverse the list until you reach the desired index or value. Then create a new node and set its pointer to the current node's pointer. Finally, update the current node's pointer to point to the new node.</p>
+<pre id="code">
+current = head<br>
+index = 0<br>
+while current is not None and index < target_index - 1:<br>
+    current = current.next<br>
+    index += 1<br>
+if current is not None:<br>
+    new_node = Node(value)<br>
+    new_node.next = current.next<br>
+    current.next = new_node<br>
+else:<br>
+    print("Index out of range")<br>
+</pre>
+
+<h3>Deleting a Node at the Front of a Linked List</h3>
+<p>To delete a node at the front of a linked list, simply update the head to point to the next node.</p>
+<pre id="code">
+head = head.next<br>
+</pre>
+<h3>Deleting a Node at the Back of a Linked List</h3>
+<p>To delete a node at the back of a linked list, traverse the list until you reach the second-to-last node. Then set its pointer to None.</p>
+<pre id="code">
+current = head<br>
+while current.next.next is not None:<br>
+    current = current.next<br>
+current.next = None<br>
+</pre>
+<h3>Deleting a Node Somewhere in the Middle of a Linked List</h3>
+<p>To delete a node somewhere in the middle of a linked list, traverse the list until you reach the desired index or value. Then update the previous node's pointer to skip the current node.</p>
+<pre id="code">
+current = head<br>
+index = 0<br>
+while current is not None and index < target_index - 1:<br>
+    current = current.next<br>
+    index += 1<br>
+if current is not None and current.next is not None:<br>
+    current.next = current.next.next<br>
+else:<br>
+    print("Index out of range")<br>
+</pre>

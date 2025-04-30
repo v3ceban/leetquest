@@ -1,0 +1,27 @@
+<h2 id="title">Problem Description</h2>
+<p>
+    Given an array of positive and negative integers <code id="code">asteroids</code> representing asteroids in a row moving right and left respectively, find out the state of the 
+    asteroids after all collisions. <red>If 
+    two asteroids meet, the smaller one 
+    will explode.</red> <purple>If both are the same 
+    size, both will explode.</purple> <green>Two 
+    asteroids moving in the same 
+    direction will never meet.</green>
+</p>
+<h2 id="subtitle">Examples</h2>
+<div style="background-color: #4C4F69; padding: 10px; border-radius: 5px;">
+    <p><b>Input:</b> <code>asteroids = [<green>1</green>, <green>2</green>, <green>3</green>, <green>4</green>]</code></p>
+    <p><b>Output:</b> <code>[1, 2, 3, 4]</code></p>
+    <p><b>Input:</b> <code>asteroids = [5, <red>10</red>, <red>-5</red>]</code></p>
+    <p><b>Output:</b> <code>[5, 10]</code></p>
+    <p><b>Input:</b> <code>asteroids = [<red>10</red>, <red>2</red>, <red>-5</red>]</code></p>
+    <p><b>Output:</b> <code>[10]</code></p>
+    <p><b>Input:</b> <code>asteroids = [<purple>8</purple>, <purple>-8</purple>]</code></p>
+    <p><b>Output:</b> <code>[]</code></p>
+</div>
+<h2 id="subtitle">Constraints</h2>
+<ul>
+    <li><code id="code">1 &lt;= asteroids.length &lt;= 10<sup>4</sup></code></li>
+    <li><code id="code">-1000 &lt;= asteroids[i] &lt;= 1000</code></li>
+    <li><code id="code">asteroids[i] != 0</code></li>
+</ul>

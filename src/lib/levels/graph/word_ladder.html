@@ -1,0 +1,20 @@
+<h2 id="title">Problem Description</h2>
+<p>
+    Given two words <code id="code">beginWord</code> and <code id="code">endWord</code>, and a list <code id="code">wordList</code>, find the length of the shortest transformation sequence from <code id="code">beginWord</code> to <code id="code">endWord</code> created from words in <code id="code">wordList</code> (<code id="code">beginWord</code> doesn't have to be in <code id="code">wordList</code>), where every adjacent pair differs by a single letter. If there is no such transformation sequence, return 0.
+</p>
+<h2 id="subtitle">Examples</h2>
+<div style="background-color: #4C4F69; padding: 10px; border-radius: 5px;">
+    <p><b>Input:</b> <code>beginWord = "<green>pot</green>", endWord = "dig", wordList = ["pop","pug","put","<green>dog</green>","<green>lot</green>","<green>log</green>","cog","<green>dig</green>","cup"]</code></p>
+    <p><b>Output:</b> <code><green>5</green></code></p>
+    <p><b>Input:</b> <code>beginWord = "dig", endWord = "cut", wordList = ["pop","pug","put","dog","lot","log","cog","dig","cup"]</code></p>
+    <p><b>Output:</b> <code>0</code></p>
+</div>
+<h2 id="subtitle">Constraints</h2>
+<ul>
+    <li><code id="code">1 &lt;= beginWord.length, endWord.length &lt;= 10</code></li>
+    <li><code id="code">1 &lt;= wordList.length &lt;= 1000</code></li>
+    <li><code id="code">beginWord.length == endWord.length</code></li>
+    <li><code id="code">beginWord</code>, <code id="code">endWord</code>, and <code id="code">wordList[i]</code> consist of lowercase English letters.</li>
+    <li><code id="code">beginWord != endWord</code></li>
+    <li>All the strings of <code id="code">wordList</code> are unique.</li>
+</ul>

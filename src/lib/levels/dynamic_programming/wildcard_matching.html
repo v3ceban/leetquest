@@ -1,0 +1,19 @@
+<h2 id="title">Problem Description</h2>
+<p>
+    Given an input string <code id="code">s</code> and a pattern <code id="code">p</code>, implement wildcard pattern matching with support for <code id="code">'?'</code> and <code id="code">'*'</code>, where <code id="code">'?'</code> matches any single character and <code id="code">'*'</code> matches any sequence of characters (including the empty sequence). The matching should cover the entire input string (not partial).
+</p>
+<h2 id="subtitle">Examples</h2>
+<div style="background-color: #4C4F69; padding: 10px; border-radius: 5px;">
+    <p><b>Input:</b> <code>s = "<yellow>b</yellow><green>a</green><blue>nan</blue><purple>a</purple>", p = "<yellow>b</yellow><green>a</green><blue>*</blue><purple>a</purple>"</code></p>
+    <p><b>Output:</b> <code><green>true</green></code></p>
+    <p><b>Input:</b> <code>s = "<yellow>a</yellow><green>pp</green><blue>l</blue><purple>e</purple>", p = "<yellow>a</yellow><green>*</green><blue>l</blue><purple>e</purple><red>?</red>"</code></p>
+    <p><b>Output:</b> <code><red>false</red></code></p>
+</div>
+<h2 id="subtitle">Constraints</h2>
+<ul>
+    <li><code id="code">0 &lt;= s.length &lt;= 100</code></li>
+    <li><code id="code">0 &lt;= p.length &lt;= 100</code></li>
+    <li><code id="code">s</code> can be empty and contains only lowercase letters.</li>
+    <li><code id="code">p</code> can be empty and contains only lowercase letters, <code id="code">'?'</code>, and <code id="code">'*'</code>.</li>
+    <li>It is guaranteed that the input string and the pattern are both valid.</li>
+</ul>

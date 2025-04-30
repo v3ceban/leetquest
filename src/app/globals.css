@@ -57,3 +57,81 @@ body {
     --window-shadow: -3px 3px 5px 5px rgba(17, 17, 27, 0.2);
   }
 }
+
+.prose ul {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+}
+.prose #title {
+  font-size: large;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.prose h3 {
+  font-size: medium;
+  text-decoration: underline;
+}
+.prose #subtitle {
+  font-size: large;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.prose #code {
+  background-color: #4b5563;
+  padding: 0.1rem;
+  border-radius: 0.15rem;
+  color: white;
+}
+
+.prose #terminal {
+  background-color: #262626;
+  padding: 0.1rem;
+  border-radius: 0.15rem;
+  color: white;
+}
+
+.prose green {
+  color: lightgreen;
+}
+.prose red {
+  color: lightcoral;
+}
+.prose orange {
+  color: rgb(255, 178, 102);
+}
+.prose purple {
+  color: rgb(200, 160, 238);
+}
+.prose yellow {
+  color: rgb(240, 240, 163);
+}
+.prose blue {
+  color: rgb(151, 217, 238);
+}
+.prose a {
+  color: rgb(131, 169, 251);
+  text-decoration: none;
+}
+.editor-terminal {
+  background-color: #262626;
+  height: 18px;
+  width: 100%;
+  /* padding-left: 32px; */
+  overflow: scroll;
+}
+.inline-terminal {
+  background-color: #262626;
+  padding: 0.1rem;
+  border-radius: 0.15rem;
+  color: white;
+}
+
+.editor-terminal > pre {
+  font-family: menlo;
+  font-size: 13px;
+}
+
+.stderr {
+  color: #f04d4b;
+}

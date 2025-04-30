@@ -1,0 +1,12 @@
+<h2 id="title">Binary Search Outside of Structures</h2>
+<p>Binary search can also be used to search for a value within a certain range or to find the maximum or minimum value that satisfies a certain condition. This is often referred to as "searching an answer space." In this context, binary search is applied to a continuous range of values rather than a discrete set of elements.</p>
+<h3>How Binary Search Works on an Answer Space:</h3>
+<ul>
+    <li>Start with two values: <code id="code">low</code> and <code id="code">high</code>, representing the low end and high end of the search space.</li>
+    <li>Calculate the middle value: <code id="code">mid = (low + high) // 2</code>.</li>
+    <li>Check if the middle value is the desired answer.</li>
+    <li>If it is, return it.</li>
+    <li>If it is smaller than the desired answer, adjust the low pointer to <code id="code">mid + 1</code>.</li>
+    <li>If it is larger than the desired answer, adjust the high pointer to <code id="code">mid - 1</code>.</li>
+    <li>Repeat until the low pointer exceeds the high pointer or the desired answer is found.</li>
+</ul>

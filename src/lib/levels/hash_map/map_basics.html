@@ -1,0 +1,54 @@
+
+<h2 id="title">What is a Hash Map?</h2>
+<p>A hash map is an unordered collection of items, each item consisting of a <purple>key</purple> and a <yellow>value</yellow>.</p>
+<ul>
+<li>A hash map has no duplicate <purple>keys</purple>.</li>
+</ul>
+<h2 id="subtitle">Basic Syntax</h2>
+<p>Initializing a Hash Map:</p>
+<ul>
+<li>Empty Map: <code id="code">hash_map = {}</code></li>
+<li>Non-Empty Set: <code id="code">hash_map = {<purple>"a"</purple>: <yellow>1</yellow>, <purple>"b"</purple>: <yellow>2</yellow>, <purple>"c"</purple>: <yellow>3</yellow>}</code></li>
+</ul>
+<p>Setting a <purple>Key's</purple> <yellow>Value</yellow>:</p>
+<ul>
+<li><code id="code">hash_map[<purple>"b"</purple>] = <yellow>4</yellow></code></li>
+<code id="terminal"> <green>></green> hash_map: {<purple>"a"</purple>: <yellow>1</yellow>, <purple>"b"</purple>: <yellow>4</yellow>, <purple>"c"</purple>: <yellow>3</yellow>}</code>
+<li>The code will add the item if the <purple>key</purple> is not in the hash map yet.</li>
+<li>The code will modify the <purple>key's</purple> <yellow>value</yellow> if the <purple>key</purple> is already in the hash map.</li>
+<li>Note: The <purple>key</purple> must be a hashable type (e.g., strings, numbers, tuples).</li>
+</ul>
+<p>Remove a <purple>Key</purple>:</p>
+<ul>
+<li><code id="code">hash_map.pop(<purple>"a"</purple>)</code></li>
+<code id="terminal"> <green>></green> hash_map: {<purple>"b"</purple>: <yellow>4</yellow>, <purple>"c"</purple>: <yellow>3</yellow>}</code>
+<li>Note: The <purple>key</purple> must be in the hash map.</li>
+</ul>
+<p>Checking if <purple>Key</purple> is in Hash Map:</p>
+<ul>
+<li><code id="code">if <purple>"b"</purple> in hash_map:</code></li>
+<code id="terminal"> <green>> true</green></code>
+<li><code id="code">if <purple>"a"</purple> in hash_map:</code></li>
+<code id="terminal"> <green>></green> <red>false</red></code>
+</ul>
+
+<p>Get a List of <purple>Keys</purple>:</p>
+<ul>
+<li><code id="code">keys = list(hash_map.<purple>keys</purple>())</code></li>
+<code id="terminal">keys: [<purple>"b"</purple>, <purple>"c"</purple>]</code>
+<li>Note: The order of the <purple>keys</purple> is not guaranteed.</li>
+</ul>
+<p>Get a List of <yellow>Values</yellow>:</p>
+<ul>
+<li><code id="code">values = list(hash_map.<yellow>values</yellow>())</code></li>
+<code id="terminal">values: [<yellow>4</yellow>, <yellow>3</yellow>]</code>
+<li>Note: The order of the <yellow>values</yellow> is not guaranteed.</li>
+</ul>
+<p>Get a List of <purple>Key</purple>-<yellow>Value</yellow> Pairs:</p>
+<ul>
+<li><code id="code">items = list(hash_map.items())</code></li>
+<code id="terminal">items: [(<purple>"b"</purple>, <yellow>4</yellow>), (<purple>"c"</purple>, <yellow>3</yellow>)]</code>
+<li>Note: The order of the items is not guaranteed.</li>
+</ul>
+<br>
+<codetrier defaultpythoncode="hash_map = {&#x22;a&#x22;: 1, &#x22;b&#x22;: 2, &#x22;c&#x22;: 3}&#10;print(&#x22;hash_map =&#x22;, hash_map)&#10;hash_map[&#x22;d&#x22;] = 4&#10;print(&#x22;after adding d, hash_map =&#x22;, hash_map)&#10;hash_map[&#x22;b&#x22;] = 5&#10;print(&#x22;after updating b, hash_map =&#x22;, hash_map)&#10;hash_map.pop(&#x22;a&#x22;)&#10;print(&#x22;after removing a, hash_map =&#x22;, hash_map)&#10;print(&#x22;c in hash_map is&#x22;, &#x22;c&#x22; in hash_map)&#10;print(&#x22;a in hash_map is&#x22;, &#x22;a&#x22; in hash_map)"></codetrier>

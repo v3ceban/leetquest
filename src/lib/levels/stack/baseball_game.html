@@ -1,0 +1,25 @@
+<h2 id="title">Problem Description</h2>
+<p>
+    Given a baseball game represented as a list of operations, where each operation can be:
+    <ul>
+        <li><code id="code">"X"</code>: Record a new score x.</li>
+        <li><code id="code">"+"</code>: Record a new score that is the sum of the previous two scores.</li>
+        <li><code id="code">"D"</code>: Record a new score that is the double of the previous score.</li>
+        <li><code id="code">"C"</code>: Remove previous score.</li>
+    </ul>
+    Return the sum of all the scores recorded after the operations.
+</p>
+<h2 id="subtitle">Examples</h2>
+<div style="background-color: #4C4F69; padding: 10px; border-radius: 5px;">
+    <p><b>Input:</b> <code>["3", <red>"1"</red>, <red>"C"</red>, "D", "+"]</code></p>
+    <p><b>Output:</b> <code>18</code></p>
+    <p><b>Input:</b> <code>["5", "-2", <red>"4"</red>, <red>"C"</red>, "D", "9", "+"]</code></p>
+    <p><b>Output:</b> <code>13</code></p>
+</div>
+<h2 id="subtitle">Constraints</h2>
+<ul>
+    <li><code id="code">1 &lt;= operations.length &lt;= 1000</code></li>
+    <li><code id="code">operations[i]</code> is <code id="code">"+", "D", "C"</code>, or a string representing an integer.</li>
+    <li>The integer represented by <code id="code">operations[i]</code> is between <code id="code">-1000</code> and <code id="code">1000</code>.</li>
+    <li>The operations are generated such that the sum of the elements in the stack will not exceed <code id="code">2<sup>31</sup> - 1</code>.</li>
+</ul>

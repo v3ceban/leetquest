@@ -1,0 +1,20 @@
+<h2 id="title">Problem Description</h2>
+<p>
+    Given a circular array <code id="code">code</code> and an integer key <code id="code">k</code>, return the decrypted array <code id="code">d</code> to defuse the bomb, where <code id="code">d[i]</code> is the sum of the next <code id="code">k</code> elements in the circular array <code id="code">code</code>.
+    If <code id="code">k</code> is negative, the sum is to be taken from the previous <code id="code">k</code> elements in the circular array.
+</p>
+<h2 id="subtitle">Examples</h2>
+<div style="background-color: #4C4F69; padding: 10px; border-radius: 5px;">
+    <p><b>Input:</b> <code>code = [1,2,3,4,5], k = 3</code></p>
+    <p><b>Output:</b> <code>[9,12,10,8,6]</code></p>
+    <p><b>Input:</b> <code>code = [2,4,9,3], k = 0</code></p>
+    <p><b>Output:</b> <code>[0,0,0,0]</code></p>
+    <p><b>Input:</b> <code>code = [1,2,3,4], k = -1</code></p>
+    <p><b>Output:</b> <code>[4,1,2,3]</code></p>
+</div>
+<h2 id="subtitle">Constraints</h2>
+<ul>
+    <li><code id="code">1 &lt;= code.length &lt;= 100</code></li>
+    <li><code id="code">1 &lt;= code[i] &lt;= 100</code></li>
+    <li><code id="code">-(n - 1) &lt;= k &lt;= n - 1</code></li>
+</ul>

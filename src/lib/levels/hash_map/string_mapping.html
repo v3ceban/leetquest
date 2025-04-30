@@ -1,0 +1,20 @@
+<h2 id="title">Mapping Strings to Other Strings</h2>
+<p>Other common uses for hash maps are mapping a string to another string. </p>
+<p>For example, you can use a hash map to implement a substitution cipher, where each letter in the alphabet is replaced with another letter.</p>
+<p>In this case, the key would be the letter in the alphabet, and the value would be the letter it is replaced with.</p>
+<h2 id="subtitle">Example</h2>
+<p>If you want to replace the letter 'a' with 'b', you would add the following entry to the hash map:</p>
+<ul>
+    <li><code id="code">hash_map['a'] = 'b'</code></li>
+</ul>
+<p>Then, when you want to encrypt a message, you can iterate through the message and replace each letter with its corresponding value in the hash map.</p>
+<p>If you want to encrypt the message "hello", you would do the following:</p>
+<pre id="code">
+<p>encrypted_message = ""</p>
+<p>for letter in message:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;encrypted_message += hash_map[letter]</p>
+<p>print(encrypted_message)</p>
+</pre>
+<p>This would print the encrypted message, where each letter has been replaced with its corresponding value in the hash map.</p>
+<br>
+<codetrier defaultpythoncode="message = &#x22;hello&#x22;&#10;print(message)&#10;decrypted_message = &#x22;&#x22;&#10;hsh = {&#x22;h&#x22;: &#x22;g&#x22;, &#x22;e&#x22;: &#x22;r&#x22;, &#x22;l&#x22;: &#x22;e&#x22;, &#x22;o&#x22;: &#x22;n&#x22;}&#10;for letter in message:&#10;    decrypted_message += hsh[letter]&#10;print(decrypted_message)"></codetrier>

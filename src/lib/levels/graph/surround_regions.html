@@ -1,0 +1,24 @@
+<h2 id="title">Problem Description</h2>
+<p>
+    Given an <code id="code">m x n</code> matrix <code id="code">board</code> containing letters <code id="code"><blue>'X'</blue></code> and <code id="code"><yellow>'O'</yellow></code>, capture regions of <code id="code"><yellow>'O'</yellow></code> that are surrounded by <code id="code"><blue>'X'</blue></code>. To capture a surrounding region, every <code id="code"><yellow>'O'</yellow></code> in that region should be flipped to <code id="code"><blue>'X'</blue></code>.
+</p>
+<h2 id="subtitle">Examples</h2>
+<div style="background-color: #4C4F69; padding: 10px; border-radius: 5px;">
+    <p><b>Input:</b> <code>grid = [<br>
+        [<yellow>'O'</yellow>,<blue>'X'</blue>,<blue>'X'</blue>,<yellow>'O'</yellow>],<br>
+        [<blue>'X'</blue>,<yellow>'O'</yellow>,<yellow>'O'</yellow>,<blue>'X'</blue>],<br>
+        [<blue>'X'</blue>,<blue>'X'</blue>,<yellow>'O'</yellow>,<blue>'X'</blue>],<br>
+        [<blue>'X'</blue>,<yellow>'O'</yellow>,<blue>'X'</blue>,<blue>'X'</blue>]]</code></p>
+    <p><b>Output:</b> <code>grid = [<br>
+        [<yellow>'O'</yellow>,<blue>'X'</blue>,<blue>'X'</blue>,<yellow>'O'</yellow>],<br>
+        [<blue>'X'</blue>,<blue>'X'</blue>,<blue>'X'</blue>,<blue>'X'</blue>],<br>
+        [<blue>'X'</blue>,<blue>'X'</blue>,<blue>'X'</blue>,<blue>'X'</blue>],<br>
+        [<blue>'X'</blue>,<yellow>'O'</yellow>,<blue>'X'</blue>,<blue>'X'</blue>]]</code></p>
+</div>
+<h2 id="subtitle">Constraints</h2>
+<ul>
+    <li><code id="code">m == grid.length</code></li>
+    <li><code id="code">n == grid[i].length</code></li>
+    <li><code id="code">1 &lt;= m, n &lt;= 200</code></li>
+    <li><code id="code">grid[i][j]</code> is either <code id="code"><blue>'X'</blue></code> or <code id="code"><yellow>'O'</yellow></code>.</li>
+</ul>

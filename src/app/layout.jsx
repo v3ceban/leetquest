@@ -25,8 +25,8 @@ const RootLayout = async ({ children }) => {
         className={`${montserrat.variable} bg-background text-foreground antialiased`}
       >
         <SessionProvider>
-          <Navbar className="container px-4 mx-auto md:px-0" />
-          <div className="container px-4 mx-auto md:px-0">{children}</div>
+          <Navbar className="container px-4 mx-auto md:px-2" />
+          <div className="container px-4 mx-auto md:px-2">{children}</div>
         </SessionProvider>
       </body>
     </html>

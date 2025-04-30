@@ -209,7 +209,7 @@ function WorldNode({
         >
           <h3>{name}</h3>
           {levelStatus === "COMPLETE" && (
-            <FaCircleCheck className="absolute w-3 h-3 rounded-full -right-[1px] -top-[1px] bg-[--overlay]" />
+            <FaCircleCheck className="absolute w-3 h-3 rounded-full -right-[1px] -top-[1px] bg-primary" />
           )}
         </TooltipTrigger>
         <LevelTooltipContent level={worldData} />
@@ -280,7 +280,7 @@ WorldNode.propTypes = {
 function LevelTooltipContent({ level }) {
   const levelComplete = level.status === "COMPLETE";
   return (
-    <TooltipContent className="absolute left-6 space-y-1 w-48 text-xs rounded-sm shadow-background/75">
+    <TooltipContent className="absolute left-6 space-y-1 w-48 text-xs rounded border-none bg-[--surface-1] shadow-background/75">
       <h4 className="font-semibold">{level.title}</h4>
       <p className="flex gap-1 items-center">
         <Star className="w-3 h-3 fill-foreground" />

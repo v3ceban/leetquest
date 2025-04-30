@@ -22,6 +22,8 @@ const QuestProvider = ({ children, initialWorldsData }) => {
   const [levelFull, setLevelFull] = React.useState(false);
   const [descriptionFull, setDescriptionFull] = React.useState(false);
 
+  const [manualOpen, setManualOpen] = React.useState(false);
+
   React.useEffect(
     function setFullScreenOnMobile() {
       if (isMobile) {
@@ -167,6 +169,8 @@ const QuestProvider = ({ children, initialWorldsData }) => {
         setLevelFull,
         descriptionFull,
         setDescriptionFull,
+        manualOpen,
+        setManualOpen,
       }}
     >
       {children}

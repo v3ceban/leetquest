@@ -10,21 +10,18 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
-import { GripVertical, X, Move, CornerDownRight, BookOpen } from "lucide-react";
+import { GripVertical, X, CornerDownRight, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
+import LevelDescription from "./level-description";
+import { useMobile } from "@/hooks/use-mobile";
 
-const ResizeHandle = ({
-  width = "12",
-  height = "12",
-  fill = "currentColor",
-  className,
-}) => (
+const ResizeHandle = ({ width = "12", height = "12", className }) => (
   <svg
     width={width}
     height={height}
     viewBox={`0 0 ${width} ${height}`}
-    className="text-gray-400"
+    className={cn("text-foreground", className)}
   >
     <path
       d="M8 12H12V8L8 12ZM4 12H6L12 6V4L4 12ZM0 12H2L12 2V0L0 12Z"
@@ -70,6 +67,7 @@ const setManualWindowState = (state) => {
 };
 
 export const Manual = ({ open, onOpenChange }) => {
+  const isMobile = useMobile();
   const { worldsData, selectedWorld, selectedLevelName } =
     useContext(QuestContext);
 
@@ -241,35 +239,55 @@ export const Manual = ({ open, onOpenChange }) => {
       id="leetquest-manual-window"
       className={cn(
         "fixed z-[100] transition-transform duration-100 shadow shadow-black/75 border border-[--surface-2] bg-[--surface-1] rounded-xl flex flex-col",
-        dragging &&
+        !isMobile &&
+          dragging &&
           "shadow-black/75 shadow-md scale-[1.01] motion-reduce:scale-100",
+        isMobile && "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2",
       )}
-      style={{
-        left: position.x,
-        top: position.y,
-        width: size.width,
-        height: size.height,
-        minWidth: 320,
-        minHeight: 320,
-        maxWidth: "90vw",
-        maxHeight: "90vh",
-      }}
+      style={
+        isMobile
+          ? {
+              left: "50%",
+              top: "50%",
+              width: "95vw",
+              height: "90vh",
+              minWidth: 0,
+              minHeight: 0,
+              maxWidth: "95vw",
+              maxHeight: "90vh",
+            }
+          : {
+              left: position.x,
+              top: position.y,
+              width: size.width,
+              height: size.height,
+              minWidth: 320,
+              minHeight: 320,
+              maxWidth: "90vw",
+              maxHeight: "90vh",
+            }
+      }
     >
       <header
         className={cn(
-          "flex items-center justify-between px-4 py-2 border-b border-[--surface-2] cursor-grab select-none bg-[--surface-1] rounded-t-xl",
-          dragging && "cursor-grabbing",
+          "flex items-center justify-between px-4 sm:px-6 py-2 border-b border-[--surface-2] select-none bg-[--surface-1] rounded-t-xl",
+          !isMobile && "cursor-grab",
+          !isMobile && dragging && "cursor-grabbing",
         )}
-        onMouseDown={(e) => {
-          setDragging(true);
-          dragStart.current = {
-            x: e.clientX - positionRef.current.x,
-            y: e.clientY - positionRef.current.y,
-          };
-        }}
+        {...(!isMobile && {
+          onMouseDown: (e) => {
+            setDragging(true);
+            dragStart.current = {
+              x: e.clientX - positionRef.current.x,
+              y: e.clientY - positionRef.current.y,
+            };
+          },
+        })}
       >
         <h2 className="flex gap-2 items-center text-lg font-semibold">
-          <GripVertical className="mr-1 w-4 h-4 text-muted-foreground" />
+          {!isMobile && (
+            <GripVertical className="mr-1 w-4 h-4 text-muted-foreground" />
+          )}
           Manual
         </h2>
         <Button
@@ -281,7 +299,7 @@ export const Manual = ({ open, onOpenChange }) => {
           <X className="w-5 h-5" />
         </Button>
       </header>
-      <main className="overflow-y-auto flex-1 p-4 space-y-6">
+      <main className="overflow-y-auto flex-1 py-4 px-4 space-y-6 sm:px-6">
         {unlockedWorlds.length === 0 && (
           <p className="py-8 text-center text-muted-foreground">
             No unlocked worlds yet.
@@ -298,7 +316,7 @@ export const Manual = ({ open, onOpenChange }) => {
             <AccordionItem
               key={world.id}
               value={world.name}
-              className="mb-2 rounded-lg border-none bg-[--surface-2]"
+              className="mb-2 rounded-md border-none bg-[--surface-2]"
               ref={(el) => {
                 if (el) worldRefs.current[world.name] = el;
               }}
@@ -338,21 +356,20 @@ export const Manual = ({ open, onOpenChange }) => {
                           if (el) levelRefs.current[level.name] = el;
                         }}
                       >
-                        <AccordionTrigger className="py-1 px-2 font-medium rounded">
+                        <AccordionTrigger className="py-1 px-2 font-semibold rounded">
                           <span className="flex gap-2 items-center">
                             <CornerDownRight className="w-4 h-4 text-muted-foreground" />
                             {level.title || level.name}
                           </span>
                         </AccordionTrigger>
                         <AccordionContent>
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html: level.description,
-                            }}
-                            className="px-6 pt-4 text-sm text-muted-foreground"
-                          ></div>
+                          <LevelDescription
+                            className="py-4 px-6 text-sm prose"
+                            rawHtml={level.description}
+                            skipCode
+                          />
                           <Textarea
-                            className="block mx-6 w-[calc(100%-3rem)]"
+                            className="block mx-6 w-[calc(100%-3rem)] placeholder:text-background placeholder:opacity-70 border-[--surface-2] bg-[--light] text-background"
                             placeholder="Your notes..."
                             value={notes[level.id] || ""}
                             onChange={(e) =>
@@ -369,21 +386,23 @@ export const Manual = ({ open, onOpenChange }) => {
           ))}
         </Accordion>
       </main>
-      <div
-        className="flex absolute right-1 bottom-1 z-10 justify-center items-center w-6 h-6 cursor-se-resize"
-        onMouseDown={(e) => {
-          setResizing(true);
-          sizeStart.current = {
-            width: sizeRef.current.width,
-            height: sizeRef.current.height,
-            x: e.clientX,
-            y: e.clientY,
-          };
-          e.stopPropagation();
-        }}
-      >
-        <ResizeHandle />
-      </div>
+      {!isMobile && (
+        <div
+          className="flex absolute right-0 bottom-0 z-10 justify-center items-center w-6 h-6 cursor-se-resize"
+          onMouseDown={(e) => {
+            setResizing(true);
+            sizeStart.current = {
+              width: sizeRef.current.width,
+              height: sizeRef.current.height,
+              x: e.clientX,
+              y: e.clientY,
+            };
+            e.stopPropagation();
+          }}
+        >
+          <ResizeHandle />
+        </div>
+      )}
     </article>
   );
 };

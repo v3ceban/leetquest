@@ -9,7 +9,7 @@ const TestCase = ({ number, testCase }) => {
 
   return (
     <div className="border p-4 rounded-md shadow-md">
-      <h3 className="font-bold text-lg flex items-center gap-2">
+      <h3 className="font-bold text-lg flex items-center gap-2 !no-underline">
         Test Case {number}
         {isJudging ? (
           <span className="text-yellow-500">⏳</span> // Hourglass while judging

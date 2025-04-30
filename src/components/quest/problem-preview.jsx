@@ -69,8 +69,8 @@ const ProblemPreview = () => {
   };
 
   return (
-    <section className="flex overflow-scroll relative flex-col gap-4 pb-4 h-full">
-      <header className="flex sticky top-0 flex-row gap-4 items-center p-4 shadow-md shadow-background/75 bg-[var(--surface-1)]">
+    <section className="flex overflow-scroll relative flex-col gap-4 h-full">
+      <header className="flex sticky top-0 z-10 flex-row gap-4 items-center p-4 border-b border-[--surface-2] bg-[var(--surface-1)]">
         {selectedLevelData && (
           <WorldNode
             key={selectedLevelName}
@@ -96,7 +96,7 @@ const ProblemPreview = () => {
           <ResizeButton
             onClick={() => setDescriptionFull((prev) => !prev)}
             open={descriptionFull}
-            className="hidden md:block"
+            className="hidden md:flex"
           />
           <CloseButton onClick={closeLevel} />
         </ButtonsContainer>
@@ -104,12 +104,12 @@ const ProblemPreview = () => {
 
       <LevelDescription
         rawHtml={selectedLevelData.description}
-        className="overflow-scroll px-4 prose prose-invert"
+        className="px-4 md:overflow-scroll prose prose-invert"
       />
 
       <footer
         className={cn(
-          "grid gap-4 mx-auto w-full mt-auto max-w-xl px-4 pb-4",
+          "grid gap-4 mx-auto mt-auto w-full max-w-xl p-4 border-t border-[--surface-2]",
           selectedLevelData.leetcode_url && "lg:grid-cols-2 grid-cols-1",
         )}
       >

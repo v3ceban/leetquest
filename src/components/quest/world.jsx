@@ -15,7 +15,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { FaCircleCheck, FaLock } from "react-icons/fa6";
+import {
+  FaCircleCheck,
+  FaLightbulb,
+  FaLock,
+  FaPuzzlePiece,
+  FaStar,
+} from "react-icons/fa6";
 
 // also in src/components/arrow.jsx
 const WORLD_WIDTH = 100;
@@ -240,8 +246,8 @@ function WorldNode({
       {!isAPreview && (
         <>
           {!isWorldUnlocked ? (
-            <span className="mt-1 text-[6px]">
-              <FaLock className="inline-block mr-1 w-2 h-2" />
+            <span className="flex gap-x-0.5 items-center mt-1 text-[7px]">
+              <FaLock className="inline-block w-2 h-2" />
               Locked
             </span>
           ) : (
@@ -283,13 +289,15 @@ function LevelTooltipContent({ level }) {
     <TooltipContent className="absolute left-6 space-y-1 w-48 text-xs rounded border-none bg-[--surface-1] shadow-background/75">
       <h4 className="font-semibold">{level.title}</h4>
       <p className="flex gap-1 items-center">
-        <Star className="w-3 h-3 fill-foreground" />
+        {level.type === "LEARN" && <FaLightbulb className="w-3 h-3" />}
+        {level.type === "PROBLEM" && <FaPuzzlePiece className="w-3 h-3" />}
+        {level.type === "BONUS" && <FaStar className="w-3 h-3" />}
         <span>{level.type[0] + level.type.slice(1).toLowerCase()}</span>
       </p>
       <p className="flex gap-1 items-center">
         {level.unlocked ? (
           levelComplete ? (
-            <CheckCircle2 className="w-3 h-3" />
+            <FaCircleCheck className="w-3 h-3" />
           ) : (
             <Circle className="w-3 h-3" />
           )

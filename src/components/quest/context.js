@@ -57,6 +57,27 @@ const QuestProvider = ({ children, initialWorldsData }) => {
     }
   }, []);
 
+  React.useEffect(function setManualOpenFromURL() {
+    const params = new URLSearchParams(location.search);
+    const manualParam = params.get("manual");
+    if (manualParam) {
+      setManualOpen(manualParam === "true");
+    }
+  }, []);
+
+  React.useEffect(
+    function setManualURLParam() {
+      const params = new URLSearchParams(location.search);
+      if (manualOpen) {
+        params.set("manual", "true");
+      } else {
+        params.delete("manual");
+      }
+      history.replaceState({}, "", `${location.pathname}?${params}`);
+    },
+    [manualOpen],
+  );
+
   const updateSelectedWorldData = (worldName) => {
     if (!worldName) {
       setSelectedWorldData([]);

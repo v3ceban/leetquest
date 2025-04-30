@@ -13,7 +13,7 @@ export const ButtonsContainer = ({ children, className }) => {
   return (
     <nav
       className={cn(
-        "absolute right-4 top-[7px] flex items-center justify-center gap-3",
+        "absolute right-4 top-[7px] flex items-center justify-center gap-3 bg-[--surface-1]",
         className,
       )}
     >
@@ -26,30 +26,47 @@ ButtonsContainer.propTypes = {
   className: PropTypes.string,
 };
 
-export const ResizeButton = ({ onClick, className, open }) => {
-  if (open) {
-    return (
-      <Minimize
-        title="Minimize"
-        onClick={onClick}
-        className={cn(
-          "w-6 h-6 ease-in-out cursor-pointer",
-          "hover:text-primary",
-          className,
-        )}
-      />
-    );
-  }
+const AnimatedButton = ({ children, onClick, className, title, ariaLabel }) => {
   return (
-    <Expand
-      aria-label="Maximize"
+    <button
       onClick={onClick}
       className={cn(
-        "w-[24px] h-[24px] cursor-pointer",
-        "hover:text-primary",
+        "flex relative justify-center items-center w-6 h-6 hover:text-primary",
         className,
       )}
-    />
+      title={title}
+      aria-label={ariaLabel}
+    >
+      {children}
+    </button>
+  );
+};
+AnimatedButton.propTypes = {
+  children: PropTypes.node.isRequired,
+  onClick: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  title: PropTypes.string,
+  ariaLabel: PropTypes.string,
+};
+
+export const ResizeButton = ({ onClick, className, open }) => {
+  return (
+    <AnimatedButton
+      aria-label={open ? "Minimize" : "Minimize"}
+      title={open ? "Minimize" : "Maximize"}
+      onClick={onClick}
+      className={className}
+    >
+      <Expand
+        className={cn(
+          "transition-all absolute w-[22px] h-[22px]",
+          open && "opacity-0 scale-0",
+        )}
+      />
+      <Minimize
+        className={cn("transition-all absolute", !open && "opacity-0 scale-50")}
+      />
+    </AnimatedButton>
   );
 };
 ResizeButton.propTypes = {
@@ -73,25 +90,27 @@ CloseButton.propTypes = {
 };
 
 export const ManualButton = ({ open, onClick, className }) => {
-  if (open) {
-    return (
+  return (
+    <AnimatedButton
+      aria-label={open ? "Close Manual" : "Open Manual"}
+      title={open ? "Close Manual" : "Open Manual"}
+      onClick={onClick}
+    >
       <Book
-        aria-label="Close Manual"
-        onClick={onClick}
         className={cn(
-          "w-6 h-6 cursor-pointer",
-          "hover:text-primary",
+          "transition-all absolute",
+          open && "opacity-0 scale-50",
           className,
         )}
       />
-    );
-  }
-  return (
-    <BookOpen
-      aria-label="Open Manual"
-      onClick={onClick}
-      className={cn("w-6 h-6 cursor-pointer", "hover:text-primary", className)}
-    />
+      <BookOpen
+        className={cn(
+          "transition-all absolute",
+          !open && "opacity-0 scale-50",
+          className,
+        )}
+      />
+    </AnimatedButton>
   );
 };
 ManualButton.propTypes = {
@@ -140,7 +159,7 @@ export const Quest = () => {
                 setDescriptionFull(false);
               }}
               open={levelFull}
-              className="hidden md:block"
+              className="hidden md:flex"
             />
             <CloseButton onClick={closeWorld} />
           </ButtonsContainer>
@@ -158,6 +177,12 @@ export const Quest = () => {
           <World worldData={selectedWorldData} isAWorld={true} />
         </section>
       )}
+      <ButtonsContainer>
+        <ManualButton
+          open={manualOpen}
+          onClick={() => setManualOpen((prev) => !prev)}
+        />
+      </ButtonsContainer>
       <World worldData={worldsData} isAWorld={false} />
     </section>
   );

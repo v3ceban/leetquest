@@ -3,14 +3,13 @@
 import propTypes from "prop-types";
 import { useContext, useRef, useState, useEffect } from "react";
 import { QuestContext } from "./context";
-import { Button } from "@/components/ui/button";
 import {
   Accordion,
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
-import { GripVertical, X, CornerDownRight, BookOpen } from "lucide-react";
+import { GripVertical, CircleX, CornerDownRight, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import LevelDescription from "./level-description";
@@ -159,6 +158,7 @@ export const Manual = ({ open, onOpenChange }) => {
     if (!dragging && !resizing) return;
 
     const handleMouseMove = (e) => {
+      window.getSelection().removeAllRanges();
       if (dragging) {
         const newX = e.clientX - dragStart.current.x;
         const newY = e.clientY - dragStart.current.y;
@@ -290,14 +290,14 @@ export const Manual = ({ open, onOpenChange }) => {
           )}
           Manual
         </h2>
-        <Button
-          size="icon"
-          variant="ghost"
-          className="rounded-full"
-          onClick={() => onOpenChange(false)}
-        >
-          <X className="w-5 h-5" />
-        </Button>
+        <CircleX
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onOpenChange(false);
+          }}
+          className="w-6 h-6 cursor-pointer hover:text-primary"
+        />
       </header>
       <main className="overflow-y-auto flex-1 py-4 px-4 space-y-6 sm:px-6">
         {unlockedWorlds.length === 0 && (
@@ -327,8 +327,8 @@ export const Manual = ({ open, onOpenChange }) => {
                   {world.name}
                 </span>
               </AccordionTrigger>
-              <AccordionContent>
-                <div className="px-2 pb-2 space-y-4">
+              <AccordionContent className="pb-2">
+                <div className="px-2 space-y-4">
                   {getUnlockedLevels(world).length === 0 && (
                     <div className="pl-2 text-sm text-muted-foreground">
                       No unlocked levels yet.
@@ -357,7 +357,7 @@ export const Manual = ({ open, onOpenChange }) => {
                         }}
                       >
                         <AccordionTrigger className="py-1 px-2 font-semibold rounded">
-                          <span className="flex gap-2 items-center">
+                          <span className="flex gap-2 items-center text-left">
                             <CornerDownRight className="w-4 h-4 text-muted-foreground" />
                             {level.title || level.name}
                           </span>

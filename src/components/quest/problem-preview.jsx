@@ -5,10 +5,16 @@ import { Button } from "@/components/ui/button";
 import { Loading } from "@/components/ui/spinner";
 import { QuestContext } from "@/components/quest/context";
 import { WorldNode } from "@/components/quest/world";
-import { setLevelComplete } from "./fetch-data";
+import { setLevelComplete } from "@/components/quest/fetch-data";
 import { cn } from "@/lib/utils";
 import { CheckCircle2, Circle, Play } from "lucide-react";
-import LevelDescription from "./level-description";
+import LevelDescription from "@/components/quest/level-description";
+import {
+  ButtonsContainer,
+  CloseButton,
+  ManualButton,
+  ResizeButton,
+} from "@/components/quest/quest";
 
 const ProblemPreview = () => {
   const {
@@ -17,6 +23,10 @@ const ProblemPreview = () => {
     setWorldsData,
     setSelectedWorldData,
     closeLevel,
+    descriptionFull,
+    setDescriptionFull,
+    manualOpen,
+    setManualOpen,
   } = React.useContext(QuestContext);
   const [loading, setLoading] = React.useState(false);
 
@@ -75,7 +85,21 @@ const ProblemPreview = () => {
             levelStatus={selectedLevelData.status}
           />
         )}
-        <h2 className="w-2/3 text-2xl">{selectedLevelData.title}</h2>
+        <h2 className="w-2/3 text-2xl font-semibold">
+          {selectedLevelData.title}
+        </h2>
+        <ButtonsContainer className="top-1/2 -translate-y-1/2">
+          <ManualButton
+            open={manualOpen}
+            onClick={() => setManualOpen((prev) => !prev)}
+          />
+          <ResizeButton
+            onClick={() => setDescriptionFull((prev) => !prev)}
+            open={descriptionFull}
+            className="hidden md:block"
+          />
+          <CloseButton onClick={closeLevel} />
+        </ButtonsContainer>
       </header>
 
       <LevelDescription

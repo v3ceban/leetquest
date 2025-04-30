@@ -60,7 +60,7 @@ function World({ worldData, isAWorld }) {
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
     >
-      <h2 className="py-2 pl-4 bg-[var(--surface-1)]">
+      <h2 className="py-2 pl-4 font-semibold bg-[var(--surface-1)]">
         {isAWorld ? selectedWorld : "Worlds"}
       </h2>
       <section>

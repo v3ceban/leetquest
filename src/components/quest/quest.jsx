@@ -1,15 +1,15 @@
 "use client";
 
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import PropTypes from "prop-types";
 import { World } from "@/components/quest/world";
 import { QuestContext } from "@/components/quest/context";
-import ProblemPreview from "./problem-preview";
+import ProblemPreview from "@/components/quest/problem-preview";
 import { cn } from "@/lib/utils";
-import { CircleX, Expand, Minimize, BookOpen } from "lucide-react";
-import { Manual } from "./manual";
+import { CircleX, Expand, Minimize, BookOpen, Book } from "lucide-react";
+import { Manual } from "@/components/quest/manual";
 
-const ButtonsContainer = ({ children, className }) => {
+export const ButtonsContainer = ({ children, className }) => {
   return (
     <nav
       className={cn(
@@ -26,10 +26,11 @@ ButtonsContainer.propTypes = {
   className: PropTypes.string,
 };
 
-const ResizeButton = ({ onClick, className, open }) => {
+export const ResizeButton = ({ onClick, className, open }) => {
   if (open) {
     return (
       <Minimize
+        title="Minimize"
         onClick={onClick}
         className={cn(
           "w-6 h-6 ease-in-out cursor-pointer",
@@ -41,6 +42,7 @@ const ResizeButton = ({ onClick, className, open }) => {
   }
   return (
     <Expand
+      aria-label="Maximize"
       onClick={onClick}
       className={cn(
         "w-[22px] h-[22px] cursor-pointer",
@@ -56,15 +58,44 @@ ResizeButton.propTypes = {
   open: PropTypes.bool.isRequired,
 };
 
-const CloseButton = ({ onClick, className }) => {
+export const CloseButton = ({ onClick, className }) => {
   return (
     <CircleX
+      aria-label="Close"
       onClick={onClick}
       className={cn("w-6 h-6 cursor-pointer", "hover:text-primary", className)}
     />
   );
 };
 CloseButton.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  className: PropTypes.string,
+};
+
+export const ManualButton = ({ open, onClick, className }) => {
+  if (open) {
+    return (
+      <Book
+        aria-label="Close Manual"
+        onClick={onClick}
+        className={cn(
+          "w-6 h-6 cursor-pointer",
+          "hover:text-primary",
+          className,
+        )}
+      />
+    );
+  }
+  return (
+    <BookOpen
+      aria-label="Open Manual"
+      onClick={onClick}
+      className={cn("w-6 h-6 cursor-pointer", "hover:text-primary", className)}
+    />
+  );
+};
+ManualButton.propTypes = {
+  open: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
   className: PropTypes.string,
 };
@@ -82,21 +113,12 @@ export const Quest = () => {
     descriptionFull,
     setDescriptionFull,
     closeWorld,
-    closeLevel,
+    manualOpen,
+    setManualOpen,
   } = useContext(QuestContext);
-
-  const [manualOpen, setManualOpen] = useState(false);
 
   return (
     <section>
-      <button
-        type="button"
-        aria-label="Open Manual"
-        className="fixed top-6 right-6 z-50 p-2 rounded-full border shadow-lg transition-colors bg-[--surface-1] border-border hover:bg-[--surface-2]"
-        onClick={() => setManualOpen(true)}
-      >
-        <BookOpen className="w-6 h-6 text-primary" />
-      </button>
       <Manual open={manualOpen} onOpenChange={setManualOpen} />
 
       {selectedWorld && (
@@ -108,6 +130,10 @@ export const Quest = () => {
           )}
         >
           <ButtonsContainer>
+            <ManualButton
+              open={manualOpen}
+              onClick={() => setManualOpen((prev) => !prev)}
+            />
             <ResizeButton
               onClick={() => {
                 setLevelFull((prev) => !prev);
@@ -127,24 +153,11 @@ export const Quest = () => {
               )}
             >
               <ProblemPreview />
-              <ButtonsContainer className="top-6">
-                <ResizeButton
-                  onClick={() => setDescriptionFull((prev) => !prev)}
-                  open={descriptionFull}
-                  className="hidden md:block"
-                />
-                <CloseButton onClick={closeLevel} />
-              </ButtonsContainer>
             </section>
           )}
           <World worldData={selectedWorldData} isAWorld={true} />
         </section>
       )}
-      {/* WIP
-        <span className="absolute right-4 z-40 py-2 pl-4 bg-[var(--surface-1)]">
-          Manual
-        </span>
-       */}
       <World worldData={worldsData} isAWorld={false} />
     </section>
   );

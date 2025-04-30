@@ -68,6 +68,7 @@ model Level {
   x_position    Int
   y_position    Int
   leetcode_url  String?
+  order         Int          @default(0)
   // stars     Int
   world         World        @relation(fields: [world_id], references: [id], onDelete: Cascade)
   world_id      String
@@ -99,6 +100,7 @@ model User_Level {
   level_id   String
   status     Level_Status @default(INCOMPLETE)
   unlocked   Boolean      @default(false)
+  notes      String?
   created_at DateTime     @default(now())
   updated_at DateTime     @updatedAt
 

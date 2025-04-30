@@ -42,7 +42,7 @@ const MonacoEditorWrapper = ({ defaultValue, onCodeChange, setEditorHeight, edit
       lineNumbersMinChars: 3,
       selectOnLineNumbers: false,
       "bracketPairColorization.enabled": false,
-      scrollBeyondLastLine: false,
+      scrollBeyondLastLine: true,
     });
     
 

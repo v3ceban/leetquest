@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { CircleX, Expand, Minimize, BookOpen } from "lucide-react";
 import { Manual } from "./manual";
 
-const ButtonsContainer = ({ children, className }) => {
+export const ButtonsContainer = ({ children, className }) => {
   return (
     <nav
       className={cn(
@@ -26,7 +26,7 @@ ButtonsContainer.propTypes = {
   className: PropTypes.string,
 };
 
-const ResizeButton = ({ onClick, className, open }) => {
+export const ResizeButton = ({ onClick, className, open }) => {
   if (open) {
     return (
       <Minimize
@@ -56,7 +56,7 @@ ResizeButton.propTypes = {
   open: PropTypes.bool.isRequired,
 };
 
-const CloseButton = ({ onClick, className }) => {
+export const CloseButton = ({ onClick, className }) => {
   return (
     <CircleX
       onClick={onClick}
@@ -82,10 +82,9 @@ export const Quest = () => {
     descriptionFull,
     setDescriptionFull,
     closeWorld,
-    closeLevel,
   } = useContext(QuestContext);
 
-  const [manualOpen, setManualOpen] = useState(false);
+  const [manualOpen, setManualOpen] = useState(true);
 
   return (
     <section>
@@ -127,14 +126,6 @@ export const Quest = () => {
               )}
             >
               <ProblemPreview />
-              <ButtonsContainer className="top-6">
-                <ResizeButton
-                  onClick={() => setDescriptionFull((prev) => !prev)}
-                  open={descriptionFull}
-                  className="hidden md:block"
-                />
-                <CloseButton onClick={closeLevel} />
-              </ButtonsContainer>
             </section>
           )}
           <World worldData={selectedWorldData} isAWorld={true} />

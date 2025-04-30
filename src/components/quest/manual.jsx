@@ -3,7 +3,6 @@
 import propTypes from "prop-types";
 import { useContext, useRef, useState, useEffect } from "react";
 import { QuestContext } from "./context";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -13,6 +12,32 @@ import {
 } from "@/components/ui/accordion";
 import { GripVertical, X, Move, CornerDownRight, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Textarea } from "@/components/ui/textarea";
+
+const ResizeHandle = ({
+  width = "12",
+  height = "12",
+  fill = "currentColor",
+  className,
+}) => (
+  <svg
+    width={width}
+    height={height}
+    viewBox={`0 0 ${width} ${height}`}
+    className="text-gray-400"
+  >
+    <path
+      d="M8 12H12V8L8 12ZM4 12H6L12 6V4L4 12ZM0 12H2L12 2V0L0 12Z"
+      fill="currentColor"
+    />
+  </svg>
+);
+ResizeHandle.propTypes = {
+  width: propTypes.string,
+  height: propTypes.string,
+  fill: propTypes.string,
+  className: propTypes.string,
+};
 
 const getNotes = () => {
   if (typeof window === "undefined") return {};
@@ -164,7 +189,27 @@ export const Manual = ({ open, onOpenChange }) => {
     const handleMouseUp = () => {
       setDragging(false);
       setResizing(false);
-      setPosition({ ...positionRef.current });
+      const win = document.getElementById("leetquest-manual-window");
+      if (win) {
+        const { innerWidth, innerHeight } = window;
+        const rect = win.getBoundingClientRect();
+        let { x, y } = positionRef.current;
+        const width = rect.width;
+        const height = rect.height;
+
+        if (x < 0) x = 0;
+        if (y < 0) y = 0;
+        if (x + width > innerWidth) x = Math.max(0, innerWidth - width);
+        if (y + height > innerHeight) y = Math.max(0, innerHeight - height);
+
+        if (x !== positionRef.current.x || y !== positionRef.current.y) {
+          positionRef.current = { x, y };
+          win.style.left = `${x}px`;
+          win.style.top = `${y}px`;
+        }
+        setPosition({ ...positionRef.current });
+      }
+
       setSize({ ...sizeRef.current });
     };
     window.addEventListener("mousemove", handleMouseMove);
@@ -195,7 +240,9 @@ export const Manual = ({ open, onOpenChange }) => {
     <article
       id="leetquest-manual-window"
       className={cn(
-        "fixed z-[100] shadow-2xl border border-border bg-[--surface-1] rounded-xl flex flex-col",
+        "fixed z-[100] transition-transform duration-100 shadow shadow-black/75 border border-[--surface-2] bg-[--surface-1] rounded-xl flex flex-col",
+        dragging &&
+          "shadow-black/75 shadow-md scale-[1.01] motion-reduce:scale-100",
       )}
       style={{
         left: position.x,
@@ -210,8 +257,8 @@ export const Manual = ({ open, onOpenChange }) => {
     >
       <header
         className={cn(
-          "flex items-center justify-between px-4 py-2 border-b border-border cursor-move select-none bg-[--surface-2] rounded-t-xl",
-          dragging && "bg-[--surface-3]",
+          "flex items-center justify-between px-4 py-2 border-b border-[--surface-2] cursor-grab select-none bg-[--surface-1] rounded-t-xl",
+          dragging && "cursor-grabbing",
         )}
         onMouseDown={(e) => {
           setDragging(true);
@@ -302,10 +349,10 @@ export const Manual = ({ open, onOpenChange }) => {
                             dangerouslySetInnerHTML={{
                               __html: level.description,
                             }}
-                            className="mb-2 ml-6 text-sm text-muted-foreground"
+                            className="px-6 pt-4 text-sm text-muted-foreground"
                           ></div>
-                          <Input
-                            className="ml-6"
+                          <Textarea
+                            className="block mx-6 w-[calc(100%-3rem)]"
                             placeholder="Your notes..."
                             value={notes[level.id] || ""}
                             onChange={(e) =>
@@ -335,7 +382,7 @@ export const Manual = ({ open, onOpenChange }) => {
           e.stopPropagation();
         }}
       >
-        <Move className="w-4 h-4 opacity-60 text-muted-foreground" />
+        <ResizeHandle />
       </div>
     </article>
   );

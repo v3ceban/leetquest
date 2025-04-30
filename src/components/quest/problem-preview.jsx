@@ -9,6 +9,7 @@ import { setLevelComplete } from "./fetch-data";
 import { cn } from "@/lib/utils";
 import { CheckCircle2, Circle, Play } from "lucide-react";
 import LevelDescription from "./level-description";
+import { ButtonsContainer, CloseButton, ResizeButton } from "./quest";
 
 const ProblemPreview = () => {
   const {
@@ -17,6 +18,8 @@ const ProblemPreview = () => {
     setWorldsData,
     setSelectedWorldData,
     closeLevel,
+    descriptionFull,
+    setDescriptionFull,
   } = React.useContext(QuestContext);
   const [loading, setLoading] = React.useState(false);
 
@@ -75,7 +78,17 @@ const ProblemPreview = () => {
             levelStatus={selectedLevelData.status}
           />
         )}
-        <h2 className="w-2/3 text-2xl">{selectedLevelData.title}</h2>
+        <h2 className="w-2/3 text-2xl font-semibold">
+          {selectedLevelData.title}
+        </h2>
+        <ButtonsContainer className="top-1/2 -translate-y-1/2">
+          <ResizeButton
+            onClick={() => setDescriptionFull((prev) => !prev)}
+            open={descriptionFull}
+            className="hidden md:block"
+          />
+          <CloseButton onClick={closeLevel} />
+        </ButtonsContainer>
       </header>
 
       <LevelDescription

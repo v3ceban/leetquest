@@ -14,9 +14,7 @@ const codeTrier = false;
 // print("Arguments", sep=" ", end="\n")
 // print("n", n)
 
-const defaultPythonCode =`a = int(input())
-b = int(input())
-print(a + b)`;
+const defaultPythonCode =`s = list(map(str, input().split()))`
 
 // for CodeJudger, testCases is an array of objects with the following properties:
 // - hidden: boolean, whether the test case is hidden or not
@@ -25,18 +23,18 @@ print(a + b)`;
 const testCases = [
   {
     hidden: false,
-    stdin: "1\n1",
-    expectedStdout: "2",
+    stdin: "world Hello",
+    expectedStdout: "Hello world",
   },
   {
     hidden: false,
-    stdin: "2\n2",
-    expectedStdout: "4",
+    stdin: "a b c",
+    expectedStdout: "c b a",
   },
   {
     hidden: true,
-    stdin: "1\n2",
-    expectedStdout: "3",
+    stdin: "the quick brown fox jumps over the lazy dog",
+    expectedStdout: "dog lazy the over jumps fox brown quick the",
   }
 ];
 

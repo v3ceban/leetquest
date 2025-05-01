@@ -1,0 +1,20 @@
+<h2 id="title">Problem Description</h2>
+<p>
+    Given an integer array <code id="code">nums</code> and an integer <code id="code">k</code>, return all elements less than <code id="code">k</code> from the array.
+</p>
+<h2 id="subtitle">Examples</h2>
+<div style="background-color: #4C4F69; padding: 10px; border-radius: 5px;">
+    <p><b>Input:</b> <code>nums = [<red>1</red>,<red>2</red>,3,4], <red>k = 3</red></code></p>
+    <p><b>Output:</b> <code>[3,4]</code></p>
+    <p><b>Input:</b> <code>nums = [<red>3</red>,<red>-3</red>,6,<red>-6</red>,4,7,<red>-2</red>], <red>k = 4</red></code></p>
+    <p><b>Output:</b> <code>[6,4,7]</code></p>
+    <p><b>Input:</b> <code>nums = [<red>0</red>,<red>0</red>,<red>0</red>], <red>k = 1</red></code></p>
+    <p><b>Output:</b> <code>[]</code></p>
+</div>
+<h2 id="subtitle">Constraints</h2>
+<ul>
+    <li><code id="code">1 &lt;= nums.length &lt;= 10<sup>5</sup></code></li>
+    <li><code id="code">-10<sup>4</sup> &lt;= nums[i] &lt;= 10<sup>4</sup></code></li>
+    <li><code id="code">1 &lt;= k &lt;= 10<sup>4</sup></code></li>
+</ul>
+<codejudger defaultpythoncode="nums = list(map(int, input().split()))&#10;k = int(input())" testcases="[{&#x22;hidden&#x22;:false,&#x22;stdin&#x22;:&#x22;1 2 3 4\n3&#x22;,&#x22;expectedStdout&#x22;:&#x22;[3, 4]&#x22;},{&#x22;hidden&#x22;:false,&#x22;stdin&#x22;:&#x22;3 -3 6 -6 4 7 -2\n4&#x22;,&#x22;expectedStdout&#x22;:&#x22;[6, 4, 7]&#x22;},{&#x22;hidden&#x22;:false,&#x22;stdin&#x22;:&#x22;0 0 0\n1&#x22;,&#x22;expectedStdout&#x22;:&#x22;[]&#x22;},{&#x22;hidden&#x22;:true,&#x22;stdin&#x22;:&#x22;1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20\n10&#x22;,&#x22;expectedStdout&#x22;:&#x22;[10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]&#x22;}]"></codejudger>

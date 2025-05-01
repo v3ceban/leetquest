@@ -91,6 +91,7 @@ export async function fetchWorldsData() {
       requiredBy: true,
       prerequisites: true,
       flip_arrow: true,
+      order: true,
       levels: {
         select: {
           id: true,
@@ -105,6 +106,7 @@ export async function fetchWorldsData() {
           prerequisites: true,
           flip_arrow: true,
           leetcode_url: true,
+          order: true,
           world_id: true,
           user_levels: {
             where: {
@@ -115,8 +117,12 @@ export async function fetchWorldsData() {
               user_id: true,
               status: true,
               unlocked: true,
+              notes: true,
             },
           },
+        },
+        orderBy: {
+          order: "asc",
         },
       },
       user_world: {
@@ -144,6 +150,9 @@ export async function fetchWorldsData() {
           },
         },
       },
+    },
+    orderBy: {
+      order: "asc",
     },
   });
 
@@ -443,3 +452,21 @@ export const setLevelComplete = async (levelData) => {
     selectedWorldData: updatedLevelsData,
   };
 };
+
+export async function saveNote(levelId, note) {
+  const { user } = await auth();
+
+  if (!user) throw new Error("Not authenticated");
+
+  await prisma.user_Level.update({
+    where: {
+      user_id_level_id: {
+        user_id: user.id,
+        level_id: levelId,
+      },
+    },
+    data: {
+      notes: note,
+    },
+  });
+}

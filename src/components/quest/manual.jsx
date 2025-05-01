@@ -213,9 +213,9 @@ export const Manual = ({ open, onOpenChange }) => {
 
   const unlockedWorlds = (worldsData || []).filter((w) => w.isWorldUnlocked);
 
-  const getUnlockedLevels = (world) =>
+  const getCompletedLevels = (world) =>
     (world.levels || []).filter(
-      (lvl) => lvl.user_levels?.[0]?.unlocked || lvl.unlocked,
+      (lvl) => lvl.user_levels?.[0]?.status === "COMPLETE",
     );
 
   const handleNoteChange = (levelId, value) => {
@@ -385,9 +385,9 @@ export const Manual = ({ open, onOpenChange }) => {
               </AccordionTrigger>
               <AccordionContent className="pb-2">
                 <div className="px-2 space-y-4">
-                  {getUnlockedLevels(world).length === 0 && (
+                  {getCompletedLevels(world).length === 0 && (
                     <div className="pl-2 text-sm text-muted-foreground">
-                      No unlocked levels yet.
+                      No completed levels yet.
                     </div>
                   )}
                   <Accordion
@@ -403,7 +403,7 @@ export const Manual = ({ open, onOpenChange }) => {
                     }
                     className="w-full"
                   >
-                    {getUnlockedLevels(world).map((level) => (
+                    {getCompletedLevels(world).map((level) => (
                       <AccordionItem
                         key={level.id}
                         value={level.name}

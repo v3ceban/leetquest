@@ -7,7 +7,7 @@ import { QuestArrows } from "@/components/arrow";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { QuestContext } from "@/components/quest/context";
 import { cn } from "@/lib/utils";
-import { CheckCircle2, Circle, Star } from "lucide-react";
+import { Circle } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import {
   Tooltip,

@@ -55,6 +55,7 @@ model World {
   prerequisites World[]      @relation("WorldPrerequisites")
   requiredBy    World[]      @relation("WorldPrerequisites")
   flip_arrow    Boolean      @default(false)
+  order         Int          @default(0)
 }
 
 // Model for Level 

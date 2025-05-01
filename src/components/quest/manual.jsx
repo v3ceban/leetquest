@@ -12,8 +12,10 @@ import {
 import { GripVertical, CircleX, CornerDownRight, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
-import LevelDescription from "./level-description";
+import LevelDescription from "@/components/quest/level-description";
 import { useMobile } from "@/hooks/use-mobile";
+import { saveNote } from "@/components/quest/fetch-data";
+import { toast } from "sonner";
 
 const ResizeHandle = ({ width = "12", height = "12", className }) => (
   <svg
@@ -33,20 +35,6 @@ ResizeHandle.propTypes = {
   height: propTypes.string,
   fill: propTypes.string,
   className: propTypes.string,
-};
-
-const getNotes = () => {
-  if (typeof window === "undefined") return {};
-  try {
-    return JSON.parse(localStorage.getItem("leetquest_manual_notes") || "{}");
-  } catch {
-    return {};
-  }
-};
-
-const setNotes = (notes) => {
-  if (typeof window === "undefined") return;
-  localStorage.setItem("leetquest_manual_notes", JSON.stringify(notes));
 };
 
 const getManualWindowState = () => {
@@ -89,7 +77,16 @@ export const Manual = ({ open, onOpenChange }) => {
   const positionRef = useRef(position);
   const sizeRef = useRef(size);
 
-  const [notes, setNotesState] = useState(getNotes());
+  const initialNotes = {};
+  (worldsData || []).forEach((world) => {
+    (world.levels || []).forEach((level) => {
+      const note = level.user_levels?.[0]?.notes ?? "";
+      initialNotes[level.id] = note;
+    });
+  });
+  const [notes, setNotesState] = useState(initialNotes);
+  const [notesChanged, setNotesChanged] = useState({});
+  const [savingNotes, setSavingNotes] = useState(false);
 
   const [openWorld, setOpenWorld] = useState(null);
   const [openLevel, setOpenLevel] = useState(null);
@@ -126,10 +123,6 @@ export const Manual = ({ open, onOpenChange }) => {
     }, 200);
     return () => clearTimeout(timeout);
   }, [openWorld, openLevel]);
-
-  useEffect(() => {
-    setNotes(notes);
-  }, [notes]);
 
   useEffect(() => {
     setManualWindowState({ position, size });
@@ -230,6 +223,69 @@ export const Manual = ({ open, onOpenChange }) => {
       ...prev,
       [levelId]: value,
     }));
+    setNotesChanged((prev) => ({
+      ...prev,
+      [levelId]: true,
+    }));
+  };
+
+  const handleNoteBlur = async (levelId) => {
+    if (notesChanged[levelId]) {
+      const prevNote =
+        (worldsData || [])
+          .flatMap((world) => world.levels || [])
+          .find((level) => level.id === levelId)?.user_levels?.[0]?.notes ?? "";
+      if (!savingNotes) {
+        try {
+          setSavingNotes(true);
+          await saveNote(levelId, notes[levelId]);
+          setNotesChanged((prev) => ({
+            ...prev,
+            [levelId]: false,
+          }));
+        } catch {
+          setNotesState((prev) => ({
+            ...prev,
+            [levelId]: prevNote,
+          }));
+          setNotesChanged((prev) => ({
+            ...prev,
+            [levelId]: false,
+          }));
+          toast.error("Failed to save note. Please try again.");
+        } finally {
+          setSavingNotes(false);
+        }
+      }
+    }
+  };
+
+  const handleManualClose = async () => {
+    for (const levelId of Object.keys(notesChanged)) {
+      if (notesChanged[levelId]) {
+        const prevNote =
+          (worldsData || [])
+            .flatMap((world) => world.levels || [])
+            .find((level) => level.id === levelId)?.user_levels?.[0]?.notes ??
+          "";
+        if (!savingNotes) {
+          try {
+            setSavingNotes(true);
+            await saveNote(levelId, notes[levelId]);
+          } catch {
+            setNotesState((prev) => ({
+              ...prev,
+              [levelId]: prevNote,
+            }));
+            toast.error("Failed to save note. Please try again.");
+          } finally {
+            setSavingNotes(false);
+          }
+        }
+      }
+    }
+    setNotesChanged({});
+    onOpenChange(false);
   };
 
   if (!open) return null;
@@ -291,10 +347,10 @@ export const Manual = ({ open, onOpenChange }) => {
           Manual
         </h2>
         <CircleX
-          onClick={(e) => {
+          onClick={async (e) => {
             e.preventDefault();
             e.stopPropagation();
-            onOpenChange(false);
+            await handleManualClose();
           }}
           className="w-6 h-6 cursor-pointer hover:text-primary"
         />
@@ -375,6 +431,7 @@ export const Manual = ({ open, onOpenChange }) => {
                             onChange={(e) =>
                               handleNoteChange(level.id, e.target.value)
                             }
+                            onBlur={() => handleNoteBlur(level.id)}
                           />
                         </AccordionContent>
                       </AccordionItem>

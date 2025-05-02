@@ -64,13 +64,13 @@ const HomePage = async () => {
       <section className="py-20 md:py-32">
         <div className="flex flex-col gap-12 justify-between items-center lg:flex-row lg:items-start">
           <div className="flex flex-col gap-y-8">
-            <h1 className="font-bold tracking-tight text-4xl/tight">
+            <h1 className="font-bold tracking-tight text-4xl/tight sm:text-5xl/tight lg:text-4xl/tight xl:text-5xl/tight">
               Master LeetCode,
               <br />
               <span className="text-primary"> One Quest </span>
               at a Time
             </h1>
-            <p className="max-w-prose text-xl text-foreground/80">
+            <p className="max-w-prose text-xl/9 text-foreground/80">
               {
                 "Transform your coding journey with LeetQuest's gamified learning experience. Navigate through themed worlds, track your progress, and level up your problem-solving skills."
               }
@@ -97,12 +97,13 @@ const HomePage = async () => {
             </div>
           </div>
           <Image
-            className="relative w-full rounded-lg shadow-2xl lg:max-w-[766px]"
+            className="relative w-full rounded-lg shadow-2xl lg:max-w-[613px]"
             src="/img/hero.avif"
             alt="LeetQuest Worlds Preview"
-            width={766}
+            width={613}
             height={407}
             priority
+            fetchPriority="high"
           />
         </div>
       </section>

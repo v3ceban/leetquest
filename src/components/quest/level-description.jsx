@@ -46,9 +46,21 @@ Blue.propTypes = {
   children: propTypes.node.isRequired,
 };
 const Pink = ({ children }) => (
-  <span style={{ color: "rgb(255, 153, 204)" }}>{children}</span>
+  <span style={{ color: "rgb(255, 179, 217)" }}>{children}</span>
 );
 Pink.propTypes = {
+  children: propTypes.node.isRequired,
+};
+const Brown = ({ children }) => (
+  <span style={{ color: "rgb(217, 179, 160)" }}>{children}</span>
+);
+Brown.propTypes = {
+  children: propTypes.node.isRequired,
+};
+const Gray = ({ children }) => (
+  <span style={{ color: "rgb(179, 179, 179)" }}>{children}</span>
+);
+Gray.propTypes = {
   children: propTypes.node.isRequired,
 };
 
@@ -60,6 +72,8 @@ const colorComponents = {
   yellow: Yellow,
   blue: Blue,
   pink: Pink,
+  brown: Brown,
+  gray: Gray,
 };
 
 const renderColorComponent = (node, skipCode) => {

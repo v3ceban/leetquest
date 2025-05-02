@@ -112,6 +112,12 @@ body {
 .prose pink {
   color: #ffb3d9;
 }
+.prose brown {
+  color: #d9b3a0;
+}
+.prose gray {
+  color: #b3b3b3;
+}
 .prose a {
   color: #83a9fb;
   text-decoration: none;

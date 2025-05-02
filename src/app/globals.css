@@ -40,7 +40,7 @@ body {
     --destructive: #f38ba8;
     --destructive-foreground: var(--dark);
     --destructive-hover: #ed8796;
-    --border: var(--light);
+    --border: var(--surface-2);
     --input: var(--light);
     --ring: var(--light);
     --radius: 0.5rem;

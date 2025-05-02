@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs, { link } from "fs";
 import path from "path";
 import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient();
@@ -551,8 +551,8 @@ let dynamic_programming_file_names = [
     "binary_tree_maximum_path_sum_trees.html",
     "trapping_rain_water_two_pointers.html",]
 
-let levels = array_levels;
-let file_names = array_file_names;
+let levels = tree_levels;
+let file_names = tree_file_names;
 // do some processing to get levelId you're already doing
 
 // Loop through and update each level
@@ -568,7 +568,7 @@ if (!levelId) {
     continue; // Skip to the next iteration if levelId is not found
 }
 
-const htmlFilePath = path.join(process.cwd(), "src/lib/levels/array/", file_names[i]);
+const htmlFilePath = path.join(process.cwd(), "src/lib/levels/tree/", file_names[i]);
 const description = fs.readFileSync(htmlFilePath, "utf-8").replace(/\r?\n/g, ""); // need to delete new lines for it to be a proper string
 
 await prisma.level.update({

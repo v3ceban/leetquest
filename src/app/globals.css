@@ -92,27 +92,54 @@ body {
 }
 
 .prose green {
-  color: lightgreen;
+  color: #9CFFA0;
 }
 .prose red {
-  color: lightcoral;
+  color: #f08080;
 }
 .prose orange {
-  color: rgb(255, 178, 102);
+  color: #ffb266;
 }
 .prose purple {
-  color: rgb(200, 160, 238);
+  color: #c8a0ee;
 }
 .prose yellow {
-  color: rgb(240, 240, 163);
+  color: #f0f0a3;
 }
 .prose blue {
-  color: rgb(151, 217, 238);
+  color: #97d9ee;
+}
+.prose pink {
+  color: #ffb3d9;
 }
 .prose a {
-  color: rgb(131, 169, 251);
+  color: #83a9fb;
   text-decoration: none;
 }
+.prose .mover:hover ~ .image {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+.prose .mover:hover {
+  cursor: pointer;
+  color: #FF6767;
+}
+.prose .image {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: none;
+}
+@keyframes pulse-opacity {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+.flicker {
+  animation: pulse-opacity 2s infinite ease-in-out;
+}
+
 .editor-terminal {
   background-color: #262626;
   height: 18px;

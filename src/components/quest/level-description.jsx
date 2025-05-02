@@ -41,7 +41,14 @@ Yellow.propTypes = {
 const Blue = ({ children }) => (
   <span style={{ color: "rgb(151, 217, 238)" }}>{children}</span>
 );
+
 Blue.propTypes = {
+  children: propTypes.node.isRequired,
+};
+const Pink = ({ children }) => (
+  <span style={{ color: "rgb(255, 153, 204)" }}>{children}</span>
+);
+Pink.propTypes = {
   children: propTypes.node.isRequired,
 };
 
@@ -52,6 +59,7 @@ const colorComponents = {
   purple: Purple,
   yellow: Yellow,
   blue: Blue,
+  pink: Pink,
 };
 
 const renderColorComponent = (node, skipCode) => {

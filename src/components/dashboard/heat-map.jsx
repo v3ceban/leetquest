@@ -24,16 +24,12 @@ export const ActivityHeatmap = ({ className, dailyActivity }) => {
     let currentDate = new Date(today);
     currentDate.setFullYear(today.getFullYear() - 1);
 
-    // Generate 12 month labels starting from last year same month
     for (let i = 0; i < 12; i++) {
       labels.push(currentDate.toLocaleString("en-US", { month: "short" }));
       currentDate.setMonth(currentDate.getMonth() + 1);
     }
     return labels;
   };
-
-  const months = getMonthLabels();
-  const days = ["", "Mon", "", "Wed", "", "Fri", ""];
 
   const today = new Date();
   const startDate = new Date(today);
@@ -58,7 +54,6 @@ export const ActivityHeatmap = ({ className, dailyActivity }) => {
     currentDate.setDate(currentDate.getDate() + 1);
   }
 
-  // Pad the remaining week with future dates
   if (currentWeek.length > 0) {
     while (currentWeek.length < 7) {
       const dateStr = currentDate.toISOString().split("T")[0];
@@ -92,9 +87,8 @@ export const ActivityHeatmap = ({ className, dailyActivity }) => {
       <CardContent className="overflow-x-auto">
         <section className="inline-flex flex-col gap-2 min-w-full">
           <div className="flex min-w-full text-xs text-muted-foreground">
-            <div className="flex-shrink-0 w-8" />
             <div className="grid flex-1 grid-cols-12">
-              {months.map((month, i) => (
+              {getMonthLabels().map((month, i) => (
                 <div key={i} className="text-center">
                   {month}
                 </div>
@@ -102,13 +96,6 @@ export const ActivityHeatmap = ({ className, dailyActivity }) => {
             </div>
           </div>
           <div className="flex gap-2 min-w-full">
-            <div className="flex flex-col flex-shrink-0 justify-between w-8 text-xs/none text-muted-foreground">
-              {days.map((day, i) => (
-                <div key={i} className="h-[10px]">
-                  {day}
-                </div>
-              ))}
-            </div>
             <div className="grid flex-1 grid-cols-[repeat(53,1fr)] gap-[2px]">
               {weeks.map((week, weekIndex) => (
                 <div key={weekIndex} className="grid grid-rows-7 gap-[2px]">

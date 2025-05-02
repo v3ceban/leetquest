@@ -45,7 +45,7 @@ const FeatureCard = ({ icon: Icon, title, description, className }) => {
     >
       <Icon className="mb-4 w-12 h-12 text-primary" />
       <h3 className="mb-2 text-xl font-semibold">{title}</h3>
-      <p className="text-muted-foreground">{description}</p>
+      <p className="text-foreground/80">{description}</p>
     </Card>
   );
 };
@@ -62,24 +62,24 @@ const HomePage = async () => {
   return (
     <main>
       <section className="py-20 md:py-32">
-        <div className="flex flex-col gap-12 justify-between items-center lg:flex-row">
-          <div className="space-y-8">
-            <h1 className="font-bold tracking-tight text-4xl/tight md:text-6xl/tight">
+        <div className="flex flex-col gap-12 justify-between items-center lg:flex-row lg:items-start">
+          <div className="flex flex-col gap-y-8">
+            <h1 className="font-bold tracking-tight text-4xl/tight">
               Master LeetCode,
               <br />
               <span className="text-primary"> One Quest </span>
               at a Time
             </h1>
-            <p className="max-w-prose text-xl text-muted-foreground">
+            <p className="max-w-prose text-xl text-foreground/80">
               {
                 "Transform your coding journey with LeetQuest's gamified learning experience. Navigate through themed worlds, track your progress, and level up your problem-solving skills."
               }
             </p>
-            <div className="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {session ? (
                 <Button size="lg" asChild>
                   <Link href="/dashboard" className="group">
-                    Continue Your Quest
+                    Check Your Progress
                     <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </Button>
@@ -90,16 +90,18 @@ const HomePage = async () => {
                 </AuthButton>
               )}
               <Button size="lg" variant="outline" asChild>
-                <Link href="/quest">Explore Worlds</Link>
+                <Link href="/quest">
+                  {session ? "Continue Your Quest" : "Explore Worlds"}
+                </Link>
               </Button>
             </div>
           </div>
           <Image
-            className="relative w-full rounded-lg shadow-2xl lg:max-w-[400px]"
-            src="/img/worlds.webp"
+            className="relative w-full rounded-lg shadow-2xl lg:max-w-[766px]"
+            src="/img/hero.avif"
             alt="LeetQuest Worlds Preview"
-            width={400}
-            height={300}
+            width={766}
+            height={407}
             priority
           />
         </div>
@@ -108,7 +110,7 @@ const HomePage = async () => {
       <section className="py-20">
         <div className="mb-16 text-center">
           <h2 className="mb-4 text-3xl font-bold">Why Choose LeetQuest?</h2>
-          <p className="mx-auto max-w-2xl text-xl text-muted-foreground">
+          <p className="mx-auto max-w-2xl text-xl text-foreground/80">
             Our platform combines structured learning with gamification to make
             your LeetCode practice more effective and enjoyable.
           </p>

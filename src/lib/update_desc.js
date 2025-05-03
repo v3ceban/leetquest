@@ -6,22 +6,26 @@ const prisma = new PrismaClient();
 // Settings
 let array_levels = [
     "Welcome to LeetQuest",
+    "Introduction to Time Complexity",
     "Introduction to Arrays",
     "Introduction to Strings",
     "Introduction to Standard Input and Output",
     "Add Two Numbers",
     "Remove Elements from Array",
     "Remove Vowels from String",
-    "Array to Sentence",]
+    "Array to Sentence",
+    "Wave Array",]
 let array_file_names = [
     "welcome_to_leetquest.html",
+    "introduction_to_time_complexity.html",
     "introduction_to_arrays.html",
     "introduction_to_strings.html",
     "introduction_to_standard_input_and_output.html",
     "add_two_numbers.html",
     "remove_elements_from_array.html",
     "remove_vowels_from_string.html",
-    "array_to_sentence.html",]
+    "array_to_sentence.html",
+    "wave_array.html",]
 let hash_map_levels = [
     "Set Basics",
     "Set Conversion",

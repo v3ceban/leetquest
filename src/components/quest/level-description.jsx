@@ -3,7 +3,7 @@
 import propTypes from "prop-types";
 import parse from "html-react-parser";
 import { CodeModal } from "./code-modal";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { AiReview } from "./ai-review";
 
@@ -168,21 +168,21 @@ const LevelDescription = ({ rawHtml, title, skipCode, className }) => {
   );
   const children = Array.isArray(parsed) ? parsed : [parsed];
   const lastTwo = children.slice(-2);
-  const lastTwoGrouped = lastTwo.every((node) =>
-    ["AiReview", "CodeModal"].includes(node.type.name),
-  );
 
-  if (lastTwoGrouped) {
-    children.splice(-2, 2);
-    children.push(
-      <div
-        key="last-two-grouped"
-        className="grid grid-cols-1 gap-4 mt-8 w-full sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2"
-      >
-        {lastTwo}
-      </div>,
-    );
-  }
+  useEffect(() => {
+    const lastTwoGrouped = !skipCode && !onlyAiButton && lastTwo.length === 2;
+    if (lastTwoGrouped) {
+      children.splice(-2, 2);
+      children.push(
+        <div
+          key="last-two-grouped"
+          className="grid grid-cols-1 gap-4 mt-8 w-full sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2"
+        >
+          {lastTwo}
+        </div>,
+      );
+    }
+  }, [lastTwo, skipCode, onlyAiButton]);
 
   return (
     <main className={cn("level-description", className)} aria-label={title}>

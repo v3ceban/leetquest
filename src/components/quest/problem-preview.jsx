@@ -104,12 +104,13 @@ const ProblemPreview = () => {
 
       <LevelDescription
         rawHtml={selectedLevelData.description}
+        title={selectedLevelData.title}
         className="py-4 px-4 md:overflow-scroll prose prose-invert"
       />
 
       <footer
         className={cn(
-          "grid gap-4 mt-auto w-full xl:px-16 p-4 border-t border-[--surface-2]",
+          "grid gap-4 mt-auto w-full p-4 border-t border-[--surface-2]",
           selectedLevelData.leetcode_url && "lg:grid-cols-2 grid-cols-1",
         )}
       >

@@ -157,3 +157,11 @@ body {
 .stderr {
   color: #f04d4b;
 }
+
+.md-prose pre {
+  background-color: #262626;
+  padding: 0.1rem;
+  border-radius: 0.15rem;
+  color: white;
+  overflow-x: auto;
+}

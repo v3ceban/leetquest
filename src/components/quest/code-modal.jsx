@@ -353,7 +353,12 @@ TestCase.propTypes = {
   isLast: PropTypes.bool,
 };
 
-export const CodeModal = ({ type, defaultPythonCode, testCases }) => {
+export const CodeModal = ({
+  type,
+  defaultPythonCode,
+  testCases,
+  className,
+}) => {
   const { selectedWorldData, selectedLevelName } = useContext(QuestContext);
   const selectedLevelTitle =
     selectedWorldData && selectedLevelName
@@ -362,9 +367,7 @@ export const CodeModal = ({ type, defaultPythonCode, testCases }) => {
   return (
     <Dialog modal={false}>
       <DialogTrigger asChild>
-        <Button className="flex mx-auto mt-8 bg-foreground text-background">
-          View in Code Editor
-        </Button>
+        <Button className={cn(className)}>View in Code Editor</Button>
       </DialogTrigger>
       <DialogContent
         showBackdrop
@@ -399,4 +402,5 @@ CodeModal.propTypes = {
       error: PropTypes.string,
     }),
   ),
+  className: PropTypes.string,
 };

@@ -170,6 +170,15 @@ const QuestProvider = ({ children, initialWorldsData }) => {
     }
   }, [selectedLevelName]);
 
+  const initialNotes = {};
+  (worldsData || []).forEach((world) => {
+    (world.levels || []).forEach((level) => {
+      const note = level.user_levels?.[0]?.notes ?? "";
+      initialNotes[level.id] = note;
+    });
+  });
+  const [notes, setNotesState] = React.useState(initialNotes);
+
   return (
     <QuestContext.Provider
       value={{
@@ -192,6 +201,8 @@ const QuestProvider = ({ children, initialWorldsData }) => {
         setDescriptionFull,
         manualOpen,
         setManualOpen,
+        notes,
+        setNotesState,
       }}
     >
       {children}

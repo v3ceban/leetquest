@@ -61,6 +61,8 @@ export const Manual = () => {
     selectedLevelName,
     manualOpen: open,
     setManualOpen: onOpenChange,
+    notes,
+    setNotesState,
   } = useContext(QuestContext);
 
   const worldRefs = useRef({});
@@ -90,19 +92,24 @@ export const Manual = () => {
   const positionRef = useRef(position);
   const sizeRef = useRef(size);
 
-  const initialNotes = {};
-  (worldsData || []).forEach((world) => {
-    (world.levels || []).forEach((level) => {
-      const note = level.user_levels?.[0]?.notes ?? "";
-      initialNotes[level.id] = note;
-    });
-  });
-  const [notes, setNotesState] = useState(initialNotes);
   const [notesChanged, setNotesChanged] = useState({});
   const [savingNotes, setSavingNotes] = useState(false);
 
   const [openWorld, setOpenWorld] = useState(null);
   const [openLevel, setOpenLevel] = useState(null);
+
+  useEffect(() => {
+    if (selectedWorld) {
+      setOpenWorld(selectedWorld);
+    } else {
+      setOpenWorld(null);
+    }
+    if (selectedLevelName) {
+      setOpenLevel(selectedLevelName);
+    } else {
+      setOpenLevel(null);
+    }
+  }, [open]);
 
   useEffect(() => {
     if (selectedWorld) {

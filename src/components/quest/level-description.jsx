@@ -1,64 +1,63 @@
 import propTypes from "prop-types";
 import parse from "html-react-parser";
-import CodeTrier from "./code-trier";
-import CodeJudger from "./code-judger";
+import { CodeModal } from "./code-modal";
 
 const Green = ({ children }) => (
-  <span style={{ color: "lightgreen" }}>{children}</span>
+  <span className="text-green-400">{children}</span>
 );
 Green.propTypes = {
   children: propTypes.node.isRequired,
 };
 
-const Red = ({ children }) => (
-  <span style={{ color: "lightcoral" }}>{children}</span>
-);
+const Red = ({ children }) => <span className="text-red-400">{children}</span>;
 Red.propTypes = {
   children: propTypes.node.isRequired,
 };
 
 const Orange = ({ children }) => (
-  <span style={{ color: "rgb(255, 178, 102)" }}>{children}</span>
+  <span className="text-orange-300">{children}</span>
 );
 Orange.propTypes = {
   children: propTypes.node.isRequired,
 };
 
 const Purple = ({ children }) => (
-  <span style={{ color: "rgb(200, 160, 238)" }}>{children}</span>
+  <span className="text-purple-300">{children}</span>
 );
 Purple.propTypes = {
   children: propTypes.node.isRequired,
 };
 
 const Yellow = ({ children }) => (
-  <span style={{ color: "rgb(240, 240, 163)" }}>{children}</span>
+  <span className="text-yellow-200">{children}</span>
 );
 Yellow.propTypes = {
   children: propTypes.node.isRequired,
 };
 
 const Blue = ({ children }) => (
-  <span style={{ color: "rgb(151, 217, 238)" }}>{children}</span>
+  <span className="text-blue-300">{children}</span>
 );
-
 Blue.propTypes = {
   children: propTypes.node.isRequired,
 };
+
 const Pink = ({ children }) => (
-  <span style={{ color: "rgb(255, 179, 217)" }}>{children}</span>
+  <span className="text-pink-300">{children}</span>
 );
 Pink.propTypes = {
   children: propTypes.node.isRequired,
 };
+
 const Brown = ({ children }) => (
-  <span style={{ color: "rgb(217, 179, 160)" }}>{children}</span>
+  <span className="text-yellow-800">{children}</span>
 );
 Brown.propTypes = {
   children: propTypes.node.isRequired,
 };
+
 const Gray = ({ children }) => (
-  <span style={{ color: "rgb(179, 179, 179)" }}>{children}</span>
+  <span className="text-gray-400">{children}</span>
 );
 Gray.propTypes = {
   children: propTypes.node.isRequired,
@@ -94,16 +93,13 @@ const replacePlaceholders = (node) => {
   if (node.type === "tag") {
     if (colorComponents[node.name]) {
       return renderColorComponent(node);
-    } else if (node.name === "codetrier") {
-      const defaultPythonCode = node.attribs.defaultpythoncode;
-      return <CodeTrier defaultPythonCode={defaultPythonCode} />;
-    } else if (node.name === "codejudger") {
-      const defaultPythonCode = node.attribs.defaultpythoncode;
-      const testCasesStr = node.attribs.testcases;
-      const testCases = JSON.parse(testCasesStr);
+    } else if (["codetrier", "codejudger"].includes(node.name)) {
+      const { defaultpythoncode, testcases } = node.attribs;
+      const testCases = JSON.parse(testcases ?? "[]");
       return (
-        <CodeJudger
-          defaultPythonCode={defaultPythonCode}
+        <CodeModal
+          type={node.name}
+          defaultPythonCode={defaultpythoncode}
           testCases={testCases}
         />
       );

@@ -92,7 +92,7 @@ body {
 }
 
 .prose green {
-  color: #9CFFA0;
+  color: #9cffa0;
 }
 .prose red {
   color: #f08080;
@@ -129,40 +129,29 @@ body {
 }
 .prose .mover:hover {
   cursor: pointer;
-  color: #FF6767;
+  color: #ff6767;
 }
 .prose .image {
   opacity: 0;
   transform: translateY(-10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
   display: none;
 }
 @keyframes pulse-opacity {
-  0% { opacity: 1; }
-  50% { opacity: 0.3; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 .flicker {
   animation: pulse-opacity 2s infinite ease-in-out;
-}
-
-.editor-terminal {
-  background-color: #262626;
-  height: 18px;
-  width: 100%;
-  /* padding-left: 32px; */
-  overflow: scroll;
-}
-.inline-terminal {
-  background-color: #262626;
-  padding: 0.1rem;
-  border-radius: 0.15rem;
-  color: white;
-}
-
-.editor-terminal > pre {
-  font-family: menlo;
-  font-size: 13px;
 }
 
 .stderr {

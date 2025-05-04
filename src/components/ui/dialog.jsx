@@ -31,8 +31,15 @@ DialogOverlay.propTypes = {
 };
 
 const DialogContent = React.forwardRef(
-  ({ className, children, ...props }, ref) => (
+  ({ className, showBackdrop, children, ...props }, ref) => (
     <DialogPortal>
+      {showBackdrop && (
+        <div
+          aria-hidden="true"
+          className="fixed inset-0 z-40 bg-black/80"
+          style={{ pointerEvents: "auto" }}
+        />
+      )}
       <DialogOverlay />
       <DialogPrimitive.Content
         ref={ref}
@@ -41,6 +48,12 @@ const DialogContent = React.forwardRef(
           className,
         )}
         {...props}
+        onInteractOutside={(e) => {
+          const manual = document.getElementById("leetquest-manual-window");
+          if (manual && manual.contains(e.target)) {
+            e.preventDefault();
+          }
+        }}
       >
         {children}
         <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
@@ -55,6 +68,7 @@ DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 DialogContent.propTypes = {
   className: PropTypes.string,
+  showBackdrop: PropTypes.bool,
   children: PropTypes.node,
 };
 

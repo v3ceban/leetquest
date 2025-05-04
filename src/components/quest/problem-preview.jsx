@@ -69,7 +69,7 @@ const ProblemPreview = () => {
   };
 
   return (
-    <section className="flex overflow-scroll relative flex-col gap-4 h-full">
+    <section className="flex overflow-scroll relative flex-col h-full">
       <header className="flex sticky top-0 z-10 flex-row gap-4 items-center p-4 border-b border-[--surface-2] bg-[var(--surface-1)]">
         {selectedLevelData && (
           <WorldNode
@@ -104,12 +104,12 @@ const ProblemPreview = () => {
 
       <LevelDescription
         rawHtml={selectedLevelData.description}
-        className="px-4 md:overflow-scroll prose prose-invert"
+        className="py-4 px-4 md:overflow-scroll prose prose-invert"
       />
 
       <footer
         className={cn(
-          "grid gap-4 mx-auto mt-auto w-full max-w-xl p-4 border-t border-[--surface-2]",
+          "grid gap-4 mt-auto w-full xl:px-16 p-4 border-t border-[--surface-2]",
           selectedLevelData.leetcode_url && "lg:grid-cols-2 grid-cols-1",
         )}
       >

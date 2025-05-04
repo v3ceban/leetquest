@@ -53,17 +53,30 @@ const setManualWindowState = (state) => {
   localStorage.setItem("leetquest_manual_window", JSON.stringify(state));
 };
 
-export const Manual = ({ open, onOpenChange }) => {
+export const Manual = () => {
   const isMobile = useMobile();
-  const { worldsData, selectedWorld, selectedLevelName } =
-    useContext(QuestContext);
+  const {
+    worldsData,
+    selectedWorld,
+    selectedLevelName,
+    manualOpen: open,
+    setManualOpen: onOpenChange,
+  } = useContext(QuestContext);
 
   const worldRefs = useRef({});
   const levelRefs = useRef({});
 
   const [position, setPosition] = useState(() => {
-    const saved = getManualWindowState();
-    return saved?.position || { x: 120, y: 80 };
+    const state = getManualWindowState();
+    const position = state?.position;
+    if (
+      position &&
+      position?.x <= window.innerWidth &&
+      position?.y <= window.innerHeight
+    ) {
+      return position;
+    }
+    return { x: 120, y: 80 };
   });
   const [size, setSize] = useState(() => {
     const saved = getManualWindowState();
@@ -134,7 +147,14 @@ export const Manual = ({ open, onOpenChange }) => {
     if (open) {
       const saved = getManualWindowState();
       if (saved) {
-        setPosition(saved.position);
+        if (
+          saved?.position?.x <= window.innerWidth &&
+          saved?.position?.y <= window.innerHeight
+        ) {
+          setPosition(saved.position);
+        } else {
+          setPosition({ x: 120, y: 80 });
+        }
         setSize(saved.size);
         positionRef.current = saved.position;
         sizeRef.current = saved.size;
@@ -213,9 +233,9 @@ export const Manual = ({ open, onOpenChange }) => {
 
   const unlockedWorlds = (worldsData || []).filter((w) => w.isWorldUnlocked);
 
-  const getCompletedLevels = (world) =>
+  const getUnlockedLevels = (world) =>
     (world.levels || []).filter(
-      (lvl) => lvl.user_levels?.[0]?.status === "COMPLETE",
+      (lvl) => lvl.user_levels?.[0]?.unlocked === true,
     );
 
   const handleNoteChange = (levelId, value) => {
@@ -294,7 +314,7 @@ export const Manual = ({ open, onOpenChange }) => {
     <article
       id="leetquest-manual-window"
       className={cn(
-        "fixed z-[100] transition-transform duration-100 shadow shadow-black/75 border border-[--surface-2] bg-[--surface-1] rounded-xl flex flex-col",
+        "fixed z-[100] transition-transform duration-100 shadow shadow-black/75 border border-[--surface-2] bg-[--surface-1] md:rounded-xl flex flex-col",
         !isMobile &&
           dragging &&
           "shadow-black/75 shadow-md scale-[1.01] motion-reduce:scale-100",
@@ -305,12 +325,8 @@ export const Manual = ({ open, onOpenChange }) => {
           ? {
               left: "50%",
               top: "50%",
-              width: "95vw",
-              height: "90vh",
-              minWidth: 0,
-              minHeight: 0,
-              maxWidth: "95vw",
-              maxHeight: "90vh",
+              width: "100vw",
+              height: "100dvh",
             }
           : {
               left: position.x,
@@ -320,7 +336,7 @@ export const Manual = ({ open, onOpenChange }) => {
               minWidth: 320,
               minHeight: 320,
               maxWidth: "90vw",
-              maxHeight: "90vh",
+              maxHeight: "90dvh",
             }
       }
     >
@@ -368,79 +384,79 @@ export const Manual = ({ open, onOpenChange }) => {
           onValueChange={(val) => setOpenWorld(val || null)}
           className="w-full"
         >
-          {unlockedWorlds.map((world) => (
-            <AccordionItem
-              key={world.id}
-              value={world.name}
-              className="mb-2 rounded-md border-none bg-[--surface-2]"
-              ref={(el) => {
-                if (el) worldRefs.current[world.name] = el;
-              }}
-            >
-              <AccordionTrigger className="py-2 px-4 text-lg font-bold rounded-lg text-primary">
-                <span className="flex gap-2 items-center">
-                  <BookOpen className="w-5 h-5" />
-                  {world.name}
-                </span>
-              </AccordionTrigger>
-              <AccordionContent className="pb-2">
-                <div className="px-2 space-y-4">
-                  {getCompletedLevels(world).length === 0 && (
-                    <div className="pl-2 text-sm text-muted-foreground">
-                      No completed levels yet.
-                    </div>
-                  )}
-                  <Accordion
-                    type="single"
-                    collapsible
-                    value={
-                      openWorld === world.name && openLevel ? openLevel : ""
-                    }
-                    onValueChange={(val) =>
-                      setOpenLevel(
-                        openWorld === world.name ? val || null : null,
-                      )
-                    }
-                    className="w-full"
-                  >
-                    {getCompletedLevels(world).map((level) => (
-                      <AccordionItem
-                        key={level.id}
-                        value={level.name}
-                        className="mb-2 rounded border-none bg-[--surface-1]"
-                        ref={(el) => {
-                          if (el) levelRefs.current[level.name] = el;
-                        }}
-                      >
-                        <AccordionTrigger className="py-1 px-2 font-semibold rounded">
-                          <span className="flex gap-2 items-center text-left">
-                            <CornerDownRight className="w-4 h-4 text-muted-foreground" />
-                            {level.title || level.name}
-                          </span>
-                        </AccordionTrigger>
-                        <AccordionContent>
-                          <LevelDescription
-                            className="py-4 px-6 text-sm prose"
-                            rawHtml={level.description}
-                            skipCode
-                          />
-                          <Textarea
-                            className="block mx-6 w-[calc(100%-3rem)] placeholder:text-background placeholder:opacity-70 border-[--surface-2] bg-[--light] text-background"
-                            placeholder="Your notes..."
-                            value={notes[level.id] || ""}
-                            onChange={(e) =>
-                              handleNoteChange(level.id, e.target.value)
-                            }
-                            onBlur={() => handleNoteBlur(level.id)}
-                          />
-                        </AccordionContent>
-                      </AccordionItem>
-                    ))}
-                  </Accordion>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          ))}
+          {unlockedWorlds.map((world) => {
+            if (getUnlockedLevels(world).length === 0) {
+              return;
+            }
+            return (
+              <AccordionItem
+                key={world.id}
+                value={world.name}
+                className="mb-2 rounded-md border-none bg-[--surface-2]"
+                ref={(el) => {
+                  if (el) worldRefs.current[world.name] = el;
+                }}
+              >
+                <AccordionTrigger className="py-2 px-4 text-lg font-bold rounded-lg text-primary">
+                  <span className="flex gap-2 items-center">
+                    <BookOpen className="w-5 h-5" />
+                    {world.name}
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent className="pb-2">
+                  <div className="px-2 space-y-4">
+                    <Accordion
+                      type="single"
+                      collapsible
+                      value={
+                        openWorld === world.name && openLevel ? openLevel : ""
+                      }
+                      onValueChange={(val) =>
+                        setOpenLevel(
+                          openWorld === world.name ? val || null : null,
+                        )
+                      }
+                      className="w-full"
+                    >
+                      {getUnlockedLevels(world).map((level) => (
+                        <AccordionItem
+                          key={level.id}
+                          value={level.name}
+                          className="mb-2 rounded border-none bg-[--surface-1]"
+                          ref={(el) => {
+                            if (el) levelRefs.current[level.name] = el;
+                          }}
+                        >
+                          <AccordionTrigger className="py-1 px-2 font-semibold rounded">
+                            <span className="flex gap-2 items-center text-left">
+                              <CornerDownRight className="w-4 h-4 text-muted-foreground" />
+                              {level.title || level.name}
+                            </span>
+                          </AccordionTrigger>
+                          <AccordionContent>
+                            <LevelDescription
+                              className="py-4 px-6 text-sm prose"
+                              rawHtml={level.description}
+                              skipCode
+                            />
+                            <Textarea
+                              className="block mx-6 w-[calc(100%-3rem)] placeholder:text-background placeholder:opacity-70 border-[--surface-2] bg-[--light] text-background"
+                              placeholder="Your notes..."
+                              value={notes[level.id] || ""}
+                              onChange={(e) =>
+                                handleNoteChange(level.id, e.target.value)
+                              }
+                              onBlur={() => handleNoteBlur(level.id)}
+                            />
+                          </AccordionContent>
+                        </AccordionItem>
+                      ))}
+                    </Accordion>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            );
+          })}
         </Accordion>
       </main>
       {!isMobile && (
@@ -462,9 +478,4 @@ export const Manual = ({ open, onOpenChange }) => {
       )}
     </article>
   );
-};
-
-Manual.propTypes = {
-  open: propTypes.bool.isRequired,
-  onOpenChange: propTypes.func.isRequired,
 };

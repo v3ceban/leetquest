@@ -7,7 +7,6 @@ import { QuestContext } from "@/components/quest/context";
 import ProblemPreview from "@/components/quest/problem-preview";
 import { cn } from "@/lib/utils";
 import { CircleX, Expand, Minimize, BookOpen, Book } from "lucide-react";
-import { Manual } from "@/components/quest/manual";
 
 export const ButtonsContainer = ({ children, className }) => {
   return (
@@ -139,8 +138,6 @@ export const Quest = () => {
 
   return (
     <section>
-      <Manual open={manualOpen} onOpenChange={setManualOpen} />
-
       {selectedWorld && (
         <section
           className={cn(

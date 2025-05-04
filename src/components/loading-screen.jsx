@@ -13,12 +13,12 @@ export const LoadingScreen = ({ children }) => {
 
     const interval = setInterval(() => {
       setProgress((prev) => {
-        if (prev >= 90) {
+        if (prev >= 99) {
           clearInterval(interval);
           return prev;
         }
         const increment = Math.max(1, Math.floor((100 - prev) / 10));
-        return Math.min(90, prev + increment);
+        return Math.min(99, prev + increment);
       });
     }, 100);
 

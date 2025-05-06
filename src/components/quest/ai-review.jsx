@@ -43,14 +43,15 @@ export const AiReview = ({ title, description, className }) => {
     const level = (world.levels || []).find(
       (lvl) => lvl.name === selectedLevelName,
     );
-    return level?.id || null;
+    return [level?.id || null, level?.user_levels[0]?.unlocked || false];
   };
+  const [levelId, unlocked] = getLevelId();
 
   const generateAiResponse = async () => {
     const response = await aiReviewRequest({
       title,
       description,
-      levelId: getLevelId(),
+      levelId,
     });
     setAiResponse(response);
   };
@@ -73,7 +74,6 @@ export const AiReview = ({ title, description, className }) => {
   };
 
   const handleSummarizeAndAdd = async () => {
-    const levelId = getLevelId();
     if (!levelId) {
       toast.error("Could not determine the current level.");
       return;
@@ -109,7 +109,7 @@ export const AiReview = ({ title, description, className }) => {
       <Button
         onClick={handleClick}
         className={cn("bg-foreground text-background", className)}
-        disabled={loading || summarizing || !session?.user}
+        disabled={loading || summarizing || !session?.user || !unlocked}
       >
         {loading ? "Requesting..." : "AI Review"}
       </Button>

@@ -160,8 +160,5 @@ body {
 
 .md-prose pre {
   background-color: #262626;
-  padding: 0.1rem;
-  border-radius: 0.15rem;
-  color: white;
-  overflow-x: auto;
+  @apply p-4 rounded-lg text-white overflow-x-auto;
 }

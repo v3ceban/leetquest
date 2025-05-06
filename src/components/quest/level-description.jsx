@@ -182,7 +182,7 @@ const LevelDescription = ({ rawHtml, title, skipCode, className }) => {
         </div>,
       );
     }
-  }, [lastTwo, skipCode, onlyAiButton]);
+  }, []);
 
   return (
     <main className={cn("level-description", className)} aria-label={title}>

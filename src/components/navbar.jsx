@@ -67,16 +67,16 @@ const Navbar = async ({ className }) => {
                 <DropdownMenuTrigger asChild>
                   <Button variant="wave" size="wave">
                     <Image
-                      src={session.user.image}
-                      alt={session.user.name}
+                      src={session.user?.image}
+                      alt={session.user?.name}
                       width={24}
                       height={24}
                       className="mr-1 rounded-full"
                     />
-                    {session.user.name.split(" ")[0]}
+                    {session.user?.name?.split(" ")[0] ?? "User"}
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="p-0 mt-1 border border-foreground min-w-[150px]">
+                <DropdownMenuContent className="p-0 mt-1 border border-border min-w-[150px]">
                   <DropdownMenuItem className="p-0 hover:bg-accent hover:text-accent-foreground">
                     <AuthButton
                       session={session}
@@ -100,14 +100,14 @@ const Navbar = async ({ className }) => {
                 <nav className="flex flex-col gap-4 p-6">
                   <SheetHeader className="flex flex-row gap-2 justify-center items-center pb-4 mb-4 border-b border-border">
                     <Image
-                      src={session.user.image}
-                      alt={session.user.name}
+                      src={session.user?.image}
+                      alt={session.user?.name}
                       width={32}
                       height={32}
                       className="rounded-full"
                     />
                     <SheetTitle className="!mt-0 text-base font-medium">
-                      {session.user.name}
+                      {session.user?.name}
                     </SheetTitle>
                   </SheetHeader>
                   <Button

@@ -58,7 +58,7 @@ const seed = async () => {
     totalDone,
     "/",
     totalNumToDo,
-    ` ( ${((totalDone / totalNumToDo) * 100).toFixed(2)}%)`,
+    ` (${((totalDone / totalNumToDo) * 100).toFixed(2)}%)`,
   );
 
   for (const [userId, worldMap] of userWorldLevelMap.entries()) {
@@ -106,17 +106,15 @@ const seed = async () => {
           },
         });
         for (const level of levels) {
+          const LAST_LEVEL_ORDER = 27;
           const [ul, lastUl] = await Promise.all([
             prisma.user_Level.findFirst({
               where: {
                 user_id: userId,
                 level_id: level.id,
                 level: {
-                  type: {
-                    not: "BONUS",
-                  },
                   order: {
-                    not: 27,
+                    lt: LAST_LEVEL_ORDER,
                   },
                 },
               },
@@ -126,7 +124,7 @@ const seed = async () => {
                 user_id: userId,
                 level_id: level.id,
                 level: {
-                  order: 27,
+                  order: LAST_LEVEL_ORDER,
                 },
               },
             }),
@@ -208,7 +206,7 @@ const seed = async () => {
         totalDone,
         "/",
         totalNumToDo,
-        ` ( ${((totalDone / totalNumToDo) * 100).toFixed(2)}%)`,
+        ` (${((totalDone / totalNumToDo) * 100).toFixed(2)}%)`,
       );
     }
   }

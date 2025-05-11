@@ -152,7 +152,7 @@ let two_pointers_levels = [
     "Sort Array by Parity",
     "Sort Array by Parity II",
     "Sort Colors",
-    "Move Zeros",
+    "Move Zeroes",
     "Remove Element",
     "Remove Duplicates from Sorted Array",
     "Is Subsequence",
@@ -554,9 +554,23 @@ let dynamic_programming_file_names = [
     "longest_valid_parentheses_stacks.html",
     "binary_tree_maximum_path_sum_trees.html",
     "trapping_rain_water_two_pointers.html",]
+let greedy_levels = [
+    "Understanding How to be Greedy",
+    "Hand of Straights",
+    "Jump Game",
+    "Jump Game II",
+    "Max Chunks to Make Sorted",
+    "Max Chunks to Make Sorted II",]
+let greedy_file_names = [
+    "understanding_how_to_be_greedy.html",
+    "hand_of_straights.html",
+    "jump_game.html",
+    "jump_game_ii.html",
+    "max_chunks_to_make_sorted.html",
+    "max_chunks_to_make_sorted_ii.html",]
 
-let levels = stack_levels;
-let file_names = stack_file_names;
+let levels = two_pointers_levels;
+let file_names = two_pointers_file_names;
 // do some processing to get levelId you're already doing
 
 // Loop through and update each level
@@ -572,7 +586,7 @@ if (!levelId) {
     continue; // Skip to the next iteration if levelId is not found
 }
 
-const htmlFilePath = path.join(process.cwd(), "src/lib/levels/stack/", file_names[i]);
+const htmlFilePath = path.join(process.cwd(), "src/lib/levels/two_pointers/", file_names[i]);
 const description = fs.readFileSync(htmlFilePath, "utf-8").replace(/\r?\n/g, ""); // need to delete new lines for it to be a proper string
 
 await prisma.level.update({

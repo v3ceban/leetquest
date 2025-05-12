@@ -55,7 +55,7 @@ Pink.propTypes = {
 };
 
 const Brown = ({ children }) => (
-  <span className="text-brown-800">{children}</span>
+  <span className="text-brown-300">{children}</span>
 );
 Brown.propTypes = {
   children: propTypes.node.isRequired,

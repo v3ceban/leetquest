@@ -569,34 +569,34 @@ let greedy_file_names = [
     "max_chunks_to_make_sorted.html",
     "max_chunks_to_make_sorted_ii.html",]
 
-let levels = two_pointers_levels;
-let file_names = two_pointers_file_names;
+let levels = graph_levels;
+let file_names = graph_file_names;
 // do some processing to get levelId you're already doing
 
 // Loop through and update each level
 for (let i = 0; i < levels.length; i++) {
 
-let levelId = await prisma.level.findFirst({
-    where: {
-        title: levels[i],
-    },
-});
-if (!levelId) {
-    console.error(`Level with title ${levels[i]} not found`);
-    continue; // Skip to the next iteration if levelId is not found
-}
+    let levelId = await prisma.level.findFirst({
+        where: {
+            title: levels[i],
+        },
+    });
+    if (!levelId) {
+        console.error(`Level with title ${levels[i]} not found`);
+        continue; // Skip to the next iteration if levelId is not found
+    }
 
-const htmlFilePath = path.join(process.cwd(), "src/lib/levels/two_pointers/", file_names[i]);
-const description = fs.readFileSync(htmlFilePath, "utf-8").replace(/\r?\n/g, ""); // need to delete new lines for it to be a proper string
+    const htmlFilePath = path.join(process.cwd(), "src/lib/levels/graph/", file_names[i]);
+    const description = fs.readFileSync(htmlFilePath, "utf-8").replace(/\r?\n/g, ""); // need to delete new lines for it to be a proper string
 
-await prisma.level.update({
-    where: {
-        id: levelId.id,
-    },
-    data: {
-        description,
-    },
-});
+    await prisma.level.update({
+        where: {
+            id: levelId.id,
+        },
+        data: {
+            description,
+        },
+    });
 }
 
 

@@ -62,21 +62,25 @@ body {
   list-style-type: disc;
   margin-left: 1.5rem;
 }
+
 .prose #title {
   font-size: large;
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
+
 .prose h3 {
   font-size: medium;
   text-decoration: underline;
 }
+
 .prose #subtitle {
   font-size: large;
   font-weight: bold;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
+
 .prose #code {
   background-color: #4b5563;
   padding: 0.1rem;
@@ -94,43 +98,55 @@ body {
 .prose green {
   color: #9cffa0;
 }
+
 .prose red {
   color: #f08080;
 }
+
 .prose orange {
   color: #ffb266;
 }
+
 .prose purple {
   color: #c8a0ee;
 }
+
 .prose yellow {
   color: #f0f0a3;
 }
+
 .prose blue {
   color: #97d9ee;
 }
+
 .prose pink {
   color: #ffb3d9;
 }
+
 .prose brown {
   color: #d9b3a0;
 }
+
 .prose gray {
   color: #b3b3b3;
 }
+
 .prose a {
   color: #83a9fb;
-  text-decoration: none;
+  text-decoration: underline;
 }
-.prose .mover:hover ~ .image {
+
+.prose .mover:hover~.image {
   display: block;
   opacity: 1;
   transform: translateY(0);
 }
+
 .prose .mover:hover {
   cursor: pointer;
   color: #ff6767;
 }
+
 .prose .image {
   opacity: 0;
   transform: translateY(-10px);
@@ -139,17 +155,21 @@ body {
     transform 0.3s ease;
   display: none;
 }
+
 @keyframes pulse-opacity {
   0% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.3;
   }
+
   100% {
     opacity: 1;
   }
 }
+
 .flicker {
   animation: pulse-opacity 2s infinite ease-in-out;
 }

@@ -40,3 +40,7 @@ next-env.d.ts
 # vscode and macos
 /.vscode
 /.DS_Store
+
+# HTML Templates
+src/lib/levels/*
+!src/lib/levels/*.gitkeep

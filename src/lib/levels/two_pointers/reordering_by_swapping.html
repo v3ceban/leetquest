@@ -1,5 +1,0 @@
-<h2 id="title">Same Idea</h2>
-<p>Some problems may ask you to reorder an array to fit a certain condition. Two pointers can be used to solve this problem by swapping elements in the array.</p>
-<h2 id="subtitle">Example</h2>
-<p>Given an array <code id="code">arr</code> of <code id="code">n</code> distinct integers, reorder the array such that all the positive numbers occur before all the negative numbers.</p>
-<codetrier defaultpythoncode="arr = [1, -2, 3, -4, 5, -6, 7, -8]&#10;left = 0&#10;right = len(arr) - 1&#10;while left &#x3C; right:&#10;    while arr[left] &#x3E;= 0:&#10;        left += 1&#10;        if left == right:&#10;            break&#10;    while arr[right] &#x3C; 0:&#10;        right -= 1&#10;        if left == right:&#10;            break&#10;    if left &#x3C; right:&#10;        arr[left], arr[right] = arr[right], arr[left]&#10;print(arr)"></codetrier>

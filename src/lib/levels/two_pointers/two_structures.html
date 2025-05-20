@@ -1,8 +1,0 @@
-<h2 id="title">There Are Two Now?</h2>
-<p>This subconcept of two pointers will be significantly different from the ones you have seen so far. Instead of two pointers iterating over the same data structure, we will be using two pointers to iterate over two different data structures. This is a common technique used in problems that involve comparing or merging two structures.</p>
-<h2 id="subtitle">Example (Intersection of Two Sorted Arrays)</h2>
-<p>Given two <b>sorted</b> integer arrays <code id="code">nums1</code> and <code id="code">nums2</code>, return an array of their intersection. Each element in the result must appear as many times as it shows in both arrays, and you may return the result in any order.</p>
-<br>
-<p>This problem may look familiar. In fact, it is the same problem as the one in the Hash Map world, except the arrays are sorted. Since the arrays are sorted, we don't need to use a hash map to solve this problem.</p>
-<p>We can use two pointers i and j to iterate through both arrays and compare the elements. If the elements are equal, we add them to the result array. If one element is smaller than the other, we move the pointer of the smaller element forward.</p>
-<codetrier defaultpythoncode="nums1 = [1, 1, 2, 2, 4, 5]&#10;nums2 = [1, 2, 2, 3, 4, 6]&#10;intersection = []&#10;i = 0&#10;j = 0&#10;while i &#x3C; len(nums1) and j &#x3C; len(nums2):&#10;    if nums1[i] == nums2[j]:&#10;        intersection.append(nums1[i])&#10;        i += 1&#10;        j += 1&#10;    elif nums1[i] &#x3C; nums2[j]:&#10;        i += 1&#10;    else:&#10;        j += 1&#10;print(intersection)"></codetrier>
